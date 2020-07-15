@@ -1,2 +1,3 @@
-# ripe-sdk-components-vue
-Vue.js components for RIPE SDK
+# RIPE SDK Components for Vue.js
+
+Vue.js components for RIPE SDK.
