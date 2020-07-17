@@ -145,6 +145,7 @@ export const Configurator = {
             // in case the configurator is not currently ready
             // then avoids the operation (returns control flow)
             if (!this.configurator || !this.configurator.ready) return;
+
             this.configurator.changeFrame(frame, {
                 type: null,
                 duration: null
