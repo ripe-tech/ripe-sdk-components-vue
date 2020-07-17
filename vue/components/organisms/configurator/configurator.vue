@@ -59,7 +59,6 @@
 .loader-container {
     left: calc(50%);
     position: absolute;
-    top: 250px;
 }
 </style>
 
