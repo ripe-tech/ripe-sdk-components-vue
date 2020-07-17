@@ -150,6 +150,7 @@ export const Configurator = {
             // in case the configurator is not currently ready
             // then avoids the operation (returns control flow)
             if (!this.configurator || !this.configurator.ready) return;
+
             this.configurator.changeFrame(frame, {
                 type: null,
                 duration: null
@@ -178,7 +179,10 @@ export const Configurator = {
         this.$emit("loading");
         await this.setupRipeSdk();
 
-        this.configurator = global.ripeSdk.bindConfigurator(this.$refs.configurator, {});
+        this.configurator = global.ripeSdk.bindConfigurator(this.$refs.configurator, {
+            view: this.getView(),
+            position: this.getPosition()
+        });
 
         this.configurator.bind("changed_frame", frame => {
             this.frameData = frame;
@@ -210,7 +214,7 @@ export const Configurator = {
         /**
          * Initializes Ripe SDK if it does not exists and
          * configurates it with the given brand, model,
-         * version and parts
+         * version and parts.
          */
         async setupRipeSdk() {
             global.ripeSdk = this.ripeSdk;
@@ -236,6 +240,12 @@ export const Configurator = {
         resize(size) {
             if (!size || !this.configurator) return;
             this.configurator.resize(size);
+        },
+        getView() {
+            return this.frame ? this.frame.split("-")[0] : null;
+        },
+        getPosition() {
+            return this.frame ? this.frame.split("-")[1] : null;
         }
     },
     destroyed: async function() {
