@@ -186,11 +186,6 @@ export const Configurator = {
         this.configurator.bind("changed_frame", frame => {
             this.frameData = frame;
 
-            // updates the value of the single frame view
-            // variable as the new view may have several frames
-            // or just one and the variable value may change
-            this.singleFrameView = (this.configurator.frames[this.configurator.view] || 1) === 1;
-
             // only the visible instance of this component
             // should be sending events it's considered to
             // be the main/master one
