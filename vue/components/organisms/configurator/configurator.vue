@@ -52,10 +52,6 @@
     cursor: progress;
 }
 
-.configurator-wrapper.loading-error .configurator {
-    cursor: default;
-}
-
 .loader-container {
     left: calc(50%);
     position: absolute;
@@ -154,11 +150,6 @@ export const Configurator = {
                 type: null,
                 duration: null
             });
-        },
-        useMasks() {
-            if (!this.configurator) return;
-            if (this.useMasks) this.configurator.enableMasks();
-            else this.configurator.disableMasks();
         }
     },
     computed: {
