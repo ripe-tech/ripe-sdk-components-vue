@@ -111,8 +111,8 @@ export const RipeConfigurator = {
             default: null
         },
         /**
-         * Instance of Ripe SDK initialized, if not defined, the global
-         * Ripe SDK instance will be used.
+         * Instance of Ripe SDK initialized, if not defined, a new SDK instance
+         * will be initialized
          */
         ripeSdk: {
             type: Object,
@@ -130,7 +130,12 @@ export const RipeConfigurator = {
              * Flag that controls if the initial loading process for
              * the modal in the configurator is still running.
              */
-            loading: true
+            loading: true,
+            /**
+             * Ripe SDK instance, which can be later initialized
+             * if the given prop is not defined.
+             */
+            ripeSdkData: this.ripeSdk
         };
     },
     watch: {
@@ -151,11 +156,7 @@ export const RipeConfigurator = {
                 // then avoids the operation (returns control flow)
                 if (!this.configurator || !this.configurator.ready) return;
 
-                try {
-                    this.configurator.changeFrame(value);
-                } catch (error) {
-                    this.$emit("error", error);
-                }
+                this.configurator.changeFrame(value);
 
                 // only the visible instance of this component
                 // should be sending events it's considered to
@@ -189,7 +190,7 @@ export const RipeConfigurator = {
     mounted: async function() {
         await this.setupRipeSdk();
 
-        this.configurator = global.ripeSdk.bindConfigurator(this.$refs.configurator, {
+        this.configurator = this.ripeSdkData.bindConfigurator(this.$refs.configurator, {
             view: this.frame ? this.frame.split("-")[0] : null,
             position: this.frame ? this.frame.split("-")[1] : null
         });
@@ -202,7 +203,6 @@ export const RipeConfigurator = {
             const frame = `${this.configurator.view}-${this.configurator.position}`;
             this.frameData = frame;
             this.loading = false;
-            this.$emit("update:frame", frame);
         });
 
         this.resize(this.size);
@@ -215,24 +215,23 @@ export const RipeConfigurator = {
          * be used without further configuration.
          */
         async setupRipeSdk() {
-            if (this.ripeSdk) {
-                global.ripeSdk = this.ripeSdk;
-                return;
-            }
-
-            if (!global.ripeSdk) {
-                global.ripeSdk = new Ripe();
+            if (!this.ripeSdkData) {
+                this.ripeSdkData = new Ripe();
             }
 
             try {
                 this.loading = true;
-                await global.ripeSdk.config(this.brand, this.model, {
+                await this.ripeSdkData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts
                 });
             } catch (error) {
                 this.loading = false;
                 this.$emit("error", error);
+            }
+
+            if (!global.ripeSdk) {
+                global.ripeSdk = this.ripeSdkData;
             }
         },
         /**
@@ -245,7 +244,7 @@ export const RipeConfigurator = {
         }
     },
     destroyed: async function() {
-        if (this.configurator) await global.ripeSdk.unbindConfigurator(this.configurator);
+        if (this.configurator) await this.ripeSdkData.unbindConfigurator(this.configurator);
         this.configurator = null;
     }
 };
