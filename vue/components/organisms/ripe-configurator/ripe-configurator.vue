@@ -128,7 +128,7 @@ export const RipeConfigurator = {
             frameData: this.frame,
             /**
              * Flag that controls if the initial loading process for
-             * the modal in the configurator is still running.
+             * the configurator is still running.
              */
             loading: true,
             /**
