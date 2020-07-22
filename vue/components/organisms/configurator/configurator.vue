@@ -1,5 +1,5 @@
 <template>
-    <div class="configurator-container">
+    <div class="ripe-configurator">
         <div class="loader-container" v-bind:style="loaderStyle" v-if="loading">
             <slot name="loader" v-if="loading">
                 <loader class="loader" v-bind:loader="'ball-scale-multiple'" />
@@ -12,47 +12,47 @@
 </template>
 
 <style scoped>
-.configurator-container {
+.ripe-configurator {
     position: relative;
 }
 
-.configurator-wrapper {
+.ripe-configurator > .configurator-wrapper {
     position: relative;
     text-align: center;
     transition: opacity 0.125s ease-in;
 }
 
-.configurator-wrapper.loading {
+.ripe-configurator > .configurator-wrapper.loading {
     opacity: 0;
 }
 
-.configurator-wrapper .configurator {
+.ripe-configurator > .configurator-wrapper .configurator {
     cursor: grab;
 }
 
-.configurator-wrapper .configurator[data-frames="1"] {
+.ripe-configurator > .configurator-wrapper .configurator[data-frames="1"] {
     cursor: default;
 }
 
-.configurator-wrapper .configurator.drag {
+.ripe-configurator > .configurator-wrapper .configurator.drag {
     cursor: grabbing;
 }
 
-.configurator-wrapper .configurator.drag[data-frames="1"] {
+.ripe-configurator > .configurator-wrapper .configurator.drag[data-frames="1"] {
     cursor: default;
 }
 
-.configurator-wrapper .configurator.highlight {
+.ripe-configurator > .configurator-wrapper .configurator.highlight {
     cursor: pointer;
 }
 
-.configurator-wrapper .configurator.loading,
-.configurator-wrapper .configurator.preloading,
-.configurator-wrapper .configurator:not(.ready) {
+.ripe-configurator > .configurator-wrapper .configurator.loading,
+.ripe-configurator > .configurator-wrapper .configurator.preloading,
+.ripe-configurator > .configurator-wrapper .configurator:not(.ready) {
     cursor: progress;
 }
 
-.loader-container {
+.ripe-configurator > .loader-container {
     left: calc(50%);
     position: absolute;
 }
@@ -63,9 +63,9 @@ import { Ripe } from "ripe-sdk";
 import "ripe-sdk/src/css/ripe.css";
 
 /**
- * The component that contains the RIPE SDK's configurator
+ * The component that contains the RIPE SDK's configurator.
  */
-export const Configurator = {
+export const RipeConfigurator = {
     name: "ripe-configurator",
     props: {
         /**
@@ -134,22 +134,43 @@ export const Configurator = {
         };
     },
     watch: {
-        size(size) {
-            this.resize(size);
+        size: {
+            handler: function(value) {
+                this.resize(value);
+            }
         },
-        frame(frame) {
-            if (frame === this.frameData) return;
-            this.frameData = frame;
+        frame: {
+            handler: function(value) {
+                if (this.frameData === value) return;
+                this.frameData = value;
+            }
         },
-        frameData(frame) {
-            // in case the configurator is not currently ready
-            // then avoids the operation (returns control flow)
-            if (!this.configurator || !this.configurator.ready) return;
+        frameData: {
+            handler: function(value) {
+                // in case the configurator is not currently ready
+                // then avoids the operation (returns control flow)
+                if (!this.configurator || !this.configurator.ready) return;
 
-            this.configurator.changeFrame(frame, {
-                type: null,
-                duration: null
-            });
+                try {
+                    this.configurator.changeFrame(value);
+                } catch (error) {
+                    this.$emit("error", error);
+                }
+
+                // only the visible instance of this component
+                // should be sending events it's considered to
+                // be the main/master one
+                if (this.elementDisplayed) {
+                    this.$emit("update:frame", value);
+                }
+            }
+        },
+        loading: {
+            handler: function(value) {
+                if (value) this.$emit("loading");
+                else this.$emit("loaded");
+            },
+            immediate: true
         }
     },
     computed: {
@@ -166,23 +187,15 @@ export const Configurator = {
         }
     },
     mounted: async function() {
-        this.$emit("loading");
         await this.setupRipeSdk();
 
         this.configurator = global.ripeSdk.bindConfigurator(this.$refs.configurator, {
-            view: this.getView(),
-            position: this.getPosition()
+            view: this.frame ? this.frame.split("-")[0] : null,
+            position: this.frame ? this.frame.split("-")[1] : null
         });
 
         this.configurator.bind("changed_frame", frame => {
             this.frameData = frame;
-
-            // only the visible instance of this component
-            // should be sending events it's considered to
-            // be the main/master one
-            if (this.elementDisplayed) {
-                this.$emit("update:frame", frame);
-            }
         });
 
         this.configurator.bind("loaded", () => {
@@ -190,7 +203,6 @@ export const Configurator = {
             this.frameData = frame;
             this.loading = false;
             this.$emit("update:frame", frame);
-            this.$emit("loaded");
         });
 
         this.resize(this.size);
@@ -199,16 +211,21 @@ export const Configurator = {
         /**
          * Initializes Ripe SDK if it does not exists and
          * configurates it with the given brand, model,
-         * version and parts.
+         * version and parts. If a Ripe SDK is given, it will
+         * be used without further configuration.
          */
         async setupRipeSdk() {
-            global.ripeSdk = this.ripeSdk;
+            if (this.ripeSdk) {
+                global.ripeSdk = this.ripeSdk;
+                return;
+            }
 
             if (!global.ripeSdk) {
                 global.ripeSdk = new Ripe();
             }
 
             try {
+                this.loading = true;
                 await global.ripeSdk.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts
@@ -225,12 +242,6 @@ export const Configurator = {
         resize(size) {
             if (!size || !this.configurator) return;
             this.configurator.resize(size);
-        },
-        getView() {
-            return this.frame ? this.frame.split("-")[0] : null;
-        },
-        getPosition() {
-            return this.frame ? this.frame.split("-")[1] : null;
         }
     },
     destroyed: async function() {
@@ -239,5 +250,5 @@ export const Configurator = {
     }
 };
 
-export default Configurator;
+export default RipeConfigurator;
 </script>
