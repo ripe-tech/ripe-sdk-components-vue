@@ -1,11 +1,5 @@
 <template>
-    <img
-        class="ripe-image"
-        v-bind:alt="name"
-        src=""
-        ref="image"
-        v-on:load="onLoaded"
-    />
+    <img class="ripe-image" v-bind:alt="name" ref="image" v-on:load="onLoaded" />
 </template>
 
 <style scoped>
@@ -81,32 +75,25 @@ export const RipeImage = {
     data: function() {
         return {
             image: null,
-            loading: true
+            loading: true,
+            /**
+             * Ripe SDK instance, which can be later initialized
+             * if the given prop is not defined.
+             */
+            ripeSdkData: this.ripeSdk
         };
     },
     watch: {
         frame: {
-            handler: async function(value) {
+            handler: function(value) {
                 this.loading = true;
-                await this.unbindImage();
-
-                this.image = global.ripeSdk.bindImage(this.$refs.image, {
-                    frame: value,
-                    size: this.size || undefined
-                });
+                this.image.setFrame(value);
             }
         },
         size: {
             handler: async function(value) {
                 this.loading = true;
-                // await this.unbindImage();
-
-                console.log("here");
-
-                this.image = global.ripeSdk.bindImage(this.$refs.image, {
-                    frame: this.frame,
-                    size: value
-                });
+                this.image.resize(value);
             }
         },
         loading: {
@@ -133,18 +120,12 @@ export const RipeImage = {
          * be used without further configuration.
          */
         async setupRipeSdk() {
-            if (this.ripeSdk) {
-                global.ripeSdk = this.ripeSdk;
-                return;
+            if (!this.ripeSdkData) {
+                this.ripeSdkData = new Ripe();
             }
-
-            if (!global.ripeSdk) {
-                global.ripeSdk = new Ripe();
-            }
-
             try {
                 this.loading = true;
-                await global.ripeSdk.config(this.brand, this.model, {
+                await this.ripeSdkData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts
                 });
@@ -152,9 +133,12 @@ export const RipeImage = {
                 this.loading = false;
                 this.$emit("error", error);
             }
+            if (!global.ripeSdk) {
+                global.ripeSdk = this.ripeSdkData;
+            }
         },
         async unbindImage() {
-            if (this.image) await global.ripeSdk.unbindImage(this.image);
+            if (this.image) await this.ripeSdkData.unbindImage(this.image);
             this.image = null;
         },
         onLoaded() {
