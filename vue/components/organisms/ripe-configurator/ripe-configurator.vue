@@ -195,8 +195,8 @@ export const RipeConfigurator = {
         await this.setupRipeSdk();
 
         this.configurator = this.ripeSdkData.bindConfigurator(this.$refs.configurator, {
-            view: this.frame ? this.frame.split("-")[0] : null,
-            position: this.frame ? this.frame.split("-")[1] : null
+            view: this.frameData ? this.frameData.split("-")[0] : null,
+            position: this.frameData ? this.frameData.split("-")[1] : null
         });
 
         this.configurator.bind("changed_frame", frame => {
