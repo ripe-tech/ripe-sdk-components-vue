@@ -151,12 +151,16 @@ export const RipeConfigurator = {
             }
         },
         frameData: {
-            handler: function(value) {
+            handler: async function(value) {
                 // in case the configurator is not currently ready
                 // then avoids the operation (returns control flow)
                 if (!this.configurator || !this.configurator.ready) return;
 
-                this.configurator.changeFrame(value);
+                try {
+                    await this.configurator.changeFrame(value);
+                } catch (error) {
+                    this.$emit("error", error);
+                }
 
                 // only the visible instance of this component
                 // should be sending events it's considered to
