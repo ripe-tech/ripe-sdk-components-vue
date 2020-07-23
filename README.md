@@ -7,6 +7,7 @@ Vue.js components for [RIPE SDK](https://github.com/ripe-tech/ripe-sdk).
 The configurator component provides an interactive configuration experience inside a DOM. The user can interact with a model by rotating, highlighting and selecting it.
 
 The configurator can receive the following parameters:
+
 | Prop    | Type     | Required | Description                                                                                                                                    |
 | ------- | -------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | brand   | `String` | `true`   | The brand of the model.                                                                                                                        |
