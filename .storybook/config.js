@@ -10,6 +10,7 @@ Vue.use(RipeSdkComponentsVue);
 Vue.component("global-events", GlobalEvents);
 
 const req = require.context("../vue", true, /\.stories\.js$/);
+
 function loadStories() {
     req.keys().forEach(filename => req(filename));
 }
