@@ -1,12 +1,8 @@
 import Vue from "vue";
 import GlobalEvents from "vue-global-events";
-import {
-    configure
-} from "@storybook/vue";
+import { configure } from "@storybook/vue";
 
-import {
-    install as RipeSdkComponentsVue
-} from "../vue";
+import { install as RipeSdkComponentsVue } from "../vue";
 
 import "./styles.css";
 

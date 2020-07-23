@@ -1,10 +1,5 @@
-import {
-    install
-} from "./vue";
-import {
-    name,
-    version
-} from "./package.json";
+import { install } from "./vue";
+import { name, version } from "./package.json";
 
 export * from "./vue";
 

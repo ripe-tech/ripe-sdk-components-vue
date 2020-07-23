@@ -18,12 +18,8 @@ localVue.component("global-events", globalEvents.default);
  * - 'mocks' - The set of mocks to apply.
  */
 const getComponent = function(
-    component, {
-        props = {},
-        route = null,
-        mixins = [],
-        mocks = {}
-    } = {}
+    component,
+    { props = {}, route = null, mixins = [], mocks = {} } = {}
 ) {
     const options = {
         propsData: props,
