@@ -107,7 +107,7 @@ export const RipeImage = {
     mounted: async function() {
         await this.setupRipeSdk();
 
-        this.image = global.ripeSdk.bindImage(this.$refs.image, {
+        this.image = this.ripeSdkData.bindImage(this.$refs.image, {
             frame: this.frame,
             size: this.size || undefined
         });
