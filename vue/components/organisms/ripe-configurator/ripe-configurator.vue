@@ -199,6 +199,10 @@ export const RipeConfigurator = {
             position: this.frameData ? this.frameData.split("-")[1] : null
         });
 
+        this.ripeSdkData.bind("parts", parts => {
+            this.$emit("update:parts", parts);
+        });
+
         this.configurator.bind("changed_frame", frame => {
             // if no position is given, the frame returned from SDK
             // will be something similar to 'side-NaN', it is necessary
