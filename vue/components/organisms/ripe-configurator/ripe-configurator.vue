@@ -1,6 +1,6 @@
 <template>
     <div class="ripe-configurator">
-        <div class="loader-container" v-bind:style="loaderStyle" v-if="loading">
+        <div class="loader-container" v-bind:style="loaderStyle" v-if="loader && loading">
             <slot name="loader" v-if="loading">
                 <loader class="loader" v-bind:loader="'ball-scale-multiple'" />
             </slot>
@@ -63,7 +63,8 @@ import { Ripe } from "ripe-sdk";
 import "ripe-sdk/src/css/ripe.css";
 
 /**
- * The component that contains the RIPE SDK's configurator.
+ * The component that contains the RIPE SDK's configurator
+ * under a self-managed environment.
  */
 export const RipeConfigurator = {
     name: "ripe-configurator",
@@ -90,14 +91,16 @@ export const RipeConfigurator = {
             required: true
         },
         /**
-         * The parts of the customized build.
+         * The parts of the customized build as a dictionary mapping the
+         * name of the part to an object of material and color.
          */
         parts: {
             type: Object,
             default: null
         },
         /**
-         * The name of the frame to be shown in the configurator.
+         * The name of the frame to be shown in the configurator using
+         * the normalized frame format (eg: side-1).
          */
         frame: {
             type: String,
@@ -111,10 +114,18 @@ export const RipeConfigurator = {
             default: null
         },
         /**
-         * Instance of Ripe SDK initialized, if not defined, a new SDK instance
-         * will be initialized
+         * If the loader indicator should be shown whenever a configurator
+         * related loading operation is being performed.
          */
-        ripeSdk: {
+        loader: {
+            type: Boolean,
+            default: true
+        },
+        /**
+         * An initialized RIPE instance form the RIPE SDK, if not defined,
+         * a new SDK instance will be initialized.
+         */
+        ripe: {
             type: Object,
             default: null
         }
@@ -132,10 +143,10 @@ export const RipeConfigurator = {
              */
             loading: true,
             /**
-             * Ripe SDK instance, which can be later initialized
+             * RIPE instance, which can be later initialized
              * if the given prop is not defined.
              */
-            ripeSdkData: this.ripeSdk
+            ripeData: this.ripe
         };
     },
     watch: {
@@ -192,14 +203,14 @@ export const RipeConfigurator = {
         }
     },
     mounted: async function() {
-        await this.setupRipeSdk();
+        await this.setupRipe();
 
-        this.configurator = this.ripeSdkData.bindConfigurator(this.$refs.configurator, {
+        this.configurator = this.ripeData.bindConfigurator(this.$refs.configurator, {
             view: this.frameData ? this.frameData.split("-")[0] : null,
             position: this.frameData ? this.frameData.split("-")[1] : null
         });
 
-        this.ripeSdkData.bind("parts", parts => {
+        this.ripeData.bind("parts", parts => {
             this.$emit("update:parts", parts);
         });
 
@@ -222,19 +233,19 @@ export const RipeConfigurator = {
     },
     methods: {
         /**
-         * Initializes Ripe SDK if it does not exists and
-         * configurates it with the given brand, model,
-         * version and parts. If a Ripe SDK is given, it will
+         * Initializes RIPE instance if it does not exists and
+         * configures it with the given brand, model, version
+         * and parts. If a RIPE instance is provided, it will
          * be used without further configuration.
          */
-        async setupRipeSdk() {
-            if (!this.ripeSdkData) {
-                this.ripeSdkData = new Ripe();
+        async setupRipe() {
+            if (!this.ripeData) {
+                this.ripeData = new Ripe();
             }
 
             try {
                 this.loading = true;
-                await this.ripeSdkData.config(this.brand, this.model, {
+                await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts
                 });
@@ -243,8 +254,8 @@ export const RipeConfigurator = {
                 this.$emit("error", error);
             }
 
-            if (!global.ripeSdk) {
-                global.ripeSdk = this.ripeSdkData;
+            if (!global.ripe) {
+                global.ripe = this.ripeData;
             }
         },
         /**
@@ -262,7 +273,7 @@ export const RipeConfigurator = {
         }
     },
     destroyed: async function() {
-        if (this.configurator) await this.ripeSdkData.unbindConfigurator(this.configurator);
+        if (this.configurator) await this.ripeData.unbindConfigurator(this.configurator);
         this.configurator = null;
     }
 };
