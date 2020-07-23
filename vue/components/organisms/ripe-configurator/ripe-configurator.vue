@@ -167,11 +167,9 @@ export const RipeConfigurator = {
                 // then avoids the operation (returns control flow)
                 if (!this.configurator || !this.configurator.ready) return;
 
-                try {
-                    await this.configurator.changeFrame(value);
-                } catch (error) {
-                    this.$emit("error", error);
-                }
+                // runs the frame changing operation (possible animation)
+                // according to the newly changed frame value
+                await this.configurator.changeFrame(value);
 
                 // only the visible instance of this component
                 // should be sending events it's considered to
@@ -215,11 +213,6 @@ export const RipeConfigurator = {
         });
 
         this.configurator.bind("changed_frame", frame => {
-            // if no position is given, the frame returned from SDK
-            // will be something similar to 'side-NaN', it is necessary
-            // to convert to the same format to prevent infinite loop
-            // of frame changing when an invalid frame is given.
-            if (this.convertFrameKey() === frame) return;
             this.frameData = frame;
         });
 
@@ -243,15 +236,16 @@ export const RipeConfigurator = {
                 this.ripeData = new Ripe();
             }
 
+            this.loading = true;
+
             try {
-                this.loading = true;
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts
                 });
             } catch (error) {
                 this.loading = false;
-                this.$emit("error", error);
+                throw error;
             }
 
             if (!global.ripe) {
@@ -265,11 +259,6 @@ export const RipeConfigurator = {
         resize(size) {
             if (!size || !this.configurator) return;
             this.configurator.resize(size);
-        },
-        convertFrameKey(frame) {
-            const view = this.frameData.split("-")[0];
-            const position = parseInt(this.frameData.split("-")[1]);
-            return view + "-" + position;
         }
     },
     destroyed: async function() {
