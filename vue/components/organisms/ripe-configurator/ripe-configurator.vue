@@ -200,6 +200,11 @@ export const RipeConfigurator = {
         });
 
         this.configurator.bind("changed_frame", frame => {
+            // if no position is given, the frame returned from SDK
+            // will be something similar to 'side-NaN', it is necessary
+            // to convert to the same format to prevent infinite loop
+            // of frame changing when an invalid frame is given.
+            if (this.convertFrameKey() === frame) return;
             this.frameData = frame;
         });
 
@@ -245,6 +250,11 @@ export const RipeConfigurator = {
         resize(size) {
             if (!size || !this.configurator) return;
             this.configurator.resize(size);
+        },
+        convertFrameKey(frame) {
+            const view = this.frameData.split("-")[0];
+            const position = parseInt(this.frameData.split("-")[1]);
+            return view + "-" + position;
         }
     },
     destroyed: async function() {
