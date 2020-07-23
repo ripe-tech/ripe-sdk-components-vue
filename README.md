@@ -29,7 +29,7 @@ An example of an instantiation and the correspondent view:
 />
 ```
 
-![Configurator Example](./images/configurator.gif)
+![Configurator Example](res/images/configurator.gif)
 
 The frame can be controlled externally to the component, by changing the prop `frame`:
 
@@ -43,7 +43,7 @@ The frame can be controlled externally to the component, by changing the prop `f
 />
 ```
 
-![Configurator with Frame Example](./images/configurator-frame.gif)
+![Configurator with Frame Example](res/images/configurator-frame.gif)
 
 The customization of the model can also be provided, with the prop `parts`:
 
@@ -74,7 +74,7 @@ The customization of the model can also be provided, with the prop `parts`:
 />
 ```
 
-![Configurator with Parts Example](./images/configurator-parts.gif)
+![Configurator with Parts Example](res/images/configurator-parts.gif)
 
 There can be more than one configurator using the same instance of Ripe SDK:
 
@@ -98,11 +98,11 @@ There can be more than one configurator using the same instance of Ripe SDK:
 
 Which uses a Ripe SDK instance that can be initialized like this:
 
-```html
+```javascript
 this.ripeSdk = new Ripe();
 await this.ripeSdk.config("dummy", "cube", {
     version: 52
 });
 ```
 
-![Multiple Configurators](./images/configurator-multiple.gif)
+![Multiple Configurators](res/images/configurator-multiple.gif)
