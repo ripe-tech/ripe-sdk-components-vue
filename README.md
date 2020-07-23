@@ -16,7 +16,7 @@ The configurator can receive the following parameters:
 | parts   | `Object` | `false`  | The model's customization.                                                                                                                     |
 | frame   | `String` | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
 | size    | `Number` | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                            |
-| ripe | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                                   |
+| ripe    | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                                   |
 
 An example of an instantiation and the correspondent view:
 
@@ -113,15 +113,15 @@ The image component `<ripe-image>` allows for the visualization of a given model
 
 The image can receive the following parameters:
 
-| Prop        | Type    | Required | Description |
-| ----------- | ------- | -------- | ----------- |
-| brand      | `String` | `true` | The brand of the model. | 
-| model   | `String` | `true` | The name of the model. |
-| version   | `Number` | `true`  | The version of the build. |
-| parts   | `Object` | `false`  | The model's customization. |
-| frame   | `String` | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.  |
-| size   | `Number` | `false`  | The size (in pixels) of the image. If not defined, the image will use all the screen space available. |
-| ripe   | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used. |
+| Prop    | Type     | Required | Description                                                                                                                             |
+| ------- | -------- | -------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| brand   | `String` | `true`   | The brand of the model.                                                                                                                 |
+| model   | `String` | `true`   | The name of the model.                                                                                                                  |
+| version | `Number` | `true`   | The version of the build.                                                                                                               |
+| parts   | `Object` | `false`  | The model's customization.                                                                                                              |
+| frame   | `String` | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
+| size    | `Number` | `false`  | The size (in pixels) of the image. If not defined, the image will use all the screen space available.                                   |
+| ripe    | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                            |
 
 An example of an instantiation and the correspondent view:
 
