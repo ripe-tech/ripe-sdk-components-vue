@@ -1,5 +1,5 @@
 <template>
-    <img class="ripe-image" v-bind:alt="name" ref="image" v-on:load="onLoaded" />
+    <img class="ripe-image" v-bind:alt="name || model" ref="image" v-on:load="onLoaded" />
 </template>
 
 <style scoped>
@@ -13,20 +13,23 @@
 import { Ripe } from "ripe-sdk";
 
 /**
- * The component that contains the RIPE SDK's image.
+ * The component that contains the RIPE SDK's image,
+ * for the static render of compositions.
  */
 export const RipeImage = {
     name: "ripe-image",
     props: {
         /**
-         * The brand of the model.
+         * The brand of the model to be rendered into
+         * the target image.
          */
         brand: {
             type: String,
             default: null
         },
         /**
-         * The name of the model.
+         * The name of the model to be rendered into
+         * the target image.
          */
         model: {
             type: String,
@@ -75,7 +78,7 @@ export const RipeImage = {
          */
         name: {
             type: String,
-            default: ""
+            default: null
         }
     },
     data: function() {

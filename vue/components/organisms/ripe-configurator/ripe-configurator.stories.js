@@ -1,5 +1,11 @@
-import { storiesOf } from "@storybook/vue";
-import { withKnobs, text, number } from "@storybook/addon-knobs";
+import {
+    storiesOf
+} from "@storybook/vue";
+import {
+    withKnobs,
+    text,
+    number
+} from "@storybook/addon-knobs";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)

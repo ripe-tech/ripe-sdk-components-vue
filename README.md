@@ -109,7 +109,7 @@ await this.ripe.config("dummy", "cube", {
 
 ## Image
 
-The image component `<ripe-image>` allows for the visualization of a given model. 
+The image component `<ripe-image>` allows for the visualization of a given model.
 
 The image can receive the following parameters:
 
@@ -126,7 +126,7 @@ The image can receive the following parameters:
 An example of an instantiation and the correspondent view:
 
 ```
-<ripe-image 
+<ripe-image
     v-bind:brand="'dummy'"
     v-bind:model="'cube'"
     v-bind:version="52"
