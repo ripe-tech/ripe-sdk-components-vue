@@ -17,7 +17,12 @@ class MockErrorRipeApi {
 describe("RipeConfigurator", () => {
     it("should instantiate the component", () => {
         const component = base.getComponent("RipeConfigurator", {
-            props: { brand: "dummy", model: "cube", version: 52, size: 1000 }
+            props: {
+                brand: "dummy",
+                model: "cube",
+                version: 52,
+                size: 1000
+            }
         });
 
         const loader = component.find(".loader");

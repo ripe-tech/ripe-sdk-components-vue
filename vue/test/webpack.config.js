@@ -26,7 +26,9 @@ config.module.rules.push({
                     [
                         "@babel/preset-env",
                         {
-                            targets: { node: "current" }
+                            targets: {
+                                node: "current"
+                            }
                         }
                     ]
                 ]
