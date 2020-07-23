@@ -9,7 +9,7 @@ import {
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
-    .add("RipeConfigurator", () => ({
+    .add("RipeImage", () => ({
         props: {
             brand: {
                 type: String,
@@ -52,27 +52,14 @@ storiesOf("Organisms", module)
                 default: number("Size", 1000)
             }
         },
-        data: function() {
-            return {
-                frameData: this.frame
-            };
-        },
-        watch: {
-            frame(value) {
-                this.frameData = value;
-            }
-        },
         template: `
-            <div>
-                <p>Frame: {{ frameData }}</p>
-                <ripe-configurator
-                    v-bind:brand="brand"
-                    v-bind:model="model"
-                    v-bind:version="version"
-                    v-bind:parts="parts"
-                    v-bind:frame.sync="frameData"
-                    v-bind:size="size"
-                />
-            </div>
+            <ripe-image
+                v-bind:brand="brand"
+                v-bind:model="model"
+                v-bind:version="version"
+                v-bind:parts="parts"
+                v-bind:frame="frame"
+                v-bind:size="size"
+            />
         `
     }));
