@@ -134,7 +134,7 @@ An example of an instantiation and the correspondent view:
 />
 ```
 
-![Image Example](./images/image.png)
+![Image Example](res/images/image.png)
 
 Similar to the configurator, the frame can be controlled externally to the component, by changing the prop `frame`:
 
@@ -148,7 +148,7 @@ Similar to the configurator, the frame can be controlled externally to the compo
 />
 ```
 
-![Image with Frame Example](./images/image-frame.png)
+![Image with Frame Example](res/images/image-frame.png)
 
 The customization of the model can also be provided, with the prop parts:
 
@@ -179,7 +179,7 @@ The customization of the model can also be provided, with the prop parts:
 />
 ```
 
-![Image with Parts Example](./images/image-parts.png)
+![Image with Parts Example](res/images/image-parts.png)
 
 There can be more than one image using the same instance of Ripe SDK:
 
@@ -202,4 +202,4 @@ There can be more than one image using the same instance of Ripe SDK:
 />
 ```
 
-![Multiple Images](./images/multiple-images.png)
+![Multiple Images](res/images/multiple-images.png)
