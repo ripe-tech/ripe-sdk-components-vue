@@ -12,6 +12,9 @@
 <script>
 import { Ripe } from "ripe-sdk";
 
+/**
+ * The component that contains the RIPE SDK's image.
+ */
 export const RipeImage = {
     name: "ripe-image",
     props: {
@@ -58,14 +61,14 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Instance of Ripe SDK initialized
+         * Instance of Ripe SDK initialized.
          */
         ripeSdk: {
             type: Object,
             default: null
         },
         /**
-         * Name of the image
+         * Name of the image.
          */
         name: {
             type: String,
@@ -74,7 +77,14 @@ export const RipeImage = {
     },
     data: function() {
         return {
+            /**
+             * The image created by the Ripe SDK, currently being shown.
+             */
             image: null,
+            /**
+             * Flag that controls if the initial loading process for
+             * the image is still running.
+             */
             loading: true,
             /**
              * Ripe SDK instance, which can be later initialized
@@ -137,16 +147,13 @@ export const RipeImage = {
                 global.ripeSdk = this.ripeSdkData;
             }
         },
-        async unbindImage() {
-            if (this.image) await this.ripeSdkData.unbindImage(this.image);
-            this.image = null;
-        },
         onLoaded() {
             this.loading = false;
         }
     },
     destroyed: async function() {
-        await this.unbindImage();
+        if (this.image) await this.ripeSdkData.unbindImage(this.image);
+        this.image = null;
     }
 };
 
