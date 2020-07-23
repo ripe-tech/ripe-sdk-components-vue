@@ -46,14 +46,27 @@ storiesOf("Organisms", module)
                 default: number("Size", 1000)
             }
         },
+        data: function() {
+            return {
+                frameData: this.frame
+            };
+        },
+        watch: {
+            frame(value) {
+                this.frameData = value;
+            }
+        },
         template: `
-            <ripe-configurator
-                v-bind:brand="brand"
-                v-bind:model="model"
-                v-bind:version="version"
-                v-bind:parts="parts"
-                v-bind:frame="frame"
-                v-bind:size="size"
-            />
+            <div>
+                <p>Frame: {{ frameData }}</p>
+                <ripe-configurator
+                    v-bind:brand="brand"
+                    v-bind:model="model"
+                    v-bind:version="version"
+                    v-bind:parts="parts"
+                    v-bind:frame.sync="frameData"
+                    v-bind:size="size"
+                />
+            </div>
         `
     }));
