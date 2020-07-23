@@ -40,14 +40,16 @@ export const RipeImage = {
             default: null
         },
         /**
-         * The parts of the customized build.
+         * The parts of the customized build as a dictionary mapping the
+         * name of the part to an object of material and color.
          */
         parts: {
             type: Object,
             default: null
         },
         /**
-         * The name of the frame to be shown in the configurator.
+         * The name of the frame to be shown in the configurator using
+         * the normalized frame format (eg: side-1).
          */
         frame: {
             type: String,
@@ -61,9 +63,10 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Instance of Ripe SDK initialized.
+         * An initialized RIPE instance form the RIPE SDK, if not defined,
+         * a new SDK instance will be initialized.
          */
-        ripeSdk: {
+        ripe: {
             type: Object,
             default: null
         },
@@ -90,7 +93,7 @@ export const RipeImage = {
              * Ripe SDK instance, which can be later initialized
              * if the given prop is not defined.
              */
-            ripeSdkData: this.ripeSdk
+            ripeData: this.ripe
         };
     },
     watch: {
@@ -115,36 +118,39 @@ export const RipeImage = {
         }
     },
     mounted: async function() {
-        await this.setupRipeSdk();
+        await this.setupRipe();
 
-        this.image = this.ripeSdkData.bindImage(this.$refs.image, {
+        this.image = this.ripeData.bindImage(this.$refs.image, {
             frame: this.frame,
             size: this.size || undefined
         });
     },
     methods: {
         /**
-         * Initializes Ripe SDK if it does not exists and
-         * configurates it with the given brand, model,
-         * version and parts. If a Ripe SDK is given, it will
+         * Initializes RIPE instance if it does not exists and
+         * configures it with the given brand, model, version
+         * and parts. If a RIPE instance is provided, it will
          * be used without further configuration.
          */
-        async setupRipeSdk() {
-            if (!this.ripeSdkData) {
-                this.ripeSdkData = new Ripe();
+        async setupRipe() {
+            if (!this.ripeData) {
+                this.ripeData = new Ripe();
             }
+
+            this.loading = true;
+
             try {
-                this.loading = true;
-                await this.ripeSdkData.config(this.brand, this.model, {
+                await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts
                 });
             } catch (error) {
                 this.loading = false;
-                this.$emit("error", error);
+                throw error;
             }
-            if (!global.ripeSdk) {
-                global.ripeSdk = this.ripeSdkData;
+
+            if (!global.ripe) {
+                global.ripe = this.ripeData;
             }
         },
         onLoaded() {
@@ -152,7 +158,7 @@ export const RipeImage = {
         }
     },
     destroyed: async function() {
-        if (this.image) await this.ripeSdkData.unbindImage(this.image);
+        if (this.image) await this.ripeData.unbindImage(this.image);
         this.image = null;
     }
 };
