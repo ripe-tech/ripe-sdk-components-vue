@@ -5,7 +5,7 @@ config.externals = ["vue"];
 config.output.devtoolModuleFilenameTemplate = "[absolute-resource-path]";
 config.output.devtoolFallbackModuleFilenameTemplate = "[absolute-resource-path]?[hash]";
 config.target = "node";
-config.output.filename = "ripe-commons-pluginus-test.min.js";
+config.output.filename = "ripe-sdk-components-vue-test.min.js";
 
 config.module.rules = config.module.rules.filter(
     rule =>
