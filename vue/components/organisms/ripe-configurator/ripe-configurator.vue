@@ -121,6 +121,30 @@ export const RipeConfigurator = {
             type: Boolean,
             default: true
         },
+        selectedPart: {
+            type: String,
+            default: null
+        },
+        highlightedPart: {
+            type: String,
+            default: null
+        },
+        sensitivity: {
+            type: Number,
+            default: null
+        },
+        useMasks: {
+            type: Boolean,
+            default: true
+        },
+        duration: {
+            type: Number,
+            default: null
+        },
+        configAnimate: {
+            type: Object,
+            default: null
+        },
         /**
          * An initialized RIPE instance form the RIPE SDK, if not defined,
          * a new SDK instance will be initialized.
@@ -150,15 +174,36 @@ export const RipeConfigurator = {
         };
     },
     watch: {
-        size: {
-            handler: function(value) {
-                this.resize(value);
+        brand: {
+            handler: async function(value) {
+                await this.configRipe(true);
+            }
+        },
+        model: {
+            handler: async function(value) {
+                await this.configRipe(true);
+            }
+        },
+        version: {
+            handler: async function(value) {
+                await this.configRipe(true);
+            }
+        },
+        parts: {
+            handler: async function(value) {
+                console.log("here", value);
+                await this.configRipe();
             }
         },
         frame: {
             handler: function(value) {
                 if (this.frameData === value) return;
                 this.frameData = value;
+            }
+        },
+        size: {
+            handler: function(value) {
+                this.resize(value);
             }
         },
         frameData: {
@@ -185,6 +230,26 @@ export const RipeConfigurator = {
                 else this.$emit("loaded");
             },
             immediate: true
+        },
+        selectedPart: {
+            handler: function(value) {
+                this.$emit("update:selected-part", value);
+            }
+        },
+        highlightedPart: {
+            handler: function(value, previousValue) {
+                if (!this.configurator) return;
+                this.configurator.lowlight(previousValue);
+                this.configurator.highlight(value);
+                this.$emit("update:highlighted-part", value);
+            }
+        },
+        useMasks: {
+            handler: function(value) {
+                if (!this.configurator) return;
+                if (this.useMasks) this.configurator.enableMasks();
+                else this.configurator.disableMasks();
+            }
         }
     },
     computed: {
@@ -236,20 +301,31 @@ export const RipeConfigurator = {
                 this.ripeData = new Ripe();
             }
 
+            console.log("here setup");
+            await this.configRipe();
+
+            if (!global.ripe) {
+                global.ripe = this.ripeData;
+            }
+        },
+        /**
+         * Configures the RIPE instance with the given brand,
+         * model, version and parts. The reload flag at true means that
+         * the configuration request comes after a first configuration,
+         * meaning the brand/model/version were changed. If this happens,
+         * the parts have to be resetted.
+         */
+        async configRipe(reload = false) {
             this.loading = true;
 
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: this.parts
+                    parts: reload ? null : this.parts
                 });
             } catch (error) {
                 this.loading = false;
                 throw error;
-            }
-
-            if (!global.ripe) {
-                global.ripe = this.ripeData;
             }
         },
         /**
