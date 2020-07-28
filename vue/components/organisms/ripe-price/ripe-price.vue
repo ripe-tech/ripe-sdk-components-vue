@@ -56,7 +56,7 @@ export const RipePrice = {
          */
         currency: {
             type: String,
-            default: null
+            required: true
         },
         /**
          * An initialized RIPE instance form the RIPE SDK, if not defined,
