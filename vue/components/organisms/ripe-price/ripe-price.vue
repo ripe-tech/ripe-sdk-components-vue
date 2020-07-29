@@ -96,7 +96,7 @@ export const RipePrice = {
         },
         price: {
             handler: function(value) {
-                this.$emit("update:price", this.formatMoney(value, this.currency));
+                this.$emit("update:price", this.priceText);
             }
         },
         loading: {
@@ -112,7 +112,7 @@ export const RipePrice = {
             return this.formatMoney(this.price, this.currency);
         }
     },
-    mounted: async function() {
+    created: async function() {
         await this.setupRipe();
 
         this.priceBind = this.ripeData.bind("price", this.onPriceChange);
@@ -125,7 +125,7 @@ export const RipePrice = {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts,
-                    currency: this.currency
+                    currency: this.currency.toUpperCase()
                 });
             } catch (error) {
                 this.loading = false;
@@ -154,7 +154,7 @@ export const RipePrice = {
         }
     },
     destroyed: async function() {
-        if (this.priceBind) await this.ripeData.unbind("price", this.priceBind);
+        if (this.priceBind) this.ripeData.unbind("price", this.priceBind);
         this.priceBind = null;
     }
 };
