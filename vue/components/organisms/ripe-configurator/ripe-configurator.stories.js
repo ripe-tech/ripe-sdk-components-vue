@@ -17,26 +17,6 @@ storiesOf("Organisms", module)
                 type: Number,
                 default: number("Version", 52)
             },
-            parts: {
-                type: Object,
-                default: () => ({
-                    side: {
-                        color: "blue",
-                        material: "leather_cbe",
-                        face: "side"
-                    },
-                    shadow: {
-                        color: "default",
-                        hidden: true,
-                        material: "default"
-                    },
-                    top0_bottom: {
-                        color: "red",
-                        face: "side",
-                        material: "leather_cbe"
-                    }
-                })
-            },
             frame: {
                 type: String,
                 default: text("Frame", "side-4")
@@ -63,7 +43,6 @@ storiesOf("Organisms", module)
                     v-bind:brand="brand"
                     v-bind:model="model"
                     v-bind:version="version"
-                    v-bind:parts="parts"
                     v-bind:frame.sync="frameData"
                     v-bind:size="size"
                 />

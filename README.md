@@ -203,3 +203,88 @@ There can be more than one image using the same instance of Ripe SDK:
 ```
 
 ![Multiple Images](res/images/multiple-images.png)
+
+## Price
+
+The price component `<ripe-price>` allows for the visualization of the price of a model, according to the currency provided.
+
+The image can receive the following parameters:
+
+| Prop     | Type     | Required | Description                                                                                  |
+| -------- | -------- | -------- | -------------------------------------------------------------------------------------------- |
+| brand    | `String` | `true`   | The brand of the model.                                                                      |
+| model    | `String` | `true`   | The name of the model.                                                                       |
+| version  | `Number` | `true`   | The version of the build.                                                                    |
+| parts    | `Object` | `false`  | The model's customization.                                                                   |
+| currency | `String` | `true`   | The `ISO 4217` currency code in which the price will be displayed.                           |
+| ripe     | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used. |
+
+An example of an instantiation and the correspondent view:
+
+```
+<ripe-price
+    v-bind:brand="'dummy'"
+    v-bind:model="'cube'"
+    v-bind:version="52"
+    v-bind:currency="'USD'"
+/>
+```
+
+![Price Example](res/images/price.png)
+
+Different customizations can result in different prices. Below is an example of a more expensive customization in both dollars and euros:
+
+```
+<ripe-price
+    v-bind:brand="'dummy'"
+    v-bind:model="'cube'"
+    v-bind:version="52"
+    v-bind:currency="'EUR'"
+    v-bind:parts="{
+        side: {
+            color: 'black',
+            material: 'crocodile_cbe',
+            face: 'side'
+        },
+        shadow: {
+            color: 'default',
+            hidden: true,
+            material: 'default'
+        },
+        top0_bottom: {
+            color: 'fuchsia',
+            face: 'side',
+            material: 'suede_cbe'
+        }
+    }"
+/>
+```
+```
+<ripe-price
+    v-bind:brand="'dummy'"
+    v-bind:model="'cube'"
+    v-bind:version="52"
+    v-bind:currency="'USD'"
+    v-bind:parts="{
+        side: {
+            color: 'black',
+            material: 'crocodile_cbe',
+            face: 'side'
+        },
+        shadow: {
+            color: 'default',
+            hidden: true,
+            material: 'default'
+        },
+        top0_bottom: {
+            color: 'fuchsia',
+            face: 'side',
+            material: 'suede_cbe'
+        }
+    }"
+/>
+```
+
+
+![Price Complex Example EUR](res/images/price-complex-eur.png)
+![Price Complex Example USD](res/images/price-complex-usd.png)
