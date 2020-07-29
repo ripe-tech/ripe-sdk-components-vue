@@ -153,8 +153,8 @@ export const RipeConfigurator = {
             default: true
         },
         /**
-         * The duration in milliseconds that the configuratior frame
-         *  transition should take.
+         * The duration in milliseconds that the configurator frame
+         * transition should take.
          */
         duration: {
             type: Number,
@@ -169,7 +169,7 @@ export const RipeConfigurator = {
             default: null
         },
         /**
-         * The format of the configurator image, (eg: png, jpg, svg, etc.)
+         * The format of the configurator image, (eg: png, jpg, svg, etc.).
          */
         format: {
             type: String,
@@ -212,23 +212,19 @@ export const RipeConfigurator = {
         };
     },
     watch: {
-        brand: {
+        configProps: {
             handler: async function(value) {
                 await this.configRipe(true);
             }
         },
-        model: {
+        bindProps: {
             handler: async function(value) {
-                await this.configRipe(true);
-            }
-        },
-        version: {
-            handler: async function(value) {
-                await this.configRipe(true);
+                await this.configurator.updateOptions(value);
             }
         },
         parts: {
             handler: async function(value, oldValue) {
+                // TODO: check why changing frames changes the parts as well
                 if (JSON.stringify(value) === JSON.stringify(oldValue)) return;
                 await this.configRipe();
             }
@@ -256,8 +252,9 @@ export const RipeConfigurator = {
                 // runs the frame changing operation (possible animation)
                 // according to the newly changed frame value
                 await this.configurator.changeFrame(value, {
-                    type: currentView === newView ? false : "cross",
-                    revolutionDuration: currentView === newView ? 500 : null
+                    type: currentView === newView ? false : this.configAnimate,
+                    revolutionDuration: currentView === newView ? this.duration : null,
+                    duration: this.duration
                 });
 
                 // only the visible instance of this component
@@ -327,6 +324,21 @@ export const RipeConfigurator = {
                 configAnimate: this.configAnimate,
                 useMasks: this.useMasks,
                 sensitivity: this.sensitivity
+            };
+        },
+        configProps() {
+            return {
+                brand: this.brand,
+                model: this.model,
+                version: this.version
+            };
+        },
+        bindProps() {
+            return {
+                sensitivity: this.sensitivity,
+                duration: this.duration,
+                configAnimate: this.configAnimate,
+                format: this.format
             };
         }
     },
