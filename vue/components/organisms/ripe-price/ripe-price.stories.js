@@ -21,8 +21,8 @@ storiesOf("Organisms", module)
                 type: Object,
                 default: () => ({
                     side: {
-                        color: "blue",
-                        material: "leather_cbe",
+                        color: "black",
+                        material: "crocodile_cbe",
                         face: "side"
                     },
                     shadow: {
@@ -31,9 +31,9 @@ storiesOf("Organisms", module)
                         material: "default"
                     },
                     top0_bottom: {
-                        color: "red",
+                        color: "fuchsia",
                         face: "side",
-                        material: "leather_cbe"
+                        material: "suede_cbe"
                     }
                 })
             },
