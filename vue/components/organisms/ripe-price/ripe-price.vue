@@ -91,7 +91,7 @@ export const RipePrice = {
     watch: {
         currency: {
             handler: async function(value) {
-                await this.configRipe(true);
+                await this.configRipe();
             }
         },
         price: {
@@ -108,7 +108,7 @@ export const RipePrice = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                await this.configRipe(true);
             }
         }
     },
@@ -130,7 +130,14 @@ export const RipePrice = {
         this.priceBind = this.ripeData.bind("price", this.onPriceChange);
     },
     methods: {
-        async configRipe(reload = true) {
+        /**
+         * Configures the RIPE instance with the given brand,
+         * model, version and parts. The reload flag at true means that
+         * the configuration request comes after a first configuration,
+         * meaning the brand/model/version were changed. If this happens,
+         * the parts have to be resetted.
+         */
+        async configRipe(reload = false) {
             this.loading = true;
 
             try {
