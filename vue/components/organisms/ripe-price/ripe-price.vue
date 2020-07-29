@@ -10,8 +10,6 @@
 import { Ripe } from "ripe-sdk";
 import { moneyMixin } from "../../../mixins";
 
-console.log(moneyMixin);
-
 /**
  * The component that contains the RIPE SDK's image,
  * for the static render of compositions.
