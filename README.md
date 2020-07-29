@@ -216,7 +216,7 @@ The image can receive the following parameters:
 | model    | `String` | `true`   | The name of the model.                                                                       |
 | version  | `Number` | `true`   | The version of the build.                                                                    |
 | parts    | `Object` | `false`  | The model's customization.                                                                   |
-| currency | `String` | `true`   | The "ISO 4217" currency code in which the price will be displayed.                           |
+| currency | `String` | `true`   | The `ISO 4217` currency code in which the price will be displayed.                           |
 | ripe     | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used. |
 
 An example of an instantiation and the correspondent view:
