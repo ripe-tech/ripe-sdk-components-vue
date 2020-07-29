@@ -67,11 +67,11 @@ storiesOf("Organisms", module)
             },
             duration: {
                 type: Number,
-                default: number("Animation duration", 0)
+                default: number("Animation duration", 1000)
             },
             configAnimate: {
                 type: String,
-                default: text("Animation configuration", undefined)
+                default: text("Animation configuration", "cross")
             },
             format: {
                 type: String,
@@ -80,17 +80,22 @@ storiesOf("Organisms", module)
         },
         data: function() {
             return {
-                frameData: this.frame
+                frameData: this.frame,
+                highlightedPartData: this.highlightedPart
             };
         },
         watch: {
             frame(value) {
                 this.frameData = value;
+            },
+            highlightedPart(value) {
+                this.highlightedPartData = value;
             }
         },
         template: `
             <div>
                 <p>Frame: {{ frameData }}</p>
+                <p>Highlighted Part: {{ highlightedPartData }}</p>
                 <ripe-configurator
                     v-bind:brand="brand"
                     v-bind:model="model"
@@ -100,7 +105,7 @@ storiesOf("Organisms", module)
                     v-bind:size="size"
                     v-bind:loader="loader"
                     v-bind:selected-part="selectedPart"
-                    v-bind:highlighted-part="highlightedPart"
+                    v-bind:highlighted-part.sync="highlightedPartData"
                     v-bind:sensitivity="sensitivity"
                     v-bind:use-masks="useMasks"
                     v-bind:duration="duration"

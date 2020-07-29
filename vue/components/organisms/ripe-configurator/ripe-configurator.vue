@@ -203,7 +203,7 @@ export const RipeConfigurator = {
             /**
              * Part of the model that is currently highlighted.
              */
-            hightlightedPartData: this.highlightedPart,
+            highlightedPartData: this.highlightedPart,
             /**
              * RIPE instance, which can be later initialized
              * if the given prop is not defined.
@@ -228,7 +228,8 @@ export const RipeConfigurator = {
             }
         },
         parts: {
-            handler: async function(value) {
+            handler: async function(value, oldValue) {
+                if (JSON.stringify(value) === JSON.stringify(oldValue)) return;
                 await this.configRipe();
             }
         },
@@ -336,10 +337,6 @@ export const RipeConfigurator = {
             view: this.frameData ? this.frameData.split("-")[0] : null,
             position: this.frameData ? this.frameData.split("-")[1] : null,
             ...this.options
-        });
-
-        this.ripeData.bind("parts", parts => {
-            this.$emit("update:parts", parts);
         });
 
         this.ripeData.bind("selected_part", part => {
