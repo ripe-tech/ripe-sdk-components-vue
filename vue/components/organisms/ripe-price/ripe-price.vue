@@ -91,7 +91,7 @@ export const RipePrice = {
     watch: {
         currency: {
             handler: async function(value) {
-                await this.configRipe();
+                await this.configRipe(true);
             }
         },
         price: {
@@ -105,11 +105,23 @@ export const RipePrice = {
                 else this.$emit("loaded");
             },
             immediate: true
+        },
+        configProps: {
+            handler: async function(value) {
+                await this.configRipe();
+            }
         }
     },
     computed: {
         priceText() {
             return this.formatMoney(this.price, this.currency);
+        },
+        configProps() {
+            return {
+                brand: this.brand,
+                model: this.model,
+                version: this.version
+            };
         }
     },
     created: async function() {
@@ -118,13 +130,13 @@ export const RipePrice = {
         this.priceBind = this.ripeData.bind("price", this.onPriceChange);
     },
     methods: {
-        async configRipe() {
+        async configRipe(reload = true) {
             this.loading = true;
 
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: this.parts,
+                    parts: reload ? null : this.parts,
                     currency: this.currency.toUpperCase()
                 });
             } catch (error) {
