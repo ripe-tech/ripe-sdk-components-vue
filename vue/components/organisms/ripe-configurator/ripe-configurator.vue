@@ -216,19 +216,6 @@ export const RipeConfigurator = {
         };
     },
     watch: {
-        configProps: {
-            handler: async function(value) {
-                // delete already defined parts when changing model,
-                // so that no customization errors occurr
-                this.partsData = null;
-                await this.configRipe();
-            }
-        },
-        bindProps: {
-            handler: async function(value) {
-                await this.configurator.updateOptions(value);
-            }
-        },
         parts: {
             handler: async function(value) {
                 this.partsData = value;
@@ -309,6 +296,19 @@ export const RipeConfigurator = {
                 if (!this.configurator) return;
                 if (this.useMasks) this.configurator.enableMasks();
                 else this.configurator.disableMasks();
+            }
+        },
+        configProps: {
+            handler: async function(value) {
+                // delete already defined parts when changing model,
+                // so that no customization errors occurr
+                this.partsData = null;
+                await this.configRipe();
+            }
+        },
+        bindProps: {
+            handler: async function(value) {
+                await this.configurator.updateOptions(value);
             }
         }
     },
