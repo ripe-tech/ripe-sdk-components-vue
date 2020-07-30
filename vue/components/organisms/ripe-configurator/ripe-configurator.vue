@@ -231,6 +231,7 @@ export const RipeConfigurator = {
         },
         parts: {
             handler: async function(value) {
+                this.partsData = value;
                 await this.configRipe();
             }
         },
