@@ -165,8 +165,9 @@ export const RipeImage = {
             }
         },
         parts: {
-            handler: function(value) {
+            handler: async function(value) {
                 this.partsData = value;
+                await this.configRipe();
             }
         },
         loading: {
