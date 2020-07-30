@@ -73,7 +73,9 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Indicates the image composition is to be cropped.
+         * Indicates that the image composition is to be cropped.
+         * Crops the current image according to the minimal possible
+         * bounding box in both x and y axis
          */
         crop: {
             type: Boolean,
@@ -165,6 +167,11 @@ export const RipeImage = {
             },
             immediate: true
         },
+        showInitials: {
+            handler: function(value) {
+                this.image.setShowInitials(value);
+            }
+        },
         initialsBuilder: {
             handler: function(value) {
                 this.image.setInitialsBuilder(value);
@@ -198,7 +205,6 @@ export const RipeImage = {
             return {
                 format: this.format,
                 crop: this.crop,
-                showInitials: this.showInitials,
                 initialsGroup: this.initialsGroup
             };
         }
@@ -215,8 +221,6 @@ export const RipeImage = {
             initialsGroup: this.initialsGroup,
             initialsBuilder: this.initialsBuilder
         });
-
-        // TODO: explain that the state does not show at first, only when it changes
     },
     methods: {
         /**
@@ -249,8 +253,6 @@ export const RipeImage = {
                 this.ripeData = new Ripe();
             }
 
-            this.loading = true;
-
             await this.configRipe();
 
             if (!global.ripe) {
@@ -258,6 +260,11 @@ export const RipeImage = {
             }
         },
         onLoaded() {
+            // updates the image if there is an initial state provided,
+            // showing initials when the image is first rendered. This
+            // only executes after rendering the component the first time.
+            if (this.state && this.loading) this.image.update(this.state);
+
             this.loading = false;
         }
     },
