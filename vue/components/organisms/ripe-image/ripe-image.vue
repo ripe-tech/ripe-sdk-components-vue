@@ -96,7 +96,7 @@ export const RipeImage = {
             defailt: null
         },
         /**
-         * A function that receives the initials and engraving as Strings
+         * A function that receives the initials and engraving as strings
          * and the img element that will be used and returns a map with
          * the initials and a profile list.
          */
