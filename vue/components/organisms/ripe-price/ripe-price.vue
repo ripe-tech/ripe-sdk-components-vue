@@ -11,8 +11,8 @@ import { Ripe } from "ripe-sdk";
 import { moneyMixin } from "../../../mixins";
 
 /**
- * The component that contains the RIPE SDK's image,
- * for the static render of compositions.
+ * The component that contains the price of the provided model,
+ * in accordance to its customization and personalization.
  */
 export const RipePrice = {
     name: "ripe-price",
