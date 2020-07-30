@@ -141,6 +141,10 @@ export const RipeImage = {
              */
             loading: true,
             /**
+             * Parts of the model.
+             */
+            partsData: this.parts,
+            /**
              * RIPE instance, which can be later initialized
              * if the given prop is not defined.
              */
@@ -158,6 +162,11 @@ export const RipeImage = {
             handler: async function(value) {
                 this.loading = true;
                 this.image.resize(value);
+            }
+        },
+        parts: {
+            handler: function(value) {
+                this.partsData = value;
             }
         },
         loading: {
@@ -184,7 +193,10 @@ export const RipeImage = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe(true);
+                // delete already defined parts when changing model,
+                // so that no customization errors occurr
+                this.partsData = null;
+                await this.configRipe();
             }
         },
         imageProps: {
@@ -235,7 +247,7 @@ export const RipeImage = {
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: reload ? null : this.parts
+                    parts: this.partsData
                 });
             } catch (error) {
                 this.loading = false;
