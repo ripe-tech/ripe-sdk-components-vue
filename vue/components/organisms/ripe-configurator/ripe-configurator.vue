@@ -205,6 +205,10 @@ export const RipeConfigurator = {
              */
             highlightedPartData: this.highlightedPart,
             /**
+             * Parts of the model.
+             */
+            partsData: this.parts,
+            /**
              * RIPE instance, which can be later initialized
              * if the given prop is not defined.
              */
@@ -214,7 +218,10 @@ export const RipeConfigurator = {
     watch: {
         configProps: {
             handler: async function(value) {
-                await this.configRipe(true);
+                // delete already defined parts when changing model,
+                // so that no customization errors occurr
+                this.partsData = null;
+                await this.configRipe();
             }
         },
         bindProps: {
@@ -223,9 +230,7 @@ export const RipeConfigurator = {
             }
         },
         parts: {
-            handler: async function(value, oldValue) {
-                // TODO: check why changing frames changes the parts as well
-                if (JSON.stringify(value) === JSON.stringify(oldValue)) return;
+            handler: async function(value) {
                 await this.configRipe();
             }
         },
@@ -398,13 +403,13 @@ export const RipeConfigurator = {
          * meaning the brand/model/version were changed. If this happens,
          * the parts have to be resetted.
          */
-        async configRipe(reload = false) {
+        async configRipe() {
             this.loading = true;
 
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: reload ? null : this.parts
+                    parts: this.partsData
                 });
             } catch (error) {
                 this.loading = false;
