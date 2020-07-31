@@ -202,7 +202,10 @@ export const RipeImage = {
         },
         imageProps: {
             handler: async function(value) {
-                await this.image.update(this.state, value);
+                // modify image options and updates with it with the
+                // current personalization state
+                await this.image.updateOptions(value, false);
+                await this.image.update(this.state);
             }
         }
     },
