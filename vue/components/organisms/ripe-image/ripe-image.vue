@@ -271,9 +271,8 @@ export const RipeImage = {
 
             await this.configRipe();
 
-            if (!global.ripe) {
-                global.ripe = this.ripeData;
-            }
+            if (global.ripe) return;
+            global.ripe = this.ripeData;
         },
         onLoaded() {
             // updates the image if there is an initial state provided,
