@@ -37,12 +37,6 @@ storiesOf("Organisms", module)
                     }
                 }
             });
-
-            /* setTimeout(() => {
-                this.ripe.config("sergio_rossi", "sr1_pump075", {
-                    version: 117
-                });
-            }, 5000); */
         },
         methods: {
             onUpdateParts(parts) {
