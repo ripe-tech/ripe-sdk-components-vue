@@ -255,7 +255,8 @@ export const RipePickers = {
             this.selectedColor = null;
         },
         normalize(value) {
-            return value.split("_")
+            return value
+                .split("_")
                 .map(v => v[0].toUpperCase() + v.slice(1))
                 .join(" ");
         }
