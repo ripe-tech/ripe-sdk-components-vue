@@ -306,7 +306,7 @@ export const RipeConfigurator = {
                 await this.configRipe();
             }
         },
-        bindProps: {
+        options: {
             handler: async function(value) {
                 await this.configurator.updateOptions(value);
             }
@@ -337,14 +337,6 @@ export const RipeConfigurator = {
                 brand: this.brand,
                 model: this.model,
                 version: this.version
-            };
-        },
-        bindProps() {
-            return {
-                sensitivity: this.sensitivity,
-                duration: this.duration,
-                configAnimate: this.configAnimate,
-                format: this.format
             };
         }
     },
