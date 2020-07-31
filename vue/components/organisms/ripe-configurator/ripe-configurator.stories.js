@@ -69,7 +69,7 @@ storiesOf("Organisms", module)
                 type: Number,
                 default: number("Animation duration", 1000)
             },
-            configAnimate: {
+            animation: {
                 type: String,
                 default: text("Animation configuration", "cross")
             },
@@ -109,7 +109,7 @@ storiesOf("Organisms", module)
                     v-bind:sensitivity="sensitivity"
                     v-bind:use-masks="useMasks"
                     v-bind:duration="duration"
-                    v-bind:config-animate="configAnimate"
+                    v-bind:animation="animation"
                     v-bind:format="format"
                 />
             </div>

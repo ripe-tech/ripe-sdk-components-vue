@@ -164,7 +164,7 @@ export const RipeConfigurator = {
          * The configurator animation style: 'simple' (fade in),
          * 'cross' (crossfade) or 'null'.
          */
-        configAnimate: {
+        animation: {
             type: String,
             default: null
         },
@@ -245,7 +245,7 @@ export const RipeConfigurator = {
                 // runs the frame changing operation (possible animation)
                 // according to the newly changed frame value
                 await this.configurator.changeFrame(value, {
-                    type: currentView === newView ? false : this.configAnimate,
+                    type: currentView === newView ? false : this.animation,
                     revolutionDuration: currentView === newView ? this.duration : null,
                     duration: this.duration
                 });
@@ -327,7 +327,7 @@ export const RipeConfigurator = {
         options() {
             return {
                 duration: this.duration,
-                configAnimate: this.configAnimate,
+                animation: this.animation,
                 useMasks: this.useMasks,
                 sensitivity: this.sensitivity
             };
@@ -385,9 +385,8 @@ export const RipeConfigurator = {
 
             await this.configRipe();
 
-            if (!global.ripe) {
-                global.ripe = this.ripeData;
-            }
+            if (global.ripe) return;
+            global.ripe = this.ripeData;
         },
         /**
          * Configures the RIPE instance with the given brand,

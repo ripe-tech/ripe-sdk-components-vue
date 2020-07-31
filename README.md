@@ -22,7 +22,7 @@ The configurator can receive the following parameters:
 | sensitivity     | `Number`  | `false`  | Configurator rotation sensitivity to the user mouse drag action. The bigger the number, more sensible it is.                                   |
 | useMasks        | `Boolean` | `false`  | Usage of masks in the current model, necessary for the part highlighting action.                                                               |
 | duration        | `Number`  | `false`  | The duration in milliseconds that the configurator frame transition should take.                                                               |
-| configAnimate   | `String`  | `false`  | The configurator animation style: 'simple' (fade in), 'cross' (crossfade) or 'null'.                                                           |
+| animation       | `String`  | `false`  | The configurator animation style: 'simple' (fade in), 'cross' (crossfade) or 'null'.                                                           |
 | format          | `String`  | `false`  | The format of the configurator image, (eg: png, jpg, svg, etc.).                                                                               |
 | ripe            | `Number`  | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                                   |
 
@@ -101,7 +101,7 @@ It is also possible to define the highlighted part of the configurator, which wi
     v-bind:sensitivity="100"
     v-bind:use-masks="true"
     v-bind:duration="1000"
-    v-bind:config-animate="'cross'"
+    v-bind:animation="'cross'"
     v-bind:format="'png'"
 />
 ```
