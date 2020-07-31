@@ -16,7 +16,7 @@ The configurator can receive the following parameters:
 | parts   | `Object` | `false`  | The model's customization.                                                                                                                     |
 | frame   | `String` | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
 | size    | `Number` | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                            |
-| ripe    | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                                   |
+| ripe    | `Object` | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated.                                                              |
 
 An example of an instantiation and the correspondent view:
 
@@ -121,7 +121,7 @@ The image can receive the following parameters:
 | parts   | `Object` | `false`  | The model's customization.                                                                                                              |
 | frame   | `String` | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
 | size    | `Number` | `false`  | The size (in pixels) of the image. If not defined, the image will use all the screen space available.                                   |
-| ripe    | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                            |
+| ripe    | `Object` | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated.                                                       |
 
 An example of an instantiation and the correspondent view:
 
@@ -208,16 +208,16 @@ There can be more than one image using the same instance of Ripe SDK:
 
 The price component `<ripe-price>` allows for the visualization of the price of a model, according to the currency provided.
 
-The image can receive the following parameters:
+The component can receive the following parameters:
 
-| Prop     | Type     | Required | Description                                                                                  |
-| -------- | -------- | -------- | -------------------------------------------------------------------------------------------- |
-| brand    | `String` | `true`   | The brand of the model.                                                                      |
-| model    | `String` | `true`   | The name of the model.                                                                       |
-| version  | `Number` | `true`   | The version of the build.                                                                    |
-| parts    | `Object` | `false`  | The model's customization.                                                                   |
-| currency | `String` | `true`   | The `ISO 4217` currency code in which the price will be displayed.                           |
-| ripe     | `Number` | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used. |
+| Prop     | Type     | Required | Description                                                                       |
+| -------- | -------- | -------- | --------------------------------------------------------------------------------- |
+| brand    | `String` | `true`   | The brand of the model.                                                           |
+| model    | `String` | `true`   | The name of the model.                                                            |
+| version  | `Number` | `true`   | The version of the build.                                                         |
+| parts    | `Object` | `false`  | The model's customization.                                                        |
+| currency | `String` | `true`   | The `ISO 4217` currency code in which the price will be displayed.                |
+| ripe     | `Object` | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated. |
 
 An example of an instantiation and the correspondent view:
 
@@ -259,6 +259,7 @@ Different customizations can result in different prices. Below is an example of 
     }"
 />
 ```
+
 ```
 <ripe-price
     v-bind:brand="'dummy'"
@@ -285,6 +286,39 @@ Different customizations can result in different prices. Below is an example of 
 />
 ```
 
-
 ![Price Complex Example EUR](res/images/price-complex-eur.png)
 ![Price Complex Example USD](res/images/price-complex-usd.png)
+
+## Pickers
+
+The pickers component `<ripe-pickers>` allows for the customization of a model, by choosing materials and colors for its parts.
+
+The pickers can receive the following parameters:
+
+| Prop | Type     | Required | Description                       |
+| ---- | -------- | -------- | --------------------------------- |
+| ripe | `Object` | `true`   | Instance of Ripe SDK initialized. |
+
+The pickers component will wait for the RIPE configuration to be completed in order to have access to its parts and materials.
+
+An example of an instantiation and the correspondent view:
+
+```javascript
+this.ripe = new Ripe();
+await this.ripe.config("dummy", "cube", {
+    version: 52
+});
+```
+
+```html
+<ripe-pickers
+    v-bind:ripe="ripe"
+/>
+```
+
+![Pickers Example](res/images/pickers.gif)
+
+The pickers can interact with an existing configurator, by using the same RIPE instance:
+
+![Pickers with Configurator Example](res/images/pickers_configurator.gif)
+
