@@ -1,16 +1,10 @@
 import { storiesOf } from "@storybook/vue";
-import { withKnobs, text } from "@storybook/addon-knobs";
+import { withKnobs } from "@storybook/addon-knobs";
 import { Ripe } from "ripe-sdk";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
     .add("RipePickers", () => ({
-        props: {
-            locale: {
-                type: String,
-                default: text("Locale", "en_us")
-            }
-        },
         data: function() {
             return {
                 ripe: null
@@ -38,16 +32,9 @@ storiesOf("Organisms", module)
                 }
             });
         },
-        methods: {
-            onUpdateParts(parts) {
-                console.log(parts);
-            }
-        },
         template: `
             <ripe-pickers
-                v-bind:locale="locale"
                 v-bind:ripe="ripe"
-                v-on:update:parts="onUpdateParts"
             />
         `
     }));

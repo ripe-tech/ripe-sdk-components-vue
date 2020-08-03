@@ -10,7 +10,6 @@ describe("RipePickers", () => {
         });
         const component = base.getComponent("RipePickers", {
             props: {
-                locale: "en_us",
                 ripe: ripeInstance
             }
         });

@@ -228,6 +228,12 @@ export const RipePickers = {
             await this.ripeData.isReady();
             this.loading = false;
         },
+        normalize(value) {
+            return value
+                .split("_")
+                .map(v => v[0].toUpperCase() + v.slice(1))
+                .join(" ");
+        },
         onSelectPartChange(value) {
             this.selectedPart = value;
         },
@@ -253,12 +259,6 @@ export const RipePickers = {
             this.selectedPart = null;
             this.selectedMaterial = null;
             this.selectedColor = null;
-        },
-        normalize(value) {
-            return value
-                .split("_")
-                .map(v => v[0].toUpperCase() + v.slice(1))
-                .join(" ");
         }
     }
 };
