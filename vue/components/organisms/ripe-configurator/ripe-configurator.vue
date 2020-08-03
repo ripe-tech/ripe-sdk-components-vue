@@ -390,10 +390,7 @@ export const RipeConfigurator = {
         },
         /**
          * Configures the RIPE instance with the given brand,
-         * model, version and parts. The reload flag at true means that
-         * the configuration request comes after a first configuration,
-         * meaning the brand/model/version were changed. If this happens,
-         * the parts have to be resetted.
+         * model, version and parts.
          */
         async configRipe() {
             this.loading = true;
