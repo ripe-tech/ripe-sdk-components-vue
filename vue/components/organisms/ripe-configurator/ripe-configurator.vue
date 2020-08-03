@@ -234,19 +234,21 @@ export const RipeConfigurator = {
             }
         },
         frameData: {
-            handler: async function(value, oldValue) {
+            handler: async function(value, previous) {
                 // in case the configurator is not currently ready
                 // then avoids the operation (returns control flow)
                 if (!this.configurator || !this.configurator.ready) return;
 
-                const currentView = oldValue ? oldValue.split("-")[0] : "";
-                const newView = value.split("-")[0];
+                // extracts the view part of both the previous and the
+                // current frame to be used for change view comparison
+                const previousView = previous ? previous.split("-")[0] : "";
+                const view = value.split("-")[0];
 
                 // runs the frame changing operation (possible animation)
                 // according to the newly changed frame value
                 await this.configurator.changeFrame(value, {
-                    type: currentView === newView ? false : this.animation,
-                    revolutionDuration: currentView === newView ? this.duration : null,
+                    type: view === previousView ? false : this.animation,
+                    revolutionDuration: view === previousView ? this.duration : null,
                     duration: this.duration
                 });
 
