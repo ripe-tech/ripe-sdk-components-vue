@@ -59,7 +59,7 @@
 </style>
 
 <script>
-import { Ripe } from "ripe-sdk";
+import { Ripe, parseFrameKey } from "ripe-sdk";
 import "ripe-sdk/src/css/ripe.css";
 
 /**
@@ -241,8 +241,8 @@ export const RipeConfigurator = {
 
                 // extracts the view part of both the previous and the
                 // current frame to be used for change view comparison
-                const previousView = previous ? previous.split("-")[0] : "";
-                const view = value.split("-")[0];
+                const previousView = previous ? parseFrameKey(previous)[0] : "";
+                const view = parseFrameKey(value)[0];
 
                 // runs the frame changing operation (possible animation)
                 // according to the newly changed frame value
@@ -303,7 +303,7 @@ export const RipeConfigurator = {
         configProps: {
             handler: async function(value) {
                 // delete already defined parts when changing model,
-                // so that no customization errors occurr
+                // so that no customization errors occur
                 this.partsData = null;
                 await this.configRipe();
             }
