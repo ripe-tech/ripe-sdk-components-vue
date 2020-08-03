@@ -387,8 +387,11 @@ export const RipeConfigurator = {
 
             await this.configRipe();
 
-            if (global.ripe) return;
-            global.ripe = this.ripeData;
+            // in case the global RIPE instance is not set then
+            // updates it with the current one
+            if (!global.ripe) {
+                global.ripe = this.ripeData;
+            }
         },
         /**
          * Configures the RIPE instance with the given brand,
