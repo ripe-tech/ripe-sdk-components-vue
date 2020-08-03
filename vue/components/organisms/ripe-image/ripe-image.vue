@@ -202,7 +202,7 @@ export const RipeImage = {
         },
         imageProps: {
             handler: async function(value) {
-                // modify image options and updates with it with the
+                // modify image options and updates it with the
                 // current personalization state
                 await this.image.updateOptions(value, false);
                 await this.image.update(this.state);
@@ -241,12 +241,9 @@ export const RipeImage = {
     methods: {
         /**
          * Configures the RIPE instance with the given brand,
-         * model, version and parts. The reload flag at true means that
-         * the configuration request comes after a first configuration,
-         * meaning the brand/model/version were changed. If this happens,
-         * the parts have to be resetted.
+         * model, version and parts.
          */
-        async configRipe(reload = false) {
+        async configRipe() {
             this.loading = true;
             try {
                 await this.ripeData.config(this.brand, this.model, {
