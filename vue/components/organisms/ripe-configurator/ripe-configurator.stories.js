@@ -47,15 +47,15 @@ storiesOf("Organisms", module)
             },
             loader: {
                 type: Boolean,
-                default: boolean("Show loader", true)
+                default: boolean("Loader", true)
             },
             selectedPart: {
                 type: String,
-                default: text("Selected part", "side")
+                default: text("Selected Part", "side")
             },
             highlightedPart: {
                 type: String,
-                default: text("Highlighted part", "side")
+                default: text("Highlighted Part", "side")
             },
             sensitivity: {
                 type: Number,
@@ -63,15 +63,15 @@ storiesOf("Organisms", module)
             },
             useMasks: {
                 type: Boolean,
-                default: boolean("Use masks", true)
+                default: boolean("Use Masks", true)
             },
             duration: {
                 type: Number,
-                default: number("Animation duration", 1000)
+                default: number("Duration", 1000)
             },
             animation: {
                 type: String,
-                default: text("Animation configuration", "cross")
+                default: text("Animation", "cross")
             },
             format: {
                 type: String,
