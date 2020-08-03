@@ -59,7 +59,7 @@
 </style>
 
 <script>
-import { Ripe, parseFrameKey } from "ripe-sdk";
+import { Ripe, ripe } from "ripe-sdk";
 import "ripe-sdk/src/css/ripe.css";
 
 /**
@@ -241,8 +241,8 @@ export const RipeConfigurator = {
 
                 // extracts the view part of both the previous and the
                 // current frame to be used for change view comparison
-                const previousView = previous ? parseFrameKey(previous)[0] : "";
-                const view = parseFrameKey(value)[0];
+                const previousView = previous ? ripe.parseFrameKey(previous)[0] : "";
+                const view = ripe.parseFrameKey(value)[0];
 
                 // runs the frame changing operation (possible animation)
                 // according to the newly changed frame value
