@@ -111,7 +111,7 @@ export const RipeImage = {
          */
         state: {
             type: Object,
-            default: {}
+            default: () => ({})
         },
         /**
          * An initialized RIPE instance form the RIPE SDK, if not defined,
