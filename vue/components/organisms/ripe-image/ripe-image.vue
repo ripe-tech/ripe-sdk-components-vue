@@ -141,10 +141,6 @@ export const RipeImage = {
              */
             loading: true,
             /**
-             * Parts of the model.
-             */
-            partsData: this.parts,
-            /**
              * RIPE instance, which can be later initialized
              * if the given prop is not defined.
              */
@@ -162,12 +158,6 @@ export const RipeImage = {
             handler: async function(value) {
                 this.loading = true;
                 this.image.resize(value);
-            }
-        },
-        parts: {
-            handler: async function(value) {
-                this.partsData = value;
-                await this.configRipe();
             }
         },
         loading: {
@@ -194,18 +184,12 @@ export const RipeImage = {
         },
         configProps: {
             handler: async function(value) {
-                // delete already defined parts when changing model,
-                // so that no customization errors occurr
-                this.partsData = null;
                 await this.configRipe();
             }
         },
         imageProps: {
             handler: async function(value) {
-                // modify image options and updates it with the
-                // current personalization state
-                await this.image.updateOptions(value, false);
-                await this.image.update(this.state);
+                await this.image.updateOptions(value);
             }
         }
     },
@@ -214,7 +198,8 @@ export const RipeImage = {
             return {
                 brand: this.brand,
                 model: this.model,
-                version: this.version
+                version: this.version,
+                parts: this.parts
             };
         },
         imageProps() {
@@ -237,6 +222,7 @@ export const RipeImage = {
             initialsGroup: this.initialsGroup,
             initialsBuilder: this.initialsBuilder
         });
+        this.image.update(this.state);
     },
     methods: {
         /**
@@ -248,7 +234,8 @@ export const RipeImage = {
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: this.partsData
+                    parts: this.parts,
+                    safe: true
                 });
             } catch (error) {
                 this.loading = false;
@@ -272,11 +259,6 @@ export const RipeImage = {
             global.ripe = this.ripeData;
         },
         onLoaded() {
-            // updates the image if there is an initial state provided,
-            // showing initials when the image is first rendered. This
-            // only executes after rendering the component the first time.
-            if (this.state && this.loading) this.image.update(this.state);
-
             this.loading = false;
         }
     },
