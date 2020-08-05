@@ -1,5 +1,5 @@
 import { storiesOf } from "@storybook/vue";
-import { withKnobs, text, number } from "@storybook/addon-knobs";
+import { withKnobs, text, number, boolean } from "@storybook/addon-knobs";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
@@ -39,11 +39,34 @@ storiesOf("Organisms", module)
             },
             frame: {
                 type: String,
-                default: text("Frame", "side-4")
+                default: text("Frame", "side-0")
             },
             size: {
                 type: Number,
                 default: number("Size", 1000)
+            },
+            format: {
+                type: String,
+                default: text("Format", "png")
+            },
+            crop: {
+                type: Boolean,
+                default: boolean("Crop", true)
+            },
+            showInitials: {
+                type: Boolean,
+                default: boolean("Show Initials", true)
+            },
+            state: {
+                type: Object,
+                default: () => ({
+                    initialsExtra: {
+                        main: {
+                            initials: "A",
+                            engraving: "style:white"
+                        }
+                    }
+                })
             }
         },
         template: `
@@ -54,6 +77,11 @@ storiesOf("Organisms", module)
                 v-bind:parts="parts"
                 v-bind:frame="frame"
                 v-bind:size="size"
+                v-bind:format="format"
+                v-bind:crop="crop"
+                v-bind:show-initials="showInitials"
+                v-bind:initials-group="'main'"
+                v-bind:state="state"
             />
         `
     }));
