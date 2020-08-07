@@ -7,8 +7,6 @@
 <style scoped></style>
 
 <script>
-import { Ripe } from "ripe-sdk";
-import { moneyMixin } from "../../../mixins";
 import { logicMixin, moneyMixin } from "../../../mixins";
 
 /**
@@ -17,7 +15,6 @@ import { logicMixin, moneyMixin } from "../../../mixins";
  */
 export const RipePrice = {
     name: "ripe-price",
-    mixins: [moneyMixin],
     mixins: [logicMixin, moneyMixin],
     props: {
         /**
@@ -149,44 +146,6 @@ export const RipePrice = {
         this.priceBind = this.ripeData.bind("price", this.onPriceChange);
     },
     methods: {
-        /**
-         * Configures the RIPE instance with the given brand,
-         * model, version and parts. The reload flag at true means that
-         * the configuration request comes after a first configuration,
-         * meaning the brand/model/version were changed. If this happens,
-         * the parts have to be resetted.
-         */
-        async configRipe(reload = false) {
-            this.loading = true;
-
-            try {
-                await this.ripeData.config(this.brand, this.model, {
-                    version: this.version,
-                    parts: reload ? null : this.parts,
-                    currency: this.currency.toUpperCase()
-                });
-            } catch (error) {
-                this.loading = false;
-                throw error;
-            }
-        },
-        /**
-         * Initializes RIPE instance if it does not exists and
-         * configures it with the given brand, model, version
-         * and parts. If a RIPE instance is provided, it will
-         * be used without further configuration.
-         */
-        async setupRipe() {
-            if (!this.ripeData) {
-                this.ripeData = new Ripe();
-            }
-
-            await this.configRipe();
-
-            if (!global.ripe) {
-                global.ripe = this.ripeData;
-            }
-        },
         onPriceChange(value) {
             this.price = value.total.price_final;
         }

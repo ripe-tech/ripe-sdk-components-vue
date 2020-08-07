@@ -2,6 +2,45 @@ import { Ripe } from "ripe-sdk";
 
 export const logicMixin = {
     methods: {
+        /**
+         * Initializes RIPE instance if it does not exists and
+         * configures it with the given brand, model, version
+         * and parts. If a RIPE instance is provided, it will
+         * be used without further configuration.
+         */
+        async setupRipe() {
+            if (!this.ripeData) {
+                this.ripeData = new Ripe();
+            }
+
+            await this.configRipe();
+
+            // in case the global RIPE instance is not set then
+            // updates it with the current one
+            if (!global.ripe) {
+                global.ripe = this.ripeData;
+            }
+        },
+        /**
+         * Configures the RIPE instance with the given brand,
+         * model, version and parts.
+         */
+        async configRipe() {
+            this.loading = true;
+
+            try {
+                await this.ripeData.config(this.brand, this.model, {
+                    version: this.version,
+                    parts: this.parts,
+                    currency: this.currency?.toUpperCase()
+                });
+
+                this.partsData = Object.assign({}, this.ripeData.parts);
+            } catch (error) {
+                this.loading = false;
+                throw error;
+            }
+        },
         equalParts(first, second) {
             if (Boolean(first) !== Boolean(second)) {
                 return false;

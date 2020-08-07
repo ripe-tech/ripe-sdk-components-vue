@@ -10,7 +10,6 @@
 </style>
 
 <script>
-import { Ripe } from "ripe-sdk";
 import { logicMixin } from "../../../mixins";
 
 /**
@@ -244,39 +243,6 @@ export const RipeImage = {
         this.image.update(this.state);
     },
     methods: {
-        /**
-         * Configures the RIPE instance with the given brand,
-         * model, version and parts.
-         */
-        async configRipe() {
-            this.loading = true;
-            try {
-                await this.ripeData.config(this.brand, this.model, {
-                    version: this.version,
-                    parts: this.parts,
-                    safe: true
-                });
-            } catch (error) {
-                this.loading = false;
-                throw error;
-            }
-        },
-        /**
-         * Initializes RIPE instance if it does not exists and
-         * configures it with the given brand, model, version
-         * and parts. If a RIPE instance is provided, it will
-         * be used without further configuration.
-         */
-        async setupRipe() {
-            if (!this.ripeData) {
-                this.ripeData = new Ripe();
-            }
-
-            await this.configRipe();
-
-            if (global.ripe) return;
-            global.ripe = this.ripeData;
-        },
         onLoaded() {
             this.loading = false;
         }
