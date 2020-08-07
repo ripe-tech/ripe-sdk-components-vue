@@ -149,6 +149,7 @@ export const RipePrice = {
         this.partsData = Object.assign({}, this.ripeData.parts);
 
         this.ripeData.bind("parts", parts => {
+            if (this.equalParts(parts, this.partsData)) return;
             this.partsData = parts;
         });
 

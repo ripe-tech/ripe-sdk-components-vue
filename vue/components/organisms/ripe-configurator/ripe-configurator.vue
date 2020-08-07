@@ -367,6 +367,11 @@ export const RipeConfigurator = {
             this.selectedPartData = part;
         });
 
+        this.ripeData.bind("parts", parts => {
+            if (this.equalParts(parts, this.partsData)) return;
+            this.partsData = parts;
+        });
+
         this.configurator.bind("changed_frame", frame => {
             this.frameData = frame;
         });
@@ -380,10 +385,6 @@ export const RipeConfigurator = {
         this.configurator.bind("highlighted_part", part => {
             if (this.highlightedPartData === part) return;
             this.highlightedPartData = part;
-        });
-
-        this.ripeData.bind("parts", parts => {
-            this.partsData = parts;
         });
 
         this.resize(this.size);
