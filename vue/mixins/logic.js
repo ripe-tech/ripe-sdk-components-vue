@@ -58,22 +58,22 @@ export const logicMixin = {
         },
         _subsetCompare(base, reference) {
             for (const name of Object.keys(base)) {
-                // retrieves the group information for the current
+                // retrieves the part information for the current
                 // name in iteration for both the base and the
                 // reference set values (to be compared)
-                const groupB = base[name];
-                const groupR = reference[name];
+                const partB = base[name];
+                const partR = reference[name];
 
-                // if for a certain base group the corresponding
-                // group does not exist in the reference then the
+                // if for a certain base part the corresponding
+                // part does not exist in the reference then the
                 // reference is considered to be invalid
-                if (!groupR) {
+                if (!partR) {
                     return false;
                 }
 
                 // in case either the initials or the engraving is
                 // not matching then the subset is invalid
-                if (groupB.material !== groupR.material || groupB.color !== groupR.color) {
+                if (partB.material !== partR.material || partB.color !== partR.color) {
                     return false;
                 }
             }
