@@ -231,6 +231,10 @@ export const RipeImage = {
     mounted: async function() {
         await this.setupRipe();
 
+        this.ripeData.bind("parts", parts => {
+            this.partsData = parts;
+        });
+
         this.image = this.ripeData.bindImage(this.$refs.image, {
             frame: this.frame,
             size: this.size || undefined,

@@ -143,6 +143,10 @@ export const RipePrice = {
     created: async function() {
         await this.setupRipe();
 
+        this.ripeData.bind("parts", parts => {
+            this.partsData = parts;
+        });
+
         this.priceBind = this.ripeData.bind("price", this.onPriceChange);
     },
     methods: {
