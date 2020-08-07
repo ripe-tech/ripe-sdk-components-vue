@@ -32,7 +32,7 @@ export const logicMixin = {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
                     parts: this.parts,
-                    currency: this.currency?.toUpperCase()
+                    currency: this.currency ? this.currency.toUpperCase() : null
                 });
 
                 this.partsData = Object.assign({}, this.ripeData.parts);
