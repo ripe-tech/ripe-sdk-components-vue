@@ -60,6 +60,8 @@
 
 <script>
 import { Ripe, ripe } from "ripe-sdk";
+import { ripe } from "ripe-sdk";
+import { logicMixin } from "../../../mixins";
 import "ripe-sdk/src/css/ripe.css";
 
 /**
@@ -68,6 +70,7 @@ import "ripe-sdk/src/css/ripe.css";
  */
 export const RipeConfigurator = {
     name: "ripe-configurator",
+    mixins: [logicMixin],
     props: {
         /**
          * The brand of the model.
@@ -217,9 +220,16 @@ export const RipeConfigurator = {
     },
     watch: {
         parts: {
-            handler: async function(value) {
+            handler: async function(value, previous) {
+                if (this.equalParts(value, previous)) return;
+
                 this.partsData = value;
                 await this.configRipe();
+            }
+        },
+        partsData: {
+            handler: function(value) {
+                this.$emit("update:parts", value);
             }
         },
         frame: {
@@ -302,9 +312,6 @@ export const RipeConfigurator = {
         },
         configProps: {
             handler: async function(value) {
-                // delete already defined parts when changing model,
-                // so that no customization errors occur
-                this.partsData = null;
                 await this.configRipe();
             }
         },
@@ -369,6 +376,10 @@ export const RipeConfigurator = {
         this.configurator.bind("highlighted_part", part => {
             if (this.highlightedPartData === part) return;
             this.highlightedPartData = part;
+        });
+
+        this.ripeData.bind("parts", parts => {
+            this.partsData = parts;
         });
 
         this.resize(this.size);

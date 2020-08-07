@@ -9,6 +9,7 @@
 <script>
 import { Ripe } from "ripe-sdk";
 import { moneyMixin } from "../../../mixins";
+import { logicMixin, moneyMixin } from "../../../mixins";
 
 /**
  * The component that contains the price of the provided model,
@@ -17,6 +18,7 @@ import { moneyMixin } from "../../../mixins";
 export const RipePrice = {
     name: "ripe-price",
     mixins: [moneyMixin],
+    mixins: [logicMixin, moneyMixin],
     props: {
         /**
          * The brand of the model for which the price
@@ -82,6 +84,10 @@ export const RipePrice = {
              */
             loading: true,
             /**
+             * Parts of the model.
+             */
+            partsData: this.parts,
+            /**
              * Ripe SDK instance, which can be later initialized
              * if the given prop is not defined.
              */
@@ -89,6 +95,19 @@ export const RipePrice = {
         };
     },
     watch: {
+        parts: {
+            handler: async function(value, previous) {
+                if (this.equalParts(value, previous)) return;
+
+                this.partsData = value;
+                await this.configRipe();
+            }
+        },
+        partsData: {
+            handler: function(value) {
+                this.$emit("update:parts", value);
+            }
+        },
         currency: {
             handler: async function(value) {
                 await this.configRipe();

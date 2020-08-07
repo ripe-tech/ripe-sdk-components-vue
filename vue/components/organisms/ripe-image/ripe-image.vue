@@ -11,6 +11,7 @@
 
 <script>
 import { Ripe } from "ripe-sdk";
+import { logicMixin } from "../../../mixins";
 
 /**
  * The component that contains the RIPE SDK's image,
@@ -18,6 +19,7 @@ import { Ripe } from "ripe-sdk";
  */
 export const RipeImage = {
     name: "ripe-image",
+    mixins: [logicMixin],
     props: {
         /**
          * The brand of the model to be rendered into
@@ -141,6 +143,10 @@ export const RipeImage = {
              */
             loading: true,
             /**
+             * Parts of the model.
+             */
+            partsData: this.parts,
+            /**
              * RIPE instance, which can be later initialized
              * if the given prop is not defined.
              */
@@ -148,6 +154,19 @@ export const RipeImage = {
         };
     },
     watch: {
+        parts: {
+            handler: async function(value, previous) {
+                if (this.equalParts(value, previous)) return;
+
+                this.partsData = value;
+                await this.configRipe();
+            }
+        },
+        partsData: {
+            handler: function(value) {
+                this.$emit("update:parts", value);
+            }
+        },
         frame: {
             handler: function(value) {
                 this.loading = true;
