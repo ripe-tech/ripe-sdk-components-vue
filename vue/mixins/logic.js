@@ -34,8 +34,6 @@ export const logicMixin = {
                     parts: this.parts,
                     currency: this.currency ? this.currency.toUpperCase() : null
                 });
-
-                this.partsData = Object.assign({}, this.ripeData.parts);
             } catch (error) {
                 this.loading = false;
                 throw error;

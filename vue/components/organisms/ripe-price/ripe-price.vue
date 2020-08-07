@@ -143,6 +143,11 @@ export const RipePrice = {
     created: async function() {
         await this.setupRipe();
 
+        // saves the model parts after the RIPE configuration so that
+        // possible changes due to restrictions can be communicated
+        // to the parent component
+        this.partsData = Object.assign({}, this.ripeData.parts);
+
         this.ripeData.bind("parts", parts => {
             this.partsData = parts;
         });
