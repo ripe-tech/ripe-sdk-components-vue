@@ -31,7 +31,7 @@ export const logicMixin = {
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: this.parts,
+                    parts: this.partsData,
                     currency: this.currency ? this.currency.toUpperCase() : null
                 });
             } catch (error) {

@@ -98,7 +98,7 @@ export const RipePrice = {
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
-                await this.configRipe();
+                await this.ripeData.setParts(this.partsData);
             }
         },
         partsData: {
