@@ -61,6 +61,7 @@
 <script>
 import { ripe } from "ripe-sdk";
 import { logicMixin } from "../../../mixins";
+
 import "ripe-sdk/src/css/ripe.css";
 
 /**
