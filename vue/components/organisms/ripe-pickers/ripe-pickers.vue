@@ -65,7 +65,7 @@
 
 <script>
 /**
- * The component that contains the RIPE SDK's image,
+ * The component that contains the RIPE's pickers,
  * for the static render of compositions.
  */
 export const RipePickers = {
