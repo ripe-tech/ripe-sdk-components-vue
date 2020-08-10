@@ -142,7 +142,8 @@ export const RipeImage = {
              */
             loading: true,
             /**
-             * Parts of the model.
+             * Parts of the model to be used for the internal sync
+             * operation.
              */
             partsData: this.parts,
             /**

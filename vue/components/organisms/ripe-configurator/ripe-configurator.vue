@@ -207,7 +207,8 @@ export const RipeConfigurator = {
              */
             highlightedPartData: this.highlightedPart,
             /**
-             * Parts of the model.
+             * Parts of the model to be used for the internal sync
+             * operation.
              */
             partsData: this.parts,
             /**
