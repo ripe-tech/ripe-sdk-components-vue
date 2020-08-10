@@ -125,7 +125,7 @@ export const RipePrice = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe(true);
+                await this.configRipe();
             }
         }
     },
