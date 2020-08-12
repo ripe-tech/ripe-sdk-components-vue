@@ -2,9 +2,6 @@ import { Ripe } from "ripe-sdk";
 
 export const logicMixin = {
     methods: {
-        async setPartsRipe(parts) {
-            await this.setPartsRipe(parts);
-        },
         /**
          * Initializes RIPE instance if it does not exists and
          * configures it with the given brand, model, version
@@ -41,6 +38,17 @@ export const logicMixin = {
                 this.loading = false;
                 throw error;
             }
+        },
+        /**
+         * Runs a series of part changes as a transaction changing
+         * the current model's configuration.
+         * 
+         * @param {Object} parts An object that associated the name of the
+         * part to be changed with an object containing both the material
+         * and the color for the part.
+         */
+        async setPartsRipe(parts) {
+            await this.setPartsRipe(parts);
         },
         equalParts(first, second) {
             if (Boolean(first) !== Boolean(second)) {
