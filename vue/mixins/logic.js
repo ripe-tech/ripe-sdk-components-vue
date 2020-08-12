@@ -42,7 +42,7 @@ export const logicMixin = {
         /**
          * Runs a series of part changes as a transaction changing
          * the current model's configuration.
-         * 
+         *
          * @param {Object} parts An object that associated the name of the
          * part to be changed with an object containing both the material
          * and the color for the part.
