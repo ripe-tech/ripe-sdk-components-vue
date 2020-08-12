@@ -59,7 +59,9 @@
 </style>
 
 <script>
-import { Ripe, ripe } from "ripe-sdk";
+import { ripe } from "ripe-sdk";
+import { logicMixin } from "../../../mixins";
+
 import "ripe-sdk/src/css/ripe.css";
 
 /**
@@ -68,6 +70,7 @@ import "ripe-sdk/src/css/ripe.css";
  */
 export const RipeConfigurator = {
     name: "ripe-configurator",
+    mixins: [logicMixin],
     props: {
         /**
          * The brand of the model.
@@ -205,7 +208,8 @@ export const RipeConfigurator = {
              */
             highlightedPartData: this.highlightedPart,
             /**
-             * Parts of the model.
+             * Parts of the model to be used for the internal sync
+             * operation.
              */
             partsData: this.parts,
             /**
@@ -217,9 +221,16 @@ export const RipeConfigurator = {
     },
     watch: {
         parts: {
-            handler: async function(value) {
+            handler: async function(value, previous) {
+                if (this.equalParts(value, previous)) return;
+
                 this.partsData = value;
                 await this.configRipe();
+            }
+        },
+        partsData: {
+            handler: function(value) {
+                this.$emit("update:parts", value);
             }
         },
         frame: {
@@ -302,9 +313,6 @@ export const RipeConfigurator = {
         },
         configProps: {
             handler: async function(value) {
-                // delete already defined parts when changing model,
-                // so that no customization errors occur
-                this.partsData = null;
                 await this.configRipe();
             }
         },
@@ -345,6 +353,11 @@ export const RipeConfigurator = {
     mounted: async function() {
         await this.setupRipe();
 
+        // saves the model parts after the RIPE configuration so that
+        // possible changes due to restrictions can be communicated
+        // to the parent component
+        this.partsData = Object.assign({}, this.ripeData.parts);
+
         this.configurator = this.ripeData.bindConfigurator(this.$refs.configurator, {
             view: this.frameData ? this.frameData.split("-")[0] : null,
             position: this.frameData ? this.frameData.split("-")[1] : null,
@@ -354,6 +367,11 @@ export const RipeConfigurator = {
         this.ripeData.bind("selected_part", part => {
             if (this.selectedPartData === part) return;
             this.selectedPartData = part;
+        });
+
+        this.ripeData.bind("parts", parts => {
+            if (this.equalParts(parts, this.partsData)) return;
+            this.partsData = parts;
         });
 
         this.configurator.bind("changed_frame", frame => {
@@ -374,42 +392,6 @@ export const RipeConfigurator = {
         this.resize(this.size);
     },
     methods: {
-        /**
-         * Initializes RIPE instance if it does not exists and
-         * configures it with the given brand, model, version
-         * and parts. If a RIPE instance is provided, it will
-         * be used without further configuration.
-         */
-        async setupRipe() {
-            if (!this.ripeData) {
-                this.ripeData = new Ripe();
-            }
-
-            await this.configRipe();
-
-            // in case the global RIPE instance is not set then
-            // updates it with the current one
-            if (!global.ripe) {
-                global.ripe = this.ripeData;
-            }
-        },
-        /**
-         * Configures the RIPE instance with the given brand,
-         * model, version and parts.
-         */
-        async configRipe() {
-            this.loading = true;
-
-            try {
-                await this.ripeData.config(this.brand, this.model, {
-                    version: this.version,
-                    parts: this.partsData
-                });
-            } catch (error) {
-                this.loading = false;
-                throw error;
-            }
-        },
         /**
          * Re-sizes the configurator according to the current
          * available container size (defined by parent).
