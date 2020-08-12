@@ -22,8 +22,8 @@ export const logicMixin = {
             }
         },
         /**
-         * Configures the RIPE instance with the given brand,
-         * model, version and parts.
+         * Configures the RIPE instance with the current brand,
+         * model, version and parts defined in instance.
          */
         async configRipe() {
             this.loading = true;
