@@ -2,6 +2,9 @@ import { Ripe } from "ripe-sdk";
 
 export const logicMixin = {
     methods: {
+        async setPartsRipe(parts) {
+            await this.setPartsRipe(parts);
+        },
         /**
          * Initializes RIPE instance if it does not exists and
          * configures it with the given brand, model, version
