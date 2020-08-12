@@ -1,7 +1,6 @@
-const config = require("uxf-webpack/config/webpack.config.full");
+const config = require("../../webpack.config");
 
 config.mode = "development";
-config.externals = ["vue"];
 config.output.devtoolModuleFilenameTemplate = "[absolute-resource-path]";
 config.output.devtoolFallbackModuleFilenameTemplate = "[absolute-resource-path]?[hash]";
 config.target = "node";

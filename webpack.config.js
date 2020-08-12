@@ -1,7 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
+const vueLoader = require("vue-loader");
 
-const config = require("uxf-webpack/config/webpack.config.full");
+const VueLoaderPlugin = vueLoader.VueLoaderPlugin;
 
 const info = require("./package.json");
 
@@ -11,24 +12,114 @@ const banner = [
     info.homepage
 ].join("\n");
 
-config.entry = "./index.js";
-config.output.path = path.join(__dirname, "dist");
-config.output.filename = "ripe-sdk-components-vue.min.js?[hash]";
-config.output.library = "RipeSdkComponentsVue";
-config.output.publicPath = "/";
-
-config.externals = config.externals || {};
-config.externals.vue = "vue";
-
-config.plugins.push(new webpack.BannerPlugin(banner));
-
-config.module.rules = config.module.rules.filter(rule => rule.loader !== "file-loader");
-config.module.rules.push({
-    test: /\.(png|jpg|gif|svg|ico)$/,
-    loader: "url-loader",
-    options: {
-        esModule: false
-    }
-});
-
-module.exports = config;
+module.exports = {
+    entry: "./index.js",
+    target: process.env.WP_TARGET || "web",
+    output: {
+        path: path.join(__dirname, "dist"),
+        filename: "ripe-sdk-components-vue.min.js?[hash]",
+        library: "RipeSdkComponentsVue",
+        libraryTarget: "umd",
+        publicPath: "/"
+    },
+    plugins: [new VueLoaderPlugin({}), new webpack.BannerPlugin(banner)],
+    module: {
+        rules: [
+            {
+                test: /\.vue$/,
+                loader: "vue-loader",
+                options: {
+                    loaders: {
+                        js: "babel-loader!eslint-loader",
+                        scss: "vue-style-loader!css-loader!sass-loader",
+                        sass: "vue-style-loader!css-loader!sass-loader?indentedSyntax"
+                    }
+                }
+            },
+            {
+                test: /\.css$/,
+                use: ["style-loader", "css-loader"]
+            },
+            {
+                test: /\.(scss|sass)$/,
+                use: [
+                    {
+                        loader: "style-loader"
+                    },
+                    {
+                        loader: "css-loader"
+                    },
+                    {
+                        loader: "sass-loader"
+                    }
+                ]
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules\/(?!ripe-sdk)/,
+                use: [
+                    {
+                        loader: "babel-loader",
+                        options: {
+                            presets: [
+                                process.env.NODE_ENV === "development"
+                                    ? [
+                                          "@babel/preset-env",
+                                          {
+                                              targets: {
+                                                  browsers: ["last 2 years"]
+                                              }
+                                          }
+                                      ]
+                                    : "@babel/preset-env"
+                            ]
+                        }
+                    },
+                    {
+                        loader: "eslint-loader"
+                    }
+                ]
+            },
+            {
+                test: /\.(svga)$/,
+                loader: "file-loader",
+                options: {
+                    name: (path, query) => {
+                        if (process.env.NODE_ENV === "development") {
+                            return "[path][name].svg?[hash]";
+                        }
+                        return "[contenthash].svg";
+                    },
+                    esModule: false
+                }
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                loader: "file-loader",
+                options: {
+                    esModule: false
+                }
+            },
+            {
+                test: /\.(png|jpg|gif|svg|ico)$/,
+                loader: "url-loader",
+                options: {
+                    esModule: false
+                }
+            }
+        ]
+    },
+    resolve: {
+        alias: {
+            base$: "../../../js",
+            vue$: "vue/dist/vue.esm.js"
+        }
+    },
+    externals: {
+        vue: "vue"
+    },
+    performance: {
+        hints: false
+    },
+    devtool: "inline-source-map"
+};
