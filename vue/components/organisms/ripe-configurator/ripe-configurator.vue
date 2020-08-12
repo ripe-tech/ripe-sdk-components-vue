@@ -225,7 +225,7 @@ export const RipeConfigurator = {
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
-                await this.configRipe();
+                await this.setPartsRipe(value);
             }
         },
         partsData: {

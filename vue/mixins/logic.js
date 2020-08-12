@@ -31,13 +31,24 @@ export const logicMixin = {
             try {
                 await this.ripeData.config(this.brand, this.model, {
                     version: this.version,
-                    parts: this.parts,
+                    parts: this.partsData,
                     currency: this.currency ? this.currency.toUpperCase() : null
                 });
             } catch (error) {
                 this.loading = false;
                 throw error;
             }
+        },
+        /**
+         * Runs a series of part changes as a transaction changing
+         * the current model's configuration.
+         * 
+         * @param {Object} parts An object that associated the name of the
+         * part to be changed with an object containing both the material
+         * and the color for the part.
+         */
+        async setPartsRipe(parts) {
+            await this.setPartsRipe(parts);
         },
         equalParts(first, second) {
             if (Boolean(first) !== Boolean(second)) {
