@@ -58,15 +58,13 @@
     },
     "dependencies": {
         "loaders.css": "^0.1.2",
-        "ripe-sdk": "^1.11.7",
-        "vue": "^2.6.11",
-        "vue-global-events": "^1.1.2",
-        "yonius": "^0.5.0"
+        "ripe-sdk": "^1.12.1",
+        "vue": "^2.6.12",
+        "vue-global-events": "^1.2.1",
+        "yonius": "^0.5.4"
     },
     "devDependencies": {
         "@babel/core": "^7.11.1",
-        "@babel/plugin-transform-runtime": "^7.11.0",
-        "@babel/polyfill": "^7.10.4",
         "@babel/preset-env": "^7.11.0",
         "@storybook/addon-knobs": "^6.0.21",
         "@storybook/addon-storysource": "^6.0.21",
