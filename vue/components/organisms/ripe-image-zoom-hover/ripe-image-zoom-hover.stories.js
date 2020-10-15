@@ -3,7 +3,7 @@ import { withKnobs, text, number, boolean } from "@storybook/addon-knobs";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
-    .add("RipeImageZoomMouse", () => ({
+    .add("RipeImageZoomHover", () => ({
         props: {
             brand: {
                 type: String,
@@ -82,7 +82,7 @@ storiesOf("Organisms", module)
             }
         },
         template: `
-            <ripe-image-zoom-mouse
+            <ripe-image-zoom-hover
                 v-bind:brand="brand"
                 v-bind:model="model"
                 v-bind:version="version"

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="ripe-image-zoom-mouse"
+        class="ripe-image-zoom-hover"
         v-on:mouseover="onMouseOver"
         v-on:mousemove="onMouseMove"
         v-on:mouseleave="onEndHover"
@@ -38,8 +38,8 @@
  * The component that contains the RIPE SDK's image,
  * for the static render of compositions.
  */
-export const RipeImageZoomMouse = {
-    name: "ripe-image-zoom-mouse",
+export const RipeImageZoomHover = {
+    name: "ripe-image-zoom-hover",
     props: {
         /**
          * The brand of the model to be rendered into
@@ -250,5 +250,5 @@ export const RipeImageZoomMouse = {
     }
 };
 
-export default RipeImageZoomMouse;
+export default RipeImageZoomHover;
 </script>
