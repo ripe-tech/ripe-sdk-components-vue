@@ -31,7 +31,7 @@
 </template>
 
 <style scoped>
-.ripe-image-zoom-mouse {
+.ripe-image-zoom-hover {
     display: inline-block;
 }
 </style>
