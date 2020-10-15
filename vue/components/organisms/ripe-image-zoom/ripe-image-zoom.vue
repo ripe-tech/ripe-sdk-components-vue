@@ -11,7 +11,10 @@
             v-bind:crop="crop"
             v-bind:show-initials="showInitials"
             v-bind:initials-group="initialsGroup"
+            v-bind:initials-builder="initialsBuilder"
             v-bind:state="state"
+            v-bind:ripe="ripe"
+            v-bind:name="name"
             v-bind:style="zoomStyle"
         />
     </div>
