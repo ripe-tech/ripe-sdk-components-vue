@@ -5,9 +5,6 @@
         v-on:mousemove="onMouseMove"
         v-on:mouseleave="onEndHover"
         v-on:wheel.prevent="onMouseWheel"
-        v-on:touchstart="onTouchStart"
-        v-on:touchmove.prevent="onTouchMove"
-        v-on:touchend="onEndHover"
     >
         <ripe-image-zoom
             v-bind:brand="brand"
@@ -235,12 +232,6 @@ export const RipeImageZoomHover = {
         },
         onMouseWheel(event) {
             this.zoomScroll(event);
-        },
-        onTouchStart(event) {
-            this.startHover(event.touches[0], event.targetTouches[0].target);
-        },
-        onTouchMove(event) {
-            this.moveHover(event.touches[0], event.targetTouches[0].target);
         },
         onEndHover() {
             this.endHover();
