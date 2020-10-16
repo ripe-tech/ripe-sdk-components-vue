@@ -1,7 +1,7 @@
 <template>
     <div
         class="ripe-image-zoom-hover"
-        v-on:mouseover="onMouseOver"
+        v-on:mouseenter="onMouseEnter"
         v-on:mousemove="onMouseMove"
         v-on:mouseleave="onEndHover"
         v-on:wheel.prevent="onMouseWheel"
@@ -168,7 +168,7 @@ export const RipeImageZoomHover = {
             default: false
         },
         /**
-         * Sroll sensitivity when controlling the zoom value with the mouse
+         * Scroll sensitivity when controlling the zoom value with the mouse
          * wheel scroll.
          */
         scrollSensitivity: {
@@ -180,7 +180,7 @@ export const RipeImageZoomHover = {
         return {
             hover: false,
             pivot: null,
-            zoomData: 100
+            zoomData: this.zoom
         };
     },
     computed: {
@@ -227,7 +227,7 @@ export const RipeImageZoomHover = {
             if (!this.hover || !this.scrollZoom) return;
             this.zoomData += -1 * this.scrollSensitivity * event.deltaY;
         },
-        onMouseOver(event) {
+        onMouseEnter(event) {
             this.startHover(event, event.target);
         },
         onMouseMove(event) {
