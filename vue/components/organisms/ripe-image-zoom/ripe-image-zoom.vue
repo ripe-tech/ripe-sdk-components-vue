@@ -149,7 +149,7 @@ export const RipeImageZoom = {
             default: 100
         },
         /**
-         * The z and y coordinates of the pivot point where the zoom will be applied to.
+         * The x and y coordinates of the pivot point where the zoom will be applied to.
          */
         pivot: {
             type: Object,
