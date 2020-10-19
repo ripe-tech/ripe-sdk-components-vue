@@ -1,6 +1,6 @@
 {
     "name": "ripe-sdk-components-vue",
-    "version": "0.1.0",
+    "version": "0.0.1",
     "description": "RIPE SDK Components for Vue.js",
     "keywords": [
         "components",
@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "loaders.css": "^0.1.2",
-        "ripe-sdk": "^1.12.1",
+        "ripe-sdk": "^1.14.1",
         "vue": "^2.6.12",
         "vue-global-events": "^1.2.1",
         "yonius": "^0.5.4"
