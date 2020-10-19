@@ -21,6 +21,7 @@
 .ripe-image-zoom {
     display: inline-block;
     overflow: hidden;
+    cursor: "zoom-in";
 }
 </style>
 
@@ -158,9 +159,16 @@ export const RipeImageZoom = {
     },
     computed: {
         zoomStyle() {
-            const base = { transform: `scale(${this.zoom / 100})` };
+            const base = {
+                "transform-origin": "0px 0px 0px",
+                transform: `scale(${this.zoom / 100})`
+            };
             if (this.pivot) {
-                base.transform += ` translate(${-1 * this.pivot.x}px, ${-1 * this.pivot.y}px)`;
+                // revert the translate after scaling the image so that the scaling
+                // appears centered on the pivot
+                base.transform = `translate(${this.pivot.x}px, ${this.pivot.y}px) ${
+                    base.transform
+                } translate(${-1 * this.pivot.x}px, ${-1 * this.pivot.y}px)`;
             }
             return base;
         }
