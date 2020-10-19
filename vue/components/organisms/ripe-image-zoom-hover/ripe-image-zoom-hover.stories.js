@@ -82,34 +82,21 @@ storiesOf("Organisms", module)
             }
         },
         template: `
-            <div> 
-                <ripe-image-zoom-hover
-                    v-bind:brand="'sergio_rossi'"
-                    v-bind:model="'sr1_pump075'"
-                    v-bind:version="118"
-                    v-bind:initials-group="'left'"
-                    v-bind:state="{ initialsExtra: { left: { initials: 'R', engraving: 'gold24:font' }}}"
-                    v-bind:zoom="zoom"
-                    v-bind:scroll-zoom="scrollZoom"
-                    v-bind:scroll-sensitivity="scrollSensitivity"
-                />
-            </div>
+        <ripe-image-zoom-hover
+            v-bind:brand="brand"
+            v-bind:model="model"
+            v-bind:version="version"
+            v-bind:parts="parts"
+            v-bind:frame="frame"
+            v-bind:size="size"
+            v-bind:format="format"
+            v-bind:crop="crop"
+            v-bind:show-initials="showInitials"
+            v-bind:initials-group="'main'"
+            v-bind:state="state"
+            v-bind:zoom="zoom"
+            v-bind:scroll-zoom="scrollZoom"
+            v-bind:scroll-sensitivity="scrollSensitivity"
+        />
         `
     }));
-
-    // <ripe-image-zoom-hover
-    //     v-bind:brand="brand"
-    //     v-bind:model="model"
-    //     v-bind:version="version"
-    //     v-bind:parts="parts"
-    //     v-bind:frame="frame"
-    //     v-bind:size="size"
-    //     v-bind:format="format"
-    //     v-bind:crop="crop"
-    //     v-bind:show-initials="showInitials"
-    //     v-bind:initials-group="'main'"
-    //     v-bind:state="state"
-    //     v-bind:zoom="zoom"
-    //     v-bind:scroll-zoom="scrollZoom"
-    //     v-bind:scroll-sensitivity="scrollSensitivity"
-    // />
