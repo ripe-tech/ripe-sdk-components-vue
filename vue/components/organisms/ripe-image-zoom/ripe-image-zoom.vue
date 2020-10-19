@@ -6,7 +6,7 @@
 
 <style scoped>
 .ripe-image-zoom {
-    cursor: "zoom-in";
+    cursor: zoom-in;
     display: inline-block;
     overflow: hidden;
 }
