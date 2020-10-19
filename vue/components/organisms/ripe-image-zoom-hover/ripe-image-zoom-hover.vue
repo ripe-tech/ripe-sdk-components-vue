@@ -171,6 +171,13 @@ export const RipeImageZoomHover = {
         scrollSensitivity: {
             type: Number,
             default: 1
+        },
+        /**
+         * Enables zooming out of the image with the mouse scroll.
+         */
+        zoomOut: {
+            type: Boolean,
+            default: false
         }
     },
     data: function() {
@@ -189,31 +196,11 @@ export const RipeImageZoomHover = {
         startHover(event, target) {
             this.hover = true;
             this.zoomData = this.zoom;
-            const pivotCoordinates = this._getPivotCoordinates(event, target);
-
-            if (
-                pivotCoordinates.x > target.offsetWidth / 2 ||
-                pivotCoordinates.y > target.offsetHeight / 2
-            ) {
-                this.endHover();
-                return;
-            }
-
-            this.pivot = pivotCoordinates;
+            this.pivot = this._getPivotCoordinates(event, target);
         },
         moveHover(event, target) {
-            if (!this.hover) return;
-            const pivotCoordinates = this._getPivotCoordinates(event, target);
-
-            if (
-                pivotCoordinates.x > target.offsetWidth / 2 ||
-                pivotCoordinates.y > target.offsetHeight / 2
-            ) {
-                this.endHover();
-                return;
-            }
-
-            this.pivot = pivotCoordinates;
+            if (!this.hover || this.zoomData === 100) return;
+            this.pivot = this._getPivotCoordinates(event, target);
         },
         endHover() {
             this.hover = false;
@@ -221,8 +208,20 @@ export const RipeImageZoomHover = {
             this.zoomData = this.zoom;
         },
         zoomScroll(event) {
+            // checks if zooming on hover is enabled or if the mouse is
+            // hovering the image
             if (!this.hover || !this.scrollZoom) return;
-            this.zoomData += -1 * this.scrollSensitivity * event.deltaY;
+
+            const zoomValue = this.zoomData + -1 * this.scrollSensitivity * event.deltaY;
+
+            // checks if the zooming out feature is disabled, if so only
+            // allow zooming out until the base scaling of the image (100%)
+            if (!this.zoomOut && zoomValue <= 100) {
+                this.zoomData = 100;
+                return;
+            }
+
+            this.zoomData = zoomValue;
             this.zoomData = this.zoomData < 10 ? 10 : this.zoomData;
         },
         onMouseEnter(event) {
@@ -238,8 +237,8 @@ export const RipeImageZoomHover = {
             this.endHover();
         },
         _getPivotCoordinates(event, target) {
-            const x = event.pageX - target.offsetLeft - target.offsetWidth / 2;
-            const y = event.pageY - target.offsetTop - target.offsetHeight / 2;
+            const x = event.pageX - target.offsetLeft;
+            const y = event.pageY - target.offsetTop;
             return { x: x, y: y };
         }
     }
