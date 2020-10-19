@@ -1,9 +1,6 @@
 <template>
     <div class="ripe-image-zoom">
-        <ripe-image
-            v-bind="$attrs"
-            v-bind:style="zoomStyle"
-        />
+        <ripe-image v-bind="$attrs" v-bind:style="zoomStyle" />
     </div>
 </template>
 
