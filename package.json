@@ -1,6 +1,6 @@
 {
     "name": "ripe-sdk-components-vue",
-    "version": "0.0.1",
+    "version": "0.1.0",
     "description": "RIPE SDK Components for Vue.js",
     "keywords": [
         "components",
