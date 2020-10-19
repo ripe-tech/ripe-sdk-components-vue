@@ -223,6 +223,7 @@ export const RipeImageZoomHover = {
         zoomScroll(event) {
             if (!this.hover || !this.scrollZoom) return;
             this.zoomData += -1 * this.scrollSensitivity * event.deltaY;
+            this.zoomData = this.zoomData < 10 ? 10 : this.zoomData;
         },
         onMouseEnter(event) {
             this.startHover(event, event.target);
