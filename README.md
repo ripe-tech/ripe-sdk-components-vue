@@ -273,6 +273,33 @@ There can be more than one image using the same instance of Ripe SDK:
 
 ![Multiple Images](res/images/multiple-images.png)
 
+### Image with Zoom
+
+In cases where it is necessary to see details in the image, it is possible to use the `ripe-image-zoom`, which applies a given zoom value to the image, centered on a pivot point.
+
+The zoom value is in percentage, and will not go under the `10%` value, which is the minimum to get a visible image. Below is a comparison between the normal image component and one with zoom.
+
+```html
+<ripe-image
+    v-bind:brand="'dummy'"
+    v-bind:model="'cube'"
+    v-bind:version="52"
+    v-bind:size="1000"
+    v-bind:frame="'top-0'"
+/>
+<ripe-image-zoom
+    v-bind:brand="'dummy'"
+    v-bind:model="'cube'"
+    v-bind:version="52"
+    v-bind:size="1000"
+    v-bind:frame="'top-0'"
+    v-bind:zoom="140"
+    v-bind:pivot="{ x: 40, y: 30 }"
+/>
+```
+
+![Comparison between image with and without zoom](res/images/image-zoom.png)
+
 ## Price
 
 The price component `<ripe-price>` allows for the visualization of the price of a model, according to the currency provided.
