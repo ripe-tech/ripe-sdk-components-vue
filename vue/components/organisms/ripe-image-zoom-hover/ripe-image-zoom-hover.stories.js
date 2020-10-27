@@ -61,6 +61,10 @@ storiesOf("Organisms", module)
                 type: Number,
                 default: number("Zoom", 140)
             },
+            maxZoom: {
+                type: Number,
+                default: number("Max Zoom", 500)
+            },
             scrollZoom: {
                 type: Boolean,
                 default: boolean("Enable Scroll Zoom", true)
@@ -82,21 +86,22 @@ storiesOf("Organisms", module)
             }
         },
         template: `
-        <ripe-image-zoom-hover
-            v-bind:brand="brand"
-            v-bind:model="model"
-            v-bind:version="version"
-            v-bind:parts="parts"
-            v-bind:frame="frame"
-            v-bind:size="size"
-            v-bind:format="format"
-            v-bind:crop="crop"
-            v-bind:show-initials="showInitials"
-            v-bind:initials-group="'main'"
-            v-bind:state="state"
-            v-bind:zoom="zoom"
-            v-bind:scroll-zoom="scrollZoom"
-            v-bind:scroll-sensitivity="scrollSensitivity"
-        />
+            <ripe-image-zoom-hover
+                v-bind:brand="brand"
+                v-bind:model="model"
+                v-bind:version="version"
+                v-bind:parts="parts"
+                v-bind:frame="frame"
+                v-bind:size="size"
+                v-bind:format="format"
+                v-bind:crop="crop"
+                v-bind:show-initials="showInitials"
+                v-bind:initials-group="'main'"
+                v-bind:state="state"
+                v-bind:zoom="zoom"
+                v-bind:max-zoom="maxZoom"
+                v-bind:scroll-zoom="scrollZoom"
+                v-bind:scroll-sensitivity="scrollSensitivity"
+            />
         `
     }));

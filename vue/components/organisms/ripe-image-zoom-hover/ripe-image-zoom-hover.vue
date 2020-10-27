@@ -32,6 +32,13 @@ export const RipeImageZoomHover = {
             default: 100
         },
         /**
+         * The maximum zoom percentage allowed over the original image.
+         */
+        maxZoom: {
+            type: Number,
+            default: null
+        },
+        /**
          * Enable changing the zoom value with the mouse wheel scroll.
          */
         scrollZoom: {
@@ -88,6 +95,10 @@ export const RipeImageZoomHover = {
 
             const zoomValue = this.zoomData + -1 * this.scrollSensitivity * event.deltaY;
 
+            // checks if the zoom maximum value was reached, returning
+            // it if that is the case
+            if (zoomValue > this.maxZoom) return this.maxZoom;
+
             // checks if the zooming out feature is disabled, if so only
             // allow zooming out until the base scaling of the image (100%)
             if (!this.zoomOut && zoomValue <= 100) {
@@ -96,6 +107,9 @@ export const RipeImageZoomHover = {
             }
 
             this.zoomData = zoomValue;
+
+            // does not allow reducing to a zoom value smaller than 10 which
+            // is the zoom value that allows the image to still be seen
             this.zoomData = this.zoomData < 10 ? 10 : this.zoomData;
         },
         onMouseEnter(event) {
