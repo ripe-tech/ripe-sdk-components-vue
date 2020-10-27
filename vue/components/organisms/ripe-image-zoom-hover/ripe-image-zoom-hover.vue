@@ -97,7 +97,7 @@ export const RipeImageZoomHover = {
 
             // checks if the zoom maximum value was reached, returning
             // it if that is the case
-            if (zoomValue > this.maxZoom) return this.maxZoom;
+            if (this.maxZoom && zoomValue > this.maxZoom) return this.maxZoom;
 
             // checks if the zooming out feature is disabled, if so only
             // allow zooming out until the base scaling of the image (100%)
