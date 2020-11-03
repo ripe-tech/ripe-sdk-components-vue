@@ -102,6 +102,13 @@ export const RipeConfigurator = {
             default: null
         },
         /**
+         * Indicates that the component should apply the config internally.
+         */
+        config: {
+            type: Boolean,
+            default: true
+        },
+        /**
          * The name of the frame to be shown in the configurator using
          * the normalized frame format (eg: side-1).
          */

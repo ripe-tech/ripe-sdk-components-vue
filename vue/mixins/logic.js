@@ -26,6 +26,8 @@ export const logicMixin = {
          * model, version and parts defined in instance.
          */
         async configRipe() {
+            if (!this.config) return;
+
             this.loading = true;
 
             try {
