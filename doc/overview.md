@@ -36,7 +36,7 @@ An example of an instantiation and the correspondent view:
 />
 ```
 
-![Configurator Example](res/images/configurator.gif)
+![Configurator Example](/res/images/configurator.gif)
 
 The frame can be controlled externally to the component, by changing the prop `frame`:
 
@@ -50,7 +50,7 @@ The frame can be controlled externally to the component, by changing the prop `f
 />
 ```
 
-![Configurator with Frame Example](res/images/configurator-frame.gif)
+![Configurator with Frame Example](/res/images/configurator-frame.gif)
 
 The customization of the model can also be provided, with the prop `parts`:
 
@@ -81,7 +81,7 @@ The customization of the model can also be provided, with the prop `parts`:
 />
 ```
 
-![Configurator with Parts Example](res/images/configurator-parts.gif)
+![Configurator with Parts Example](/res/images/configurator-parts.gif)
 
 The sensitivity, duration and other configurator attributes when first building the component. This attributes in addition to brand, model and version can later be changed, causing the configurator to load again.
 It is also possible to define the highlighted part of the configurator, which will use masks to identify it. However, this highlighted part will only show after the first build of the configurator.
@@ -104,7 +104,7 @@ It is also possible to define the highlighted part of the configurator, which wi
 />
 ```
 
-![Configurator with Increased Sensitivity](res/images/configurator-sensitivity.gif)
+![Configurator with Increased Sensitivity](/res/images/configurator-sensitivity.gif)
 
 There can be more than one configurator using the same instance of Ripe SDK:
 
@@ -135,7 +135,7 @@ await this.ripe.config("dummy", "cube", {
 });
 ```
 
-![Multiple Configurators](res/images/configurator-multiple.gif)
+![Multiple Configurators](/res/images/configurator-multiple.gif)
 
 ## Image
 
@@ -166,7 +166,7 @@ An example of an instantiation and the correspondent view:
 <ripe-image v-bind:brand="'dummy'" v-bind:model="'cube'" v-bind:version="52" v-bind:size="500" />
 ```
 
-![Image Example](res/images/image.png)
+![Image Example](/res/images/image.png)
 
 Similar to the configurator, the frame can be controlled externally to the component, by changing the prop `frame`:
 
@@ -180,7 +180,7 @@ Similar to the configurator, the frame can be controlled externally to the compo
 />
 ```
 
-![Image with Frame Example](res/images/image-frame.png)
+![Image with Frame Example](/res/images/image-frame.png)
 
 The customization of the model can also be provided, with the prop parts:
 
@@ -211,7 +211,7 @@ The customization of the model can also be provided, with the prop parts:
 />
 ```
 
-![Image with Parts Example](res/images/image-parts.png)
+![Image with Parts Example](/res/images/image-parts.png)
 
 The Image component support more complex logic and attributes, such as different formats, crops and personalization options.
 By setting the `show-initials` to `true` and providing an `initials-group` and `state`, it is possible to show initials in the model.
@@ -244,7 +244,7 @@ const state = {
 />
 ```
 
-![Image with Personalization](res/images/image-personalization.png)
+![Image with Personalization](/res/images/image-personalization.png)
 
 It is also possible to provide a `initialsBuilder` function, that allows for a more custom logic in the translation from initials and engraving into initials and profiles.
 
@@ -269,7 +269,7 @@ There can be more than one image using the same instance of Ripe SDK:
 />
 ```
 
-![Multiple Images](res/images/multiple-images.png)
+![Multiple Images](/res/images/multiple-images.png)
 
 ## Price
 
@@ -297,7 +297,7 @@ An example of an instantiation and the correspondent view:
 />
 ```
 
-![Price Example](res/images/price.png)
+![Price Example](/res/images/price.png)
 
 Different customizations can result in different prices. Below is an example of a more expensive customization in both dollars and euros:
 
@@ -353,8 +353,8 @@ Different customizations can result in different prices. Below is an example of 
 />
 ```
 
-![Price Complex Example EUR](res/images/price-complex-eur.png)
-![Price Complex Example USD](res/images/price-complex-usd.png)
+![Price Complex Example EUR](/res/images/price-complex-eur.png)
+![Price Complex Example USD](/res/images/price-complex-usd.png)
 
 ## Pickers
 
@@ -381,8 +381,8 @@ await this.ripe.config("dummy", "cube", {
 <ripe-pickers v-bind:ripe="ripe" />
 ```
 
-![Pickers Example](res/images/pickers.gif)
+![Pickers Example](/res/images/pickers.gif)
 
 The pickers can interact with an existing configurator, by using the same RIPE instance:
 
-![Pickers with Configurator Example](res/images/pickers_configurator.gif)
+![Pickers with Configurator Example](/res/images/pickers_configurator.gif)
