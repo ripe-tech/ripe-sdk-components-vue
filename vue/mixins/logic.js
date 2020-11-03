@@ -48,7 +48,7 @@ export const logicMixin = {
          * and the color for the part.
          */
         async setPartsRipe(parts) {
-            await this.setPartsRipe(parts);
+            await this.ripeData.setParts(parts);
         },
         equalParts(first, second) {
             if (Boolean(first) !== Boolean(second)) {
