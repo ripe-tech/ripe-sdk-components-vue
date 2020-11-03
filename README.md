@@ -4,7 +4,7 @@ Vue.js components for [RIPE SDK](https://github.com/ripe-tech/ripe-sdk).
 
 ## Documentation
 
-For extended documentation check [doc/overview.md].
+For extended documentation check [Documentation - Overview](doc/overview.md).
 
 ## External
 

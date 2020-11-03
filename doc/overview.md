@@ -1,4 +1,4 @@
-# Documentation Overview
+# Documentation - Overview
 
 ## Configurator
 
