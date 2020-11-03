@@ -2,7 +2,7 @@ const config = require("../../webpack.config");
 
 config.mode = "development";
 config.output.devtoolModuleFilenameTemplate = "[absolute-resource-path]";
-config.output.devtoolFallbackModuleFilenameTemplate = "[absolute-resource-path]?[hash]";
+config.output.devtoolFallbackModuleFilenameTemplate = "[absolute-resource-path]?[fullhash]";
 config.target = "node";
 config.output.filename = "ripe-sdk-components-vue-test.min.js";
 
