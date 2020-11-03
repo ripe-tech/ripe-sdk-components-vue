@@ -5,8 +5,12 @@
             "src": "package.json",
             "use": "@now/static-build",
             "config": {
-                "distDir": "dist/storybook"
+                "distDir": "dist"
             }
         }
+    ],
+    "routes": [
+        { "src": "/", "dest": "/storybook/index.html" },
+        { "src": "/(?!res)(.*)", "dest": "/styleguide/$1" }
     ]
 }
