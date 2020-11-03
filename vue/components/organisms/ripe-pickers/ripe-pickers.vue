@@ -48,7 +48,7 @@
                 {{ option.label }}
             </option>
             <option class="placeholder" v-bind:value="null">
-                Materials
+                Colors
             </option>
         </select>
         <button v-bind:disabled="buttonDisabled" v-on:click="onConfirmCustomization">
