@@ -203,6 +203,7 @@ export const RipeImage = {
         },
         configProps: {
             handler: async function(value) {
+                this.partsData = null;
                 await this.configRipe();
             }
         },

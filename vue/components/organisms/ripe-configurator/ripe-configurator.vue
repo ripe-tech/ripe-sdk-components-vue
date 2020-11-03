@@ -313,6 +313,7 @@ export const RipeConfigurator = {
         },
         configProps: {
             handler: async function(value) {
+                this.partsData = null;
                 await this.configRipe();
             }
         },
