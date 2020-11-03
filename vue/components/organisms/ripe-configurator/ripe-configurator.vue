@@ -102,7 +102,8 @@ export const RipeConfigurator = {
             default: null
         },
         /**
-         * Indicates that the component should apply the config internally.
+         * Indicates that the component should apply the config internally
+         * on component initialization.
          */
         config: {
             type: Boolean,
