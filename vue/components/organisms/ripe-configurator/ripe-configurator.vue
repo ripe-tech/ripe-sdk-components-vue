@@ -321,7 +321,7 @@ export const RipeConfigurator = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         options: {
