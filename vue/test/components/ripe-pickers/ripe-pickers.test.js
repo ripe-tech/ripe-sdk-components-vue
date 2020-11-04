@@ -98,22 +98,11 @@ describe("RipePickers", () => {
     it("should instantiate the component", async () => {
         const ripeInstance = new MockRipeSdk();
 
-        const component = await base.getComponent("RipePickers", {
-            props: { ripe: ripeInstance },
-            mixins: [
-                {
-                    /*                     created: function() {
-                        console.log("overrided created");
-                    } */
-                }
-            ]
-        });
+        const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         assert.strictEqual(component.emitted("loading").length, 1);
 
         await component.vm.$forceUpdate();
-
-        console.log(component.html());
         assert.strictEqual(component.find(".select.parts").exists(), true);
         assert.strictEqual(component.find(".select.materials").exists(), true);
         assert.strictEqual(component.find(".select.colors").exists(), true);
