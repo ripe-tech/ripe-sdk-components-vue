@@ -115,7 +115,7 @@ export const RipePrice = {
         },
         currency: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         price: {
@@ -132,7 +132,7 @@ export const RipePrice = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         }
     },
