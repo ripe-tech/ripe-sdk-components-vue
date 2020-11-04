@@ -159,6 +159,14 @@ export const RipeImage = {
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
+
+                // does not update the parts in the sdk if
+                // the model configuration is about to be
+                // changed, preventing outdated calls
+                if (this.brand !== this.ripeData.brand ||
+                    this.model !== this.ripeData.model ||
+                    this.version !== this.ripeData.version) return;
+                
                 await this.setPartsRipe(value);
             }
         },
@@ -203,7 +211,6 @@ export const RipeImage = {
         },
         configProps: {
             handler: async function(value) {
-                this.partsData = this.parts;
                 await this.configRipe();
             }
         },
