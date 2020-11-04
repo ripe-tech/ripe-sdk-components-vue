@@ -17,7 +17,7 @@ module.exports = {
     target: process.env.WP_TARGET || "web",
     output: {
         path: path.join(__dirname, "dist"),
-        filename: "ripe-sdk-components-vue.min.js?[hash]",
+        filename: "ripe-sdk-components-vue.min.js?[fullhash]",
         library: "RipeSdkComponentsVue",
         libraryTarget: "umd",
         publicPath: "/"
@@ -86,7 +86,7 @@ module.exports = {
                 options: {
                     name: (path, query) => {
                         if (process.env.NODE_ENV === "development") {
-                            return "[path][name].svg?[hash]";
+                            return "[path][name].svg?[fullhash]";
                         }
                         return "[contenthash].svg";
                     },

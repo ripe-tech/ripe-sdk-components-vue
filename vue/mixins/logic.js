@@ -9,11 +9,15 @@ export const logicMixin = {
          * be used without further configuration.
          */
         async setupRipe() {
+            // in case there's no internal RIPE instance already
+            // available then created a new one with default config
             if (!this.ripeData) {
                 this.ripeData = new Ripe();
             }
 
-            await this.configRipe();
+            // runs the initial configuration of the RIPE
+            // instance properly setting its default
+            if (this.config) await this.configRipe();
 
             // in case the global RIPE instance is not set then
             // updates it with the current one

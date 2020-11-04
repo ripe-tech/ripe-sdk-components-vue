@@ -34,6 +34,13 @@ export const RipePrice = {
             default: null
         },
         /**
+         * Indicates that the component should apply the config internally.
+         */
+        config: {
+            type: Boolean,
+            default: true
+        },
+        /**
          * The version of the build.
          */
         version: {
@@ -108,7 +115,7 @@ export const RipePrice = {
         },
         currency: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         price: {
@@ -125,7 +132,7 @@ export const RipePrice = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         }
     },
