@@ -234,7 +234,7 @@ export const RipeConfigurator = {
                     this.model !== this.ripeData.model ||
                     this.version !== this.ripeData.version;
                 if (configurationChanged) return;
-                
+
                 await this.setPartsRipe(value);
             }
         },
