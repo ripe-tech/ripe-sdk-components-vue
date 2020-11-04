@@ -3,11 +3,14 @@
     "builds": [
         {
             "src": "package.json",
-            "use": "@vercel/static-build"
+            "use": "@vercel/static-build",
+            "config": {
+                "distDir": "dist"
+            }
         }
     ],
     "routes": [
-        { "src": "/storybook", "dest": "/storybook/index.html" },
-        { "src": "/(?!res)(.*)", "dest": "/dist/styleguide/$1" }
+        { "src": "/docs", "dest": "/styleguide/$1" },
+        { "src": "/(?!res)(.*)", "dest": "/storybook/index.html" }
     ]
 }
