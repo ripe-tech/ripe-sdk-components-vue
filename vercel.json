@@ -5,8 +5,12 @@
             "src": "package.json",
             "use": "@vercel/static-build",
             "config": {
-                "distDir": "dist/storybook"
+                "distDir": "dist"
             }
         }
+    ],
+    "routes": [
+        { "src": "/storybook", "dest": "/storybook/index.html" },
+        { "src": "/(?!res)(.*)", "dest": "/styleguide/$1" }
     ]
 }
