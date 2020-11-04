@@ -168,13 +168,24 @@ export const RipeImage = {
     },
     watch: {
         configProps: {
-            handler: async function(value) {
+            handler: async function(value, previous) {
                 if (!this.config) return;
 
                 this.configuring = true;
 
+                // if the model and parts changed but the parts
+                // stayed the same from the previous model, the
+                // parts must be cleaned
+                const resetParts =
+                    (value.brand !== previous.brand ||
+                        value.model !== previous.model ||
+                        value.version !== previous.version) &&
+                    previous.parts &&
+                    value.parts &&
+                    this.equalParts(value.parts, previous.parts);
+                this.partsData = resetParts ? null : value.parts;
+
                 try {
-                    this.partsData = this.parts;
                     await this.configRipe();
                 } finally {
                     this.configuring = false;
