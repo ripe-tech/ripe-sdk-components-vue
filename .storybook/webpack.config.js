@@ -11,6 +11,5 @@ module.exports = async ({ config, mode }) => {
         loaders: [require.resolve("@storybook/source-loader")],
         enforce: "pre"
     });
-    console.log(config, mode);
     return config;
 };
