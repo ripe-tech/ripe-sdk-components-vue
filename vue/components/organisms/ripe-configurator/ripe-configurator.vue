@@ -235,11 +235,13 @@ export const RipeConfigurator = {
     watch: {
         configProps: {
             handler: async function(value) {
+                if (!this.config) return;
+
                 this.configuring = true;
 
                 try {
                     this.partsData = this.parts;
-                    if (this.config) await this.configRipe();
+                    await this.configRipe();
                 } finally {
                     this.configuring = false;
                 }
@@ -252,11 +254,10 @@ export const RipeConfigurator = {
         },
         parts: {
             handler: async function(value, previous) {
+                if (this.configuring) return;
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
-
-                if (this.configuring) return;
                 await this.setPartsRipe(value);
             }
         },
