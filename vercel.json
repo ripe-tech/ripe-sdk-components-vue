@@ -9,7 +9,8 @@
             }
         }
     ],
-    "redirects": [
-        { "source": "/", "destination": "/storybook/index.html" }
+    "routes": [
+        { "src": "/docs/(.*)", "dest": "/styleguide/$1" },
+        { "src": "/(?!res)(.*)", "dest": "/storybook/index.html" }
     ]
 }
