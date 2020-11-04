@@ -163,10 +163,12 @@ export const RipeImage = {
                 // does not update the parts in the sdk if
                 // the model configuration is about to be
                 // changed, preventing outdated calls
-                if (this.brand !== this.ripeData.brand ||
+                const configurationChanged =
+                    this.brand !== this.ripeData.brand ||
                     this.model !== this.ripeData.model ||
-                    this.version !== this.ripeData.version) return;
-                
+                    this.version !== this.ripeData.version;
+                if (configurationChanged) return;
+
                 await this.setPartsRipe(value);
             }
         },
