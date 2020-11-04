@@ -225,6 +225,16 @@ export const RipeConfigurator = {
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
+
+                // does not update the parts in the sdk if
+                // the model configuration is about to be
+                // changed, preventing outdated calls
+                const configurationChanged =
+                    this.brand !== this.ripeData.brand ||
+                    this.model !== this.ripeData.model ||
+                    this.version !== this.ripeData.version;
+                if (configurationChanged) return;
+                
                 await this.setPartsRipe(value);
             }
         },
@@ -313,7 +323,6 @@ export const RipeConfigurator = {
         },
         configProps: {
             handler: async function(value) {
-                this.partsData = this.parts;
                 await this.configRipe();
             }
         },
