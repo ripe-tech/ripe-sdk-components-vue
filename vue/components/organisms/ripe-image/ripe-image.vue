@@ -142,6 +142,11 @@ export const RipeImage = {
              */
             loading: true,
             /**
+             * Flag that controls if a configuration to the ripe-sdk is
+             * being made, halting operation that may be altered due to this.
+             */
+            configuring: false,
+            /**
              * Parts of the model to be used for the internal sync
              * operation.
              */
@@ -154,21 +159,30 @@ export const RipeImage = {
         };
     },
     watch: {
+        configProps: {
+            handler: async function(value) {
+                this.configuring = true;
+
+                try {
+                    this.partsData = this.parts;
+                    await this.configRipe();
+                } finally {
+                    this.configuring = false;
+                }
+            }
+        },
+        imageProps: {
+            handler: async function(value) {
+                await this.image.updateOptions(value);
+            }
+        },
         parts: {
             handler: async function(value, previous) {
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
 
-                // does not update the parts in the sdk if
-                // the model configuration is about to be
-                // changed, preventing outdated calls
-                const configurationChanged =
-                    this.brand !== this.ripeData.brand ||
-                    this.model !== this.ripeData.model ||
-                    this.version !== this.ripeData.version;
-                if (configurationChanged) return;
-
+                if (this.configuring) return;
                 await this.setPartsRipe(value);
             }
         },
@@ -209,16 +223,6 @@ export const RipeImage = {
         state: {
             handler: async function(value) {
                 await this.image.update(this.state);
-            }
-        },
-        configProps: {
-            handler: async function(value) {
-                await this.configRipe();
-            }
-        },
-        imageProps: {
-            handler: async function(value) {
-                await this.image.updateOptions(value);
             }
         }
     },

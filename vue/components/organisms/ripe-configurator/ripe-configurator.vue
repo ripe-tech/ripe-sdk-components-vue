@@ -200,6 +200,11 @@ export const RipeConfigurator = {
              */
             loading: true,
             /**
+             * Flag that controls if a configuration to the ripe-sdk is
+             * being made, halting operation that may be altered due to this.
+             */
+            configuring: false,
+            /**
              * Part of the model that is currently selected.
              */
             selectedPartData: this.selectedPart,
@@ -220,21 +225,30 @@ export const RipeConfigurator = {
         };
     },
     watch: {
+        configProps: {
+            handler: async function(value) {
+                this.configuring = true;
+
+                try {
+                    this.partsData = this.parts;
+                    await this.configRipe();
+                } finally {
+                    this.configuring = false;
+                }
+            }
+        },
+        options: {
+            handler: async function(value) {
+                await this.configurator.updateOptions(value);
+            }
+        },
         parts: {
             handler: async function(value, previous) {
                 if (this.equalParts(value, previous)) return;
 
                 this.partsData = value;
 
-                // does not update the parts in the sdk if
-                // the model configuration is about to be
-                // changed, preventing outdated calls
-                const configurationChanged =
-                    this.brand !== this.ripeData.brand ||
-                    this.model !== this.ripeData.model ||
-                    this.version !== this.ripeData.version;
-                if (configurationChanged) return;
-
+                if (this.configuring) return;
                 await this.setPartsRipe(value);
             }
         },
@@ -319,16 +333,6 @@ export const RipeConfigurator = {
                 if (!this.configurator) return;
                 if (this.useMasks) this.configurator.enableMasks();
                 else this.configurator.disableMasks();
-            }
-        },
-        configProps: {
-            handler: async function(value) {
-                await this.configRipe();
-            }
-        },
-        options: {
-            handler: async function(value) {
-                await this.configurator.updateOptions(value);
             }
         }
     },
