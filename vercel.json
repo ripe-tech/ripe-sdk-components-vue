@@ -10,7 +10,7 @@
         }
     ],
     "routes": [
-        { "src": "/docs/(*.)", "dest": "/styleguide/$1" },
-        { "src": "/(!?res)(*.)", "dest": "/storybook/index.html" }
+        { "src": "/storybook", "dest": "/storybook/index.html" },
+        { "src": "/(?!res)(.*)", "dest": "/styleguide/$1" }
     ]
 }
