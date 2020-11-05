@@ -1,4 +1,3 @@
-const { conf } = require("yonius");
 const config = require("./webpack.config");
 
 // remove babel-loader rule and replace it with one that includes
