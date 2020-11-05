@@ -68,26 +68,10 @@ module.exports = {
                                           {
                                               targets: {
                                                   browsers: ["last 2 years"]
-                                              },
-                                              useBuiltIns: "entry",
-                                              corejs: "3"
+                                              }
                                           }
                                       ]
-                                    : [
-                                          "@babel/preset-env",
-                                          {
-                                              useBuiltIns: "entry",
-                                              corejs: "3"
-                                          }
-                                      ]
-                            ],
-                            plugins: [
-                                [
-                                    "@babel/plugin-transform-runtime",
-                                    {
-                                        regenerator: true
-                                    }
-                                ]
+                                    : "@babel/preset-env"
                             ]
                         }
                     },
