@@ -61,7 +61,6 @@ module.exports = {
                     {
                         loader: "babel-loader",
                         options: {
-                            sourceType: "unambiguous",
                             presets: [
                                 process.env.NODE_ENV === "development"
                                     ? [
