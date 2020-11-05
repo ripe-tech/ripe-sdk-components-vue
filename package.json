@@ -33,7 +33,7 @@
     "scripts": {
         "build": "cross-env NODE_ENV=production webpack --mode production --config webpack.config.js",
         "build-dev": "cross-env NODE_ENV=development webpack --mode development --config webpack.config.js",
-        "build-storybook": "build-storybook -c .storybook -o dist/storybook",
+        "build-storybook": "cross-env NODE_ENV=development build-storybook -c .storybook -o dist/storybook",
         "dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.js --mode development --watch --hot",
         "docs": "vue-styleguidist server",
         "docs:build": "vue-styleguidist build",
@@ -43,7 +43,7 @@
         "lint-fix:stylelint": "stylelint \"./**/*.{css,scss,vue}\" --fix",
         "lint:base": "eslint \"./**/*.{js,vue}\"",
         "lint:stylelint": "stylelint \"./**/*.{css,scss,vue}\"",
-        "vercel-build": "npm run build && npm run build-storybook && npm run docs:build && cp -r res dist/",
+        "now-build": "npm run build && npm run build-storybook && npm run docs:build && cp -r res dist/",
         "prettier": "prettier \"./**/*.{js,vue,json}\" --write",
         "pretty": "npm run prettier && npm run lint-fix && npm run svgo",
         "storybook": "start-storybook -p 9001 -c .storybook",
@@ -65,6 +65,7 @@
     },
     "devDependencies": {
         "@babel/core": "^7.12.3",
+        "@babel/plugin-transform-runtime": "^7.12.1",
         "@babel/preset-env": "^7.12.1",
         "@storybook/addon-knobs": "^6.0.28",
         "@storybook/addon-storysource": "^6.0.28",
@@ -101,7 +102,7 @@
         "vue-loader": "^15.9.5",
         "vue-styleguidist": "^4.33.5",
         "vue-template-compiler": "^2.6.12",
-        "webpack": "<5.0.0",
+        "webpack": "^4.44.2",
         "webpack-cli": "^4.2.0",
         "webpack-dev-server": "^3.11.0"
     },

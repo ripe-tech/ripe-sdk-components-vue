@@ -61,6 +61,7 @@ module.exports = {
                     {
                         loader: "babel-loader",
                         options: {
+                            sourceType: "unambiguous",
                             presets: [
                                 process.env.NODE_ENV === "development"
                                     ? [
@@ -68,10 +69,26 @@ module.exports = {
                                           {
                                               targets: {
                                                   browsers: ["last 2 years"]
-                                              }
+                                              },
+                                              useBuiltIns: "entry",
+                                              corejs: "3"
                                           }
                                       ]
-                                    : "@babel/preset-env"
+                                    : [
+                                          "@babel/preset-env",
+                                          {
+                                              useBuiltIns: "entry",
+                                              corejs: "3"
+                                          }
+                                      ]
+                            ],
+                            plugins: [
+                                [
+                                    "@babel/plugin-transform-runtime",
+                                    {
+                                        regenerator: true
+                                    }
+                                ]
                             ]
                         }
                     },
