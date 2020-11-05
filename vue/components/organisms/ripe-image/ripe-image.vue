@@ -211,7 +211,7 @@ export const RipeImage = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         imageProps: {
