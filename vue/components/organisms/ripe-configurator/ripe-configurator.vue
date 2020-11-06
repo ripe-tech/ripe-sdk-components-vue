@@ -77,29 +77,21 @@ export const RipeConfigurator = {
          */
         brand: {
             type: String,
-            required: true
+            required: null
         },
         /**
          * The name of the model.
          */
         model: {
             type: String,
-            required: true
+            required: null
         },
         /**
          * The version of the build.
          */
         version: {
             type: Number,
-            required: true
-        },
-        /**
-         * The parts of the customized build as a dictionary mapping the
-         * name of the part to an object of material and color.
-         */
-        parts: {
-            type: Object,
-            default: null
+            required: null
         },
         /**
          * Indicates that the component should apply the config internally
@@ -108,6 +100,14 @@ export const RipeConfigurator = {
         config: {
             type: Boolean,
             default: true
+        },
+        /**
+         * The parts of the customized build as a dictionary mapping the
+         * name of the part to an object of material and color.
+         */
+        parts: {
+            type: Object,
+            default: null
         },
         /**
          * The name of the frame to be shown in the configurator using

@@ -58,13 +58,14 @@
     },
     "dependencies": {
         "loaders.css": "^0.1.2",
-        "ripe-sdk": "^1.15.0",
+        "ripe-sdk": "^1.17.0",
         "vue": "^2.6.12",
         "vue-global-events": "^1.2.1",
         "yonius": "^0.5.5"
     },
     "devDependencies": {
         "@babel/core": "^7.12.3",
+        "@babel/plugin-transform-runtime": "^7.12.1",
         "@babel/preset-env": "^7.12.1",
         "@storybook/addon-knobs": "^6.0.28",
         "@storybook/addon-storysource": "^6.0.28",
@@ -74,9 +75,9 @@
         "babel-loader": "^8.1.0",
         "babel-preset-vue": "^2.0.2",
         "cross-env": "7.0.2",
-        "css-loader": "^5.0.0",
+        "css-loader": "^5.0.1",
         "eslint": "^7.12.1",
-        "eslint-config-hive": "^0.3.5",
+        "eslint-config-hive": "^0.3.6",
         "eslint-loader": "^4.0.2",
         "fibers": "^5.0.0",
         "file-loader": "^6.2.0",
@@ -90,7 +91,7 @@
         "null-loader": "^4.0.1",
         "prettier": "^2.1.2",
         "prettier-config-hive": "^0.1.7",
-        "sass": "^1.28.0",
+        "sass": "^1.29.0",
         "sass-loader": "^10.0.5",
         "sort-package-json": "^1.46.1",
         "style-loader": "^2.0.0",
@@ -101,8 +102,8 @@
         "vue-loader": "^15.9.5",
         "vue-styleguidist": "^4.33.5",
         "vue-template-compiler": "^2.6.12",
-        "webpack": "^5.4.0",
-        "webpack-cli": "^4.1.0",
+        "webpack": "^4.44.2",
+        "webpack-cli": "^4.2.0",
         "webpack-dev-server": "^3.11.0"
     },
     "engines": {

@@ -8,9 +8,10 @@ The configurator can receive the following parameters:
 
 | Prop            | Type      | Required | Description                                                                                                                                    |
 | --------------- | --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| brand           | `String`  | `true`   | The brand of the model.                                                                                                                        |
-| model           | `String`  | `true`   | The name of the model.                                                                                                                         |
-| version         | `Number`  | `true`   | The version of the build.                                                                                                                      |
+| brand           | `String`  | `false`  | The brand of the model.                                                                                                                        |
+| model           | `String`  | `false`  | The name of the model.                                                                                                                         |
+| version         | `Number`  | `false`  | The version of the build.                                                                                                                      |
+| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
 | parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
 | frame           | `String`  | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
 | size            | `Number`  | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                            |
@@ -145,9 +146,10 @@ The image can receive the following parameters:
 
 | Prop            | Type       | Required | Description                                                                                                                                                                                                |
 | --------------- | ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| brand           | `String`   | `true`   | The brand of the model.                                                                                                                                                                                    |
-| model           | `String`   | `true`   | The name of the model.                                                                                                                                                                                     |
-| version         | `Number`   | `true`   | The version of the build.                                                                                                                                                                                  |
+| brand           | `String`   | `false`  | The brand of the model.                                                                                                                                                                                    |
+| model           | `String`   | `false`  | The name of the model.                                                                                                                                                                                     |
+| version         | `Number`   | `false`  | The version of the build.                                                                                                                                                                                  |
+| config          | `Boolean`  | `false`  | Indicates that the component should apply the config internally on component initialization.                                                                                                               |
 | parts           | `Object`   | `false`  | The model's customization.                                                                                                                                                                                 |
 | frame           | `String`   | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.                                                                    |
 | size            | `Number`   | `false`  | The size (in pixels) of the image. If not defined, the image will use all the screen space available.                                                                                                      |
@@ -277,18 +279,19 @@ The price component `<ripe-price>` allows for the visualization of the price of 
 
 The component can receive the following parameters:
 
-| Prop     | Type     | Required | Description                                                                       |
-| -------- | -------- | -------- | --------------------------------------------------------------------------------- |
-| brand    | `String` | `true`   | The brand of the model.                                                           |
-| model    | `String` | `true`   | The name of the model.                                                            |
-| version  | `Number` | `true`   | The version of the build.                                                         |
-| parts    | `Object` | `false`  | The model's customization.                                                        |
-| currency | `String` | `true`   | The `ISO 4217` currency code in which the price will be displayed.                |
-| ripe     | `Object` | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated. |
+| Prop     | Type      | Required | Description                                                                                  |
+| -------- | --------- | -------- | -------------------------------------------------------------------------------------------- |
+| brand    | `String`  | `false`  | The brand of the model.                                                                      |
+| model    | `String`  | `false`  | The name of the model.                                                                       |
+| version  | `Number`  | `false`  | The version of the build.                                                                    |
+| config   | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization. |
+| parts    | `Object`  | `false`  | The model's customization.                                                                   |
+| currency | `String`  | `true`   | The `ISO 4217` currency code in which the price will be displayed.                           |
+| ripe     | `Object`  | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated.            |
 
 An example of an instantiation and the correspondent view:
 
-```
+```html
 <ripe-price
     v-bind:brand="'dummy'"
     v-bind:model="'cube'"
@@ -301,7 +304,7 @@ An example of an instantiation and the correspondent view:
 
 Different customizations can result in different prices. Below is an example of a more expensive customization in both dollars and euros:
 
-```
+```html
 <ripe-price
     v-bind:brand="'dummy'"
     v-bind:model="'cube'"
@@ -327,7 +330,7 @@ Different customizations can result in different prices. Below is an example of 
 />
 ```
 
-```
+```html
 <ripe-price
     v-bind:brand="'dummy'"
     v-bind:model="'cube'"
