@@ -103,7 +103,6 @@ describe("RipePickers", () => {
         assert.strictEqual(component.find(".select.parts").exists(), true);
         assert.strictEqual(component.find(".select.materials").exists(), true);
         assert.strictEqual(component.find(".select.colors").exists(), true);
-
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 1);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 1);
@@ -114,41 +113,41 @@ describe("RipePickers", () => {
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         await component.vm.$forceUpdate();
-        await component.setData({ selectedPart: "side" });
+        await component.vm.onSelectPartChange("side");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 1);
 
-        await component.setData({ selectedPart: "patch" });
+        await component.vm.onSelectPartChange("patch");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 2);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 3);
 
-        await component.setData({ selectedPart: "top0_bottom" });
+        await component.vm.onSelectPartChange("top0_bottom");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 1);
 
-        await component.setData({ selectedPart: "side" });
-        await component.setData({ selectedMaterial: "crocodile_cbe" });
+        await component.vm.onSelectPartChange("side");
+        await component.vm.onSelectMaterialChange("crocodile_cbe");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 3);
 
-        await component.setData({ selectedPart: "side" });
-        await component.setData({ selectedMaterial: "leather_cbe" });
+        await component.vm.onSelectPartChange("side");
+        await component.vm.onSelectMaterialChange("leather_cbe");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 5);
 
-        await component.setData({ selectedPart: "top0_bottom" });
-        await component.setData({ selectedMaterial: "leather_cbe" });
+        await component.vm.onSelectPartChange("top0_bottom");
+        await component.vm.onSelectMaterialChange("leather_cbe");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 5);
 
-        await component.setData({ selectedPart: "top0_bottom" });
-        await component.setData({ selectedMaterial: "suede_cbe" });
+        await component.vm.onSelectPartChange("top0_bottom");
+        await component.vm.onSelectMaterialChange("suede_cbe");
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.colors").findAll("option").length, 4);
