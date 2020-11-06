@@ -1,11 +1,12 @@
 const assert = require("assert");
+
 const base = require("../../base");
+const mocks = require("../../mocks");
 
-const ripe = require("ripe-sdk").ripe;
-
-class MockRipeSdk {
+class RipeSdk extends mocks.MockRipeSdk {
     constructor() {
-        this.sdk = new ripe.Ripe({ init: false });
+        super();
+
         this.choices = {
             side: {
                 available: true,
@@ -89,14 +90,11 @@ class MockRipeSdk {
             }
         };
     }
-
-    isReady() {}
-    bind() {}
 }
 
 describe("RipePickers", () => {
     it("should instantiate the component", async () => {
-        const ripeInstance = new MockRipeSdk();
+        const ripeInstance = new RipeSdk();
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         assert.strictEqual(component.emitted("loading").length, 1);
@@ -108,7 +106,7 @@ describe("RipePickers", () => {
     });
 
     it("should sync selects options", async () => {
-        const ripeInstance = new MockRipeSdk();
+        const ripeInstance = new RipeSdk();
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         await component.vm.$forceUpdate();
