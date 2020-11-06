@@ -103,6 +103,10 @@ describe("RipePickers", () => {
         assert.strictEqual(component.find(".select.parts").exists(), true);
         assert.strictEqual(component.find(".select.materials").exists(), true);
         assert.strictEqual(component.find(".select.colors").exists(), true);
+
+        assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
+        assert.strictEqual(component.find(".select.materials").findAll("option").length, 1);
+        assert.strictEqual(component.find(".select.colors").findAll("option").length, 1);
     });
 
     it("should sync selects options", async () => {
@@ -110,10 +114,6 @@ describe("RipePickers", () => {
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         await component.vm.$forceUpdate();
-        assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select.materials").findAll("option").length, 1);
-        assert.strictEqual(component.find(".select.colors").findAll("option").length, 1);
-
         await component.setData({ selectedPart: "side" });
         assert.strictEqual(component.find(".select.parts").findAll("option").length, 4);
         assert.strictEqual(component.find(".select.materials").findAll("option").length, 4);
