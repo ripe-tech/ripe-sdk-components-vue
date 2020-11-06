@@ -77,21 +77,21 @@ export const RipeConfigurator = {
          */
         brand: {
             type: String,
-            required: null
+            default: null
         },
         /**
          * The name of the model.
          */
         model: {
             type: String,
-            required: null
+            default: null
         },
         /**
          * The version of the build.
          */
         version: {
             type: Number,
-            required: null
+            default: null
         },
         /**
          * Indicates that the component should apply the config internally
