@@ -113,6 +113,190 @@ export const RipeImage = {
             type: Function,
             default: null
         },
+        rotation: {
+            type: Number,
+            default: null
+        },
+        flip: {
+            type: Boolean,
+            default: null
+        },
+        mirror: {
+            type: Boolean,
+            default: null
+        },
+        bounding_box: {
+            type: Array,
+            default: null
+        },
+        algorithm: {
+            type: String,
+            default: null
+        },
+        background: {
+            type: String,
+            default: null
+        },
+        engine: {
+            type: String,
+            default: null
+        },
+        initials_profile: {
+            type: Array,
+            default: null
+        },
+        initials_profiles: {
+            type: Array,
+            default: null
+        },
+        initials_x: {
+            type: Number,
+            default: null
+        },
+        initials_y: {
+            type: Number,
+            default: null
+        },
+        initials_width: {
+            type: Number,
+            default: null
+        },
+        initials_height: {
+            type: Number,
+            default: null
+        },
+        initials_viewport: {
+            type: Array,
+            default: null
+        },
+        initials_color: {
+            type: String,
+            default: null
+        },
+        initials_opacity: {
+            type: Number,
+            default: null
+        },
+        initials_align: {
+            type: String,
+            default: null
+        },
+        initials_vertical: {
+            type: String,
+            default: null
+        },
+        initials_embossing: {
+            type: String,
+            default: null
+        },
+        initials_rotation: {
+            type: Number,
+            default: null
+        },
+        initials_z_index: {
+            type: Number,
+            default: null
+        },
+        initials_algorithm: {
+            type: String,
+            default: null
+        },
+        initials_blend_color: {
+            type: String,
+            default: null
+        },
+        initials_pattern: {
+            type: String,
+            default: null
+        },
+        initials_texture: {
+            type: String,
+            default: null
+        },
+        initials_exclusion: {
+            type: String,
+            default: null
+        },
+        initials_inclusion: {
+            type: String,
+            default: null
+        },
+        initials_image_rotation: {
+            type: Number,
+            default: null
+        },
+        initials_image_flip: {
+            type: Boolean,
+            default: null
+        },
+        initials_image_mirror: {
+            type: Boolean,
+            default: null
+        },
+        debug: {
+            type: Boolean,
+            default: null
+        },
+        initials_debug: {
+            type: Boolean,
+            default: null
+        },
+        font_family: {
+            type: String,
+            default: null
+        },
+        font_weight: {
+            type: String,
+            default: null
+        },
+        font_size: {
+            type: String,
+            default: null
+        },
+        font_spacing: {
+            type: String,
+            default: null
+        },
+        font_trim: {
+            type: Boolean,
+            default: null
+        },
+        font_mask: {
+            type: String,
+            default: null
+        },
+        font_mode: {
+            type: String,
+            default: null
+        },
+        line_height: {
+            type: Number,
+            default: null
+        },
+        line_breaking: {
+            type: Boolean,
+            default: null
+        },
+        shadow: {
+            type: Boolean,
+            default: null
+        },
+        shadow_color: {
+            type: String,
+            default: null
+        },
+        shadow_offset: {
+            type: String,
+            default: null
+        },
+        offsets: {
+            type: Object,
+            default: null
+        },
+        curve: {
+            type: Array,
+            default: null
+        },
         /**
          * An object containing the state of the personalization. For each
          * group of the model it can contain the initials and the corresponding
@@ -136,17 +320,6 @@ export const RipeImage = {
         name: {
             type: String,
             default: null
-        },
-        /**
-         * Extra image options. Example:
-         * {
-         *     mirror: true,
-         *     rotation: 20
-         * }
-         */
-        extraOptions: {
-            type: Object,
-            default: () => ({})
         }
     },
     data: function() {
@@ -245,7 +418,52 @@ export const RipeImage = {
                 format: this.format,
                 crop: this.crop,
                 initialsGroup: this.initialsGroup,
-                ...this.extraOptions
+                rotation: this.rotation,
+                flip: this.flip,
+                mirror: this.mirror,
+                bounding_box: this.bounding_box,
+                algorithm: this.algorithm,
+                background: this.background,
+                engine: this.engine,
+                initials_profile: this.initials_profile,
+                initials_profiles: this.initials_profiles,
+                initials_x: this.initials_x,
+                initials_y: this.initials_y,
+                initials_width: this.initials_width,
+                initials_height: this.initials_height,
+                initials_viewport: this.initials_viewport,
+                initials_color: this.initials_color,
+                initials_opacity: this.initials_opacity,
+                initials_align: this.initials_align,
+                initials_vertical: this.initials_vertical,
+                initials_embossing: this.initials_embossing,
+                initials_rotation: this.initials_rotation,
+                initials_z_index: this.initials_z_index,
+                initials_algorithm: this.initials_algorithm,
+                initials_blend_color: this.initials_blend_color,
+                initials_pattern: this.initials_pattern,
+                initials_texture: this.initials_texture,
+                initials_exclusion: this.initials_exclusion,
+                initials_inclusion: this.initials_inclusion,
+                initials_image_rotation: this.initials_image_rotation,
+                initials_image_flip: this.initials_image_flip,
+                initials_image_mirror: this.initials_image_mirror,
+                debug: this.debug,
+                initials_debug: this.initials_debug,
+                font_family: this.font_family,
+                font_weight: this.font_weight,
+                font_size: this.font_size,
+                font_spacing: this.font_spacing,
+                font_trim: this.font_trim,
+                font_mask: this.font_mask,
+                font_mode: this.font_mode,
+                line_height: this.line_height,
+                line_breaking: this.line_breaking,
+                shadow: this.shadow,
+                shadow_color: this.shadow_color,
+                shadow_offset: this.shadow_offset,
+                offsets: this.offsets,
+                curve: this.curve
             };
         }
     },
@@ -270,7 +488,52 @@ export const RipeImage = {
             showInitials: this.showInitials,
             initialsGroup: this.initialsGroup,
             initialsBuilder: this.initialsBuilder,
-            ...this.extraOptions
+            rotation: this.rotation,
+            flip: this.flip,
+            mirror: this.mirror,
+            bounding_box: this.bounding_box,
+            algorithm: this.algorithm,
+            background: this.background,
+            engine: this.engine,
+            initials_profile: this.initials_profile,
+            initials_profiles: this.initials_profiles,
+            initials_x: this.initials_x,
+            initials_y: this.initials_y,
+            initials_width: this.initials_width,
+            initials_height: this.initials_height,
+            initials_viewport: this.initials_viewport,
+            initials_color: this.initials_color,
+            initials_opacity: this.initials_opacity,
+            initials_align: this.initials_align,
+            initials_vertical: this.initials_vertical,
+            initials_embossing: this.initials_embossing,
+            initials_rotation: this.initials_rotation,
+            initials_z_index: this.initials_z_index,
+            initials_algorithm: this.initials_algorithm,
+            initials_blend_color: this.initials_blend_color,
+            initials_pattern: this.initials_pattern,
+            initials_texture: this.initials_texture,
+            initials_exclusion: this.initials_exclusion,
+            initials_inclusion: this.initials_inclusion,
+            initials_image_rotation: this.initials_image_rotation,
+            initials_image_flip: this.initials_image_flip,
+            initials_image_mirror: this.initials_image_mirror,
+            debug: this.debug,
+            initials_debug: this.initials_debug,
+            font_family: this.font_family,
+            font_weight: this.font_weight,
+            font_size: this.font_size,
+            font_spacing: this.font_spacing,
+            font_trim: this.font_trim,
+            font_mask: this.font_mask,
+            font_mode: this.font_mode,
+            line_height: this.line_height,
+            line_breaking: this.line_breaking,
+            shadow: this.shadow,
+            shadow_color: this.shadow_color,
+            shadow_offset: this.shadow_offset,
+            offsets: this.offsets,
+            curve: this.curve
         });
         this.image.update(this.state);
     },
