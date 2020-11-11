@@ -113,186 +113,348 @@ export const RipeImage = {
             type: Function,
             default: null
         },
+        /**
+         * The angle in degrees of the rotation to apply on the model.
+         */
         rotation: {
             type: Number,
             default: null
         },
+        /**
+         * If set flips the current image vertically, this operation is going
+         * to be performed before rotation.
+         */
         flip: {
             type: Boolean,
             default: null
         },
+        /**
+         * If set mirrors the current image horizontally, this operation is going
+         * to be performed before rotation.
+         */
         mirror: {
             type: Boolean,
             default: null
         },
+        /**
+         * Tuple that defines the target width and height (only
+         * one dimension is required) for the "inside" image to be generated, note that
+         * if both dimensions are defined image deformation may occur.
+         */
         bounding_box: {
             type: Array,
             default: null
         },
+        /**
+         * The name of the blending algorithm that is going to be
+         * used in the blending of the multiple part layers.
+         */
         algorithm: {
             type: String,
             default: null
         },
+        /**
+         * String that defines the color to be applied to the background
+         * in the "RRGGBB" hexadecimal format.
+         */
         background: {
             type: String,
             default: null
         },
+        /**
+         * The name of the engine that is going to be used for the composition
+         * of the image (eg: base, rust, etc.), if not provided the best available is going
+         * to be used for the composition process.
+         */
         engine: {
             type: String,
             default: null
         },
+        /**
+         * The name of the profile to be used. A profile what what defines a premade configuration
+         * in a specific product. The configuration can set the values such as the font type, color
+         * and size, the initials position and rotation. This supports the use of namespacing.
+         */
         initials_profile: {
             type: Array,
             default: null
         },
+        /**
+         * The name of the profiles to be used. A profile what what defines a premade configuration
+         * in a specific product. The configuration can set the values such as the font type, color
+         * and size, the initials position and rotation. This supports the use of namespacing.
+         */
         initials_profiles: {
             type: Array,
             default: null
         },
+        /**
+         * Overrides the initials_profile's position on the x axis.
+         */
         initials_x: {
             type: Number,
             default: null
         },
+        /**
+         * Overrides the initials_profile's position on the y axis.
+         */
         initials_y: {
             type: Number,
             default: null
         },
+        /**
+         * Overrides the initials_profile's width.
+         */
         initials_width: {
             type: Number,
             default: null
         },
+        /**
+         * Overrides the initials_profile's height.
+         */
         initials_height: {
             type: Number,
             default: null
         },
+        /**
+         * Overrides the initials_profile's viewport. Viewport is a window (specified by [x, y, width, height])
+         * that defines a region to be shown with a zoom. It is used to showcase the initials.
+         */
         initials_viewport: {
             type: Array,
             default: null
         },
+        /**
+         * Overrides the initials_profile's color to be applied to the initials.
+         */
         initials_color: {
             type: String,
             default: null
         },
+        /**
+         * Overrides the initials_profile's opacity to be applied to the initials. This value ranges from
+         * 0 to 1.
+         */
         initials_opacity: {
             type: Number,
             default: null
         },
+        /**
+         * Overrides the initials_profile's orientation of the initials to be applied. This field can be
+         * left, right or center.
+         */
         initials_align: {
             type: String,
             default: null
         },
+        /**
+         * Overrides the initials_profile's vertical alignment on the initials. This field can be top,
+         * bottom or middle.
+         */
         initials_vertical: {
             type: String,
             default: null
         },
+        /**
+         * Overrides the initials_profile's embossing type of the initials. The available options
+         * vary with each model.
+         */
         initials_embossing: {
             type: String,
             default: null
         },
+        /**
+         * Overrides the initials_profile's rotation angle, in degrees, to be applied to the initials.
+         */
         initials_rotation: {
             type: Number,
             default: null
         },
+        /**
+         * Initials' z-index value to be using when composing, ensuring proper layering of the
+         * rendered image.
+         */
         initials_z_index: {
             type: Number,
             default: null
         },
+        /**
+         * Algorithm to be used for initials (defaults to 'mask_top').
+         */
         initials_algorithm: {
             type: String,
             default: null
         },
+        /**
+         * The background color to be used in the generation of the antialiasing (defaults to '000000').
+         */
         initials_blend_color: {
             type: String,
             default: null
         },
+        /**
+         * Pattern to be used when tiling.
+         */
         initials_pattern: {
             type: String,
             default: null
         },
+        /**
+         * Texture image to be used when filling the initials.
+         */
         initials_texture: {
             type: String,
             default: null
         },
+        /**
+         * Parts to exclude when applying the initials.
+         */
         initials_exclusion: {
             type: String,
             default: null
         },
+        /**
+         * Parts to include when applying the initials.
+         */
         initials_inclusion: {
             type: String,
             default: null
         },
+        /**
+         * Parts to include when applying the initials.
+         */
         initials_image_rotation: {
             type: Number,
             default: null
         },
+        /**
+         * Flip the image arround the X axis.
+         */
         initials_image_flip: {
             type: Boolean,
             default: null
         },
+        /**
+         * Mirror the image arround the Y axis.
+         */
         initials_image_mirror: {
             type: Boolean,
             default: null
         },
+        /**
+         * Displays the Debug information box.
+         */
         debug: {
             type: Boolean,
             default: null
         },
+        /**
+         * Displays the Debug information box.
+         */
         initials_debug: {
             type: Boolean,
             default: null
         },
+        /**
+         * Font Family to be used (system font or made available within the vendor's build).
+         */
         font_family: {
             type: String,
             default: null
         },
+        /**
+         * Font Weight variant to be used.
+         */
         font_weight: {
             type: String,
             default: null
         },
+        /**
+         * Font Size.
+         */
         font_size: {
             type: String,
             default: null
         },
+        /**
+         * Font Spacing.
+         */
         font_spacing: {
             type: String,
             default: null
         },
+        /**
+         * Font Trim
+         */
         font_trim: {
-            type: Boolean,
+            type: Number,
             default: null
         },
+        /**
+         * Mask strategy when using raster fonts: 'self' means that the alpha channel of the
+         * letter image is going to be used to defined both which pixels are going to be passed
+         * in the paste operation and the intensity; 'simple' means that just the pixels with
+         * a valid alpha value (greater than zero) will be passed to the target image.
+         */
         font_mask: {
             type: String,
             default: null
         },
+        /**
+         * Forces a specific font mode, may improve text render (vector fonts) - it's used by
+         * some graphics drivers to indicate what mode the driver prefers; usually when the
+         * font uses antialiasing the mode 'L' shall improve rendering.
+         */
         font_mode: {
             type: String,
             default: null
         },
+        /**
+         * Line Height.
+         */
         line_height: {
             type: Number,
             default: null
         },
+        /**
+         * Line break, is optional and can have one of (normal and word_break).
+         */
         line_breaking: {
             type: Boolean,
             default: null
         },
+        /**
+         * Shadow.
+         */
         shadow: {
             type: Boolean,
             default: null
         },
+        /**
+         * Shadow Color.
+         */
         shadow_color: {
             type: String,
             default: null
         },
+        /**
+         * Shadow Offset.
+         */
         shadow_offset: {
             type: String,
             default: null
         },
+        /**
+         * Offsets.
+         */
         offsets: {
             type: Object,
             default: null
         },
+        /**
+         * Bezier curve control points, must contain four (e.g. [[0.2, 0.2], [0.7, 0.2],
+         * [0.2, 0.5], [0.7, 0.5]]).
+         */
         curve: {
             type: Array,
             default: null
