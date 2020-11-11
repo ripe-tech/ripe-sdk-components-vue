@@ -227,7 +227,7 @@ export const RipeImage = {
         },
         imageProps: {
             handler: async function(value) {
-                await this.image.updateOptions(value);
+                await this.image?.updateOptions(value);
             }
         }
     },
