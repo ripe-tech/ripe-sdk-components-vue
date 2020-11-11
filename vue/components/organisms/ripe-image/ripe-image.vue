@@ -136,6 +136,17 @@ export const RipeImage = {
         name: {
             type: String,
             default: null
+        },
+        /**
+         * Extra image options. Example:
+         * {
+         *     mirror: true,
+         *     rotation: 20
+         * }
+         */
+        extraOptions: {
+            type: Object,
+            default: () => ({})
         }
     },
     data: function() {
@@ -233,7 +244,8 @@ export const RipeImage = {
             return {
                 format: this.format,
                 crop: this.crop,
-                initialsGroup: this.initialsGroup
+                initialsGroup: this.initialsGroup,
+                ...this.extraOptions
             };
         }
     },
@@ -257,7 +269,8 @@ export const RipeImage = {
             crop: this.crop,
             showInitials: this.showInitials,
             initialsGroup: this.initialsGroup,
-            initialsBuilder: this.initialsBuilder
+            initialsBuilder: this.initialsBuilder,
+            ...this.extraOptions
         });
         this.image.update(this.state);
     },
