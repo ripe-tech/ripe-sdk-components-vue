@@ -139,7 +139,8 @@ export const RipeImage = {
         /**
          * Tuple that defines the target width and height (only
          * one dimension is required) for the "inside" image to be generated, note that
-         * if both dimensions are defined image deformation may occur.
+         * if both dimensions are defined image deformation may occur. Example:
+         * [100, 100]
          */
         bounding_box: {
             type: Array,
@@ -155,7 +156,7 @@ export const RipeImage = {
         },
         /**
          * String that defines the color to be applied to the background
-         * in the "RRGGBB" hexadecimal format.
+         * in the "RRGGBB" hexadecimal format. Example: "ffffff".
          */
         background: {
             type: String,
