@@ -321,7 +321,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Parts to include when applying the initials.
+         * Overrides the initials_profile's rotation angle, in degrees, to be applied to image.
          */
         initialsImageRotation: {
             type: Number,
@@ -380,7 +380,7 @@ export const RipeImage = {
          * Overrides the initialsProfile's spacing between each letter.
          */
         fontSpacing: {
-            type: String,
+            type: Number,
             default: null
         },
         /**
