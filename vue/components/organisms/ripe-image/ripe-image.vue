@@ -137,9 +137,9 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Tuple that defines the target width and height (only
-         * one dimension is required) for the "inside" image to be generated, note that
-         * if both dimensions are defined image deformation may occur. Example: [100, 100].
+         * Tuple that defines the target width and height (only one dimension is required)
+         * for the "inside" image to be generated, note that if both dimensions are defined
+         * image deformation may occur. Example: [100, 100].
          */
         boundingBox: {
             type: Array,
