@@ -357,28 +357,28 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initials_profile's font to be applied on the initials.
+         * Overrides the initialsProfile's font to be applied on the initials.
          */
         fontFamily: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's font weight to be applied on the initials.
+         * Overrides the initialsProfile's font weight to be applied on the initials.
          */
         fontWeight: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's font size to be applied on the initials,
+         * Overrides the initialsProfile's font size to be applied on the initials,
          */
         fontSize: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's spacing between each letter.
+         * Overrides the initialsProfile's spacing between each letter.
          */
         fontSpacing: {
             type: String,
@@ -425,21 +425,21 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initials_profile's shadow, which defines if the initials have a shadow.
+         * Overrides the initialsProfile's shadow, which defines if the initials have a shadow.
          */
         shadow: {
             type: Boolean,
             default: null
         },
         /**
-         * Overrides the initials_profile's color of the shadow to be used.
+         * Overrides the initialsProfile's color of the shadow to be used.
          */
         shadowColor: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's offset to be applied on the shadow.
+         * Overrides the initialsProfile's offset to be applied on the shadow.
          */
         shadowOffset: {
             type: String,
