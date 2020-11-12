@@ -357,28 +357,28 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Font Family to be used (system font or made available within the vendor's build).
+         * Overrides the initials_profile's font to be applied on the initials.
          */
         fontFamily: {
             type: String,
             default: null
         },
         /**
-         * Font Weight variant to be used.
+         * Overrides the initials_profile's font weight to be applied on the initials.
          */
         fontWeight: {
             type: String,
             default: null
         },
         /**
-         * Font Size.
+         * Overrides the initials_profile's font size to be applied on the initials,
          */
         fontSize: {
             type: String,
             default: null
         },
         /**
-         * Font Spacing.
+         * Overrides the initials_profile's spacing between each letter.
          */
         fontSpacing: {
             type: String,
@@ -425,21 +425,21 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Shadow.
+         * Overrides the initials_profile's shadow, which defines if the initials have a shadow.
          */
         shadow: {
             type: Boolean,
             default: null
         },
         /**
-         * Shadow Color.
+         * Overrides the initials_profile's color of the shadow to be used.
          */
         shadowColor: {
             type: String,
             default: null
         },
         /**
-         * Shadow Offset.
+         * Overrides the initials_profile's offset to be applied on the shadow.
          */
         shadowOffset: {
             type: String,
