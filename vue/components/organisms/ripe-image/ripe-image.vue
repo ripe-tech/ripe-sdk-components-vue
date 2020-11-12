@@ -84,7 +84,7 @@ export const RipeImage = {
         /**
          * Indicates that the image composition is to be cropped.
          * Crops the current image according to the minimal possible
-         * bounding box in both x and y axis
+         * bounding box in both x and y axis.
          */
         crop: {
             type: Boolean,
@@ -139,8 +139,7 @@ export const RipeImage = {
         /**
          * Tuple that defines the target width and height (only
          * one dimension is required) for the "inside" image to be generated, note that
-         * if both dimensions are defined image deformation may occur. Example:
-         * [100, 100]
+         * if both dimensions are defined image deformation may occur. Example: [100, 100].
          */
         boundingBox: {
             type: Array,
@@ -371,7 +370,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's font size to be applied on the initials,
+         * Overrides the initialsProfile's font size to be applied on the initials.
          */
         fontSize: {
             type: String,
@@ -385,7 +384,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Font Trim
+         * Font Trim.
          */
         fontTrim: {
             type: Number,
@@ -451,7 +450,7 @@ export const RipeImage = {
          *   0: [0, 6],
          *   1: [0, -10],
          *   2: [0, 10]
-         * }
+         * }.
          */
         offsets: {
             type: Object,
