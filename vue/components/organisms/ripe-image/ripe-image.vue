@@ -142,7 +142,7 @@ export const RipeImage = {
          * if both dimensions are defined image deformation may occur. Example:
          * [100, 100]
          */
-        bounding_box: {
+        boundingBox: {
             type: Array,
             default: null
         },
@@ -176,7 +176,7 @@ export const RipeImage = {
          * in a specific product. The configuration can set the values such as the font type, color
          * and size, the initials position and rotation. This supports the use of namespacing.
          */
-        initials_profile: {
+        initialsProfile: {
             type: Array,
             default: null
         },
@@ -185,89 +185,89 @@ export const RipeImage = {
          * in a specific product. The configuration can set the values such as the font type, color
          * and size, the initials position and rotation. This supports the use of namespacing.
          */
-        initials_profiles: {
+        initialsProfiles: {
             type: Array,
             default: null
         },
         /**
-         * Overrides the initials_profile's position on the x axis.
+         * Overrides the initialsProfile's position on the x axis.
          */
-        initials_x: {
+        initialsX: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initials_profile's position on the y axis.
+         * Overrides the initialsProfile's position on the y axis.
          */
-        initials_y: {
+        initialsY: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initials_profile's width.
+         * Overrides the initialsProfile's width.
          */
-        initials_width: {
+        initialsWidth: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initials_profile's height.
+         * Overrides the initialsProfile's height.
          */
-        initials_height: {
+        initialsHeight: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initials_profile's viewport. Viewport is a window (specified by [x, y, width, height])
+         * Overrides the initialsProfile's viewport. Viewport is a window (specified by [x, y, width, height])
          * that defines a region to be shown with a zoom. It is used to showcase the initials.
          */
-        initials_viewport: {
+        initialsViewport: {
             type: Array,
             default: null
         },
         /**
-         * Overrides the initials_profile's color to be applied to the initials.
+         * Overrides the initialsProfile's color to be applied to the initials.
          */
-        initials_color: {
+        initialsColor: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's opacity to be applied to the initials. This value ranges from
+         * Overrides the initialsProfile's opacity to be applied to the initials. This value ranges from
          * 0 to 1.
          */
-        initials_opacity: {
+        initialsOpacity: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initials_profile's orientation of the initials to be applied. This field can be
+         * Overrides the initialsProfile's orientation of the initials to be applied. This field can be
          * left, right or center.
          */
-        initials_align: {
+        initialsAlign: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's vertical alignment on the initials. This field can be top,
+         * Overrides the initialsProfile's vertical alignment on the initials. This field can be top,
          * bottom or middle.
          */
-        initials_vertical: {
+        initialsVertical: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's embossing type of the initials. The available options
+         * Overrides the initialsProfile's embossing type of the initials. The available options
          * vary with each model.
          */
-        initials_embossing: {
+        initialsEmbossing: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initials_profile's rotation angle, in degrees, to be applied to the initials.
+         * Overrides the initialsProfile's rotation angle, in degrees, to be applied to the initials.
          */
-        initials_rotation: {
+        initialsRotation: {
             type: Number,
             default: null
         },
@@ -275,70 +275,70 @@ export const RipeImage = {
          * Initials' z-index value to be using when composing, ensuring proper layering of the
          * rendered image.
          */
-        initials_z_index: {
+        initialsZindex: {
             type: Number,
             default: null
         },
         /**
          * Algorithm to be used for initials (defaults to 'mask_top').
          */
-        initials_algorithm: {
+        initialsAlgorithm: {
             type: String,
             default: null
         },
         /**
          * The background color to be used in the generation of the antialiasing (defaults to '000000').
          */
-        initials_blend_color: {
+        initialsBlendColor: {
             type: String,
             default: null
         },
         /**
          * Pattern to be used when tiling.
          */
-        initials_pattern: {
+        initialsPattern: {
             type: String,
             default: null
         },
         /**
          * Texture image to be used when filling the initials.
          */
-        initials_texture: {
+        initialsTexture: {
             type: String,
             default: null
         },
         /**
          * Parts to exclude when applying the initials.
          */
-        initials_exclusion: {
+        initialsExclusion: {
             type: String,
             default: null
         },
         /**
          * Parts to include when applying the initials.
          */
-        initials_inclusion: {
+        initialsInclusion: {
             type: String,
             default: null
         },
         /**
          * Parts to include when applying the initials.
          */
-        initials_image_rotation: {
+        initialsImageRotation: {
             type: Number,
             default: null
         },
         /**
          * Flip the image arround the X axis.
          */
-        initials_image_flip: {
+        initialsImageFlip: {
             type: Boolean,
             default: null
         },
         /**
          * Mirror the image arround the Y axis.
          */
-        initials_image_mirror: {
+        initialsImageMirror: {
             type: Boolean,
             default: null
         },
@@ -352,42 +352,42 @@ export const RipeImage = {
         /**
          * Displays the Debug information box.
          */
-        initials_debug: {
+        initialsDebug: {
             type: Boolean,
             default: null
         },
         /**
          * Font Family to be used (system font or made available within the vendor's build).
          */
-        font_family: {
+        fontFamily: {
             type: String,
             default: null
         },
         /**
          * Font Weight variant to be used.
          */
-        font_weight: {
+        fontWeight: {
             type: String,
             default: null
         },
         /**
          * Font Size.
          */
-        font_size: {
+        fontSize: {
             type: String,
             default: null
         },
         /**
          * Font Spacing.
          */
-        font_spacing: {
+        fontSpacing: {
             type: String,
             default: null
         },
         /**
          * Font Trim
          */
-        font_trim: {
+        fontTrim: {
             type: Number,
             default: null
         },
@@ -397,7 +397,7 @@ export const RipeImage = {
          * in the paste operation and the intensity; 'simple' means that just the pixels with
          * a valid alpha value (greater than zero) will be passed to the target image.
          */
-        font_mask: {
+        fontMask: {
             type: String,
             default: null
         },
@@ -406,21 +406,21 @@ export const RipeImage = {
          * some graphics drivers to indicate what mode the driver prefers; usually when the
          * font uses antialiasing the mode 'L' shall improve rendering.
          */
-        font_mode: {
+        fontMode: {
             type: String,
             default: null
         },
         /**
          * Line Height.
          */
-        line_height: {
+        lineHeight: {
             type: Number,
             default: null
         },
         /**
          * Line break, is optional and can have one of (normal and word_break).
          */
-        line_breaking: {
+        lineBreaking: {
             type: Boolean,
             default: null
         },
@@ -434,14 +434,14 @@ export const RipeImage = {
         /**
          * Shadow Color.
          */
-        shadow_color: {
+        shadowColor: {
             type: String,
             default: null
         },
         /**
          * Shadow Offset.
          */
-        shadow_offset: {
+        shadowOffset: {
             type: String,
             default: null
         },
@@ -584,47 +584,47 @@ export const RipeImage = {
                 rotation: this.rotation,
                 flip: this.flip,
                 mirror: this.mirror,
-                bounding_box: this.bounding_box,
+                boundingBox: this.boundingBox,
                 algorithm: this.algorithm,
                 background: this.background,
                 engine: this.engine,
-                initials_profile: this.initials_profile,
-                initials_profiles: this.initials_profiles,
-                initials_x: this.initials_x,
-                initials_y: this.initials_y,
-                initials_width: this.initials_width,
-                initials_height: this.initials_height,
-                initials_viewport: this.initials_viewport,
-                initials_color: this.initials_color,
-                initials_opacity: this.initials_opacity,
-                initials_align: this.initials_align,
-                initials_vertical: this.initials_vertical,
-                initials_embossing: this.initials_embossing,
-                initials_rotation: this.initials_rotation,
-                initials_z_index: this.initials_z_index,
-                initials_algorithm: this.initials_algorithm,
-                initials_blend_color: this.initials_blend_color,
-                initials_pattern: this.initials_pattern,
-                initials_texture: this.initials_texture,
-                initials_exclusion: this.initials_exclusion,
-                initials_inclusion: this.initials_inclusion,
-                initials_image_rotation: this.initials_image_rotation,
-                initials_image_flip: this.initials_image_flip,
-                initials_image_mirror: this.initials_image_mirror,
+                initialsProfile: this.initialsProfile,
+                initialsProfiles: this.initialsProfiles,
+                initialsX: this.initialsX,
+                initialsY: this.initialsY,
+                initialsWidth: this.initialsWidth,
+                initialsHeight: this.initialsHeight,
+                initialsViewport: this.initialsViewport,
+                initialsColor: this.initialsColor,
+                initialsOpacity: this.initialsOpacity,
+                initialsAlign: this.initialsAlign,
+                initialsVertical: this.initialsVertical,
+                initialsEmbossing: this.initialsEmbossing,
+                initialsRotation: this.initialsRotation,
+                initialsZindex: this.initialsZindex,
+                initialsAlgorithm: this.initialsAlgorithm,
+                initialsBlendColor: this.initialsBlendColor,
+                initialsPattern: this.initialsPattern,
+                initialsTexture: this.initialsTexture,
+                initialsExclusion: this.initialsExclusion,
+                initialsInclusion: this.initialsInclusion,
+                initialsImageRotation: this.initialsImageRotation,
+                initialsImageFlip: this.initialsImageFlip,
+                initialsImageMirror: this.initialsImageMirror,
                 debug: this.debug,
-                initials_debug: this.initials_debug,
-                font_family: this.font_family,
-                font_weight: this.font_weight,
-                font_size: this.font_size,
-                font_spacing: this.font_spacing,
-                font_trim: this.font_trim,
-                font_mask: this.font_mask,
-                font_mode: this.font_mode,
-                line_height: this.line_height,
-                line_breaking: this.line_breaking,
+                initialsDebug: this.initialsDebug,
+                fontFamily: this.fontFamily,
+                fontWeight: this.fontWeight,
+                fontSize: this.fontSize,
+                fontSpacing: this.fontSpacing,
+                fontTrim: this.fontTrim,
+                fontMask: this.fontMask,
+                fontMode: this.fontMode,
+                lineHeight: this.lineHeight,
+                lineBreaking: this.lineBreaking,
                 shadow: this.shadow,
-                shadow_color: this.shadow_color,
-                shadow_offset: this.shadow_offset,
+                shadowColor: this.shadowColor,
+                shadowOffset: this.shadowOffset,
                 offsets: this.offsets,
                 curve: this.curve
             };
@@ -654,47 +654,47 @@ export const RipeImage = {
             rotation: this.rotation,
             flip: this.flip,
             mirror: this.mirror,
-            bounding_box: this.bounding_box,
+            boundingBox: this.boundingBox,
             algorithm: this.algorithm,
             background: this.background,
             engine: this.engine,
-            initials_profile: this.initials_profile,
-            initials_profiles: this.initials_profiles,
-            initials_x: this.initials_x,
-            initials_y: this.initials_y,
-            initials_width: this.initials_width,
-            initials_height: this.initials_height,
-            initials_viewport: this.initials_viewport,
-            initials_color: this.initials_color,
-            initials_opacity: this.initials_opacity,
-            initials_align: this.initials_align,
-            initials_vertical: this.initials_vertical,
-            initials_embossing: this.initials_embossing,
-            initials_rotation: this.initials_rotation,
-            initials_z_index: this.initials_z_index,
-            initials_algorithm: this.initials_algorithm,
-            initials_blend_color: this.initials_blend_color,
-            initials_pattern: this.initials_pattern,
-            initials_texture: this.initials_texture,
-            initials_exclusion: this.initials_exclusion,
-            initials_inclusion: this.initials_inclusion,
-            initials_image_rotation: this.initials_image_rotation,
-            initials_image_flip: this.initials_image_flip,
-            initials_image_mirror: this.initials_image_mirror,
+            initialsProfile: this.initialsProfile,
+            initialsProfiles: this.initialsProfiles,
+            initialsX: this.initialsX,
+            initialsY: this.initialsY,
+            initialsWidth: this.initialsWidth,
+            initialsHeight: this.initialsHeight,
+            initialsViewport: this.initialsViewport,
+            initialsColor: this.initialsColor,
+            initialsOpacity: this.initialsOpacity,
+            initialsAlign: this.initialsAlign,
+            initialsVertical: this.initialsVertical,
+            initialsEmbossing: this.initialsEmbossing,
+            initialsRotation: this.initialsRotation,
+            initialsZindex: this.initialsZindex,
+            initialsAlgorithm: this.initialsAlgorithm,
+            initialsBlendColor: this.initialsBlendColor,
+            initialsPattern: this.initialsPattern,
+            initialsTexture: this.initialsTexture,
+            initialsExclusion: this.initialsExclusion,
+            initialsInclusion: this.initialsInclusion,
+            initialsImageRotation: this.initialsImageRotation,
+            initialsImageFlip: this.initialsImageFlip,
+            initialsImageMirror: this.initialsImageMirror,
             debug: this.debug,
-            initials_debug: this.initials_debug,
-            font_family: this.font_family,
-            font_weight: this.font_weight,
-            font_size: this.font_size,
-            font_spacing: this.font_spacing,
-            font_trim: this.font_trim,
-            font_mask: this.font_mask,
-            font_mode: this.font_mode,
-            line_height: this.line_height,
-            line_breaking: this.line_breaking,
+            initialsDebug: this.initialsDebug,
+            fontFamily: this.fontFamily,
+            fontWeight: this.fontWeight,
+            fontSize: this.fontSize,
+            fontSpacing: this.fontSpacing,
+            fontTrim: this.fontTrim,
+            fontMask: this.fontMask,
+            fontMode: this.fontMode,
+            lineHeight: this.lineHeight,
+            lineBreaking: this.lineBreaking,
             shadow: this.shadow,
-            shadow_color: this.shadow_color,
-            shadow_offset: this.shadow_offset,
+            shadowColor: this.shadowColor,
+            shadowOffset: this.shadowOffset,
             offsets: this.offsets,
             curve: this.curve
         });
