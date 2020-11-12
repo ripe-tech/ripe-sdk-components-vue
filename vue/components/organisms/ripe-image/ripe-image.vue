@@ -171,24 +171,6 @@ export const RipeImage = {
             default: null
         },
         /**
-         * The name of the profile to be used. A profile what what defines a premade configuration
-         * in a specific product. The configuration can set the values such as the font type, color
-         * and size, the initials position and rotation. This supports the use of namespacing.
-         */
-        initialsProfile: {
-            type: Array,
-            default: null
-        },
-        /**
-         * The name of the profiles to be used. A profile what what defines a premade configuration
-         * in a specific product. The configuration can set the values such as the font type, color
-         * and size, the initials position and rotation. This supports the use of namespacing.
-         */
-        initialsProfiles: {
-            type: Array,
-            default: null
-        },
-        /**
          * Overrides the initialsProfile's position on the x axis.
          */
         initialsX: {
@@ -345,13 +327,6 @@ export const RipeImage = {
          * Displays the Debug information box.
          */
         debug: {
-            type: Boolean,
-            default: null
-        },
-        /**
-         * Displays the Debug information box.
-         */
-        initialsDebug: {
             type: Boolean,
             default: null
         },
@@ -596,8 +571,6 @@ export const RipeImage = {
                 algorithm: this.algorithm,
                 background: this.background,
                 engine: this.engine,
-                initialsProfile: this.initialsProfile,
-                initialsProfiles: this.initialsProfiles,
                 initialsX: this.initialsX,
                 initialsY: this.initialsY,
                 initialsWidth: this.initialsWidth,
@@ -620,7 +593,6 @@ export const RipeImage = {
                 initialsImageFlip: this.initialsImageFlip,
                 initialsImageMirror: this.initialsImageMirror,
                 debug: this.debug,
-                initialsDebug: this.initialsDebug,
                 fontFamily: this.fontFamily,
                 fontWeight: this.fontWeight,
                 fontSize: this.fontSize,
@@ -666,8 +638,6 @@ export const RipeImage = {
             algorithm: this.algorithm,
             background: this.background,
             engine: this.engine,
-            initialsProfile: this.initialsProfile,
-            initialsProfiles: this.initialsProfiles,
             initialsX: this.initialsX,
             initialsY: this.initialsY,
             initialsWidth: this.initialsWidth,
@@ -690,7 +660,6 @@ export const RipeImage = {
             initialsImageFlip: this.initialsImageFlip,
             initialsImageMirror: this.initialsImageMirror,
             debug: this.debug,
-            initialsDebug: this.initialsDebug,
             fontFamily: this.fontFamily,
             fontWeight: this.fontWeight,
             fontSize: this.fontSize,
