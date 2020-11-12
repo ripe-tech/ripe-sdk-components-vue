@@ -446,7 +446,12 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Offsets.
+         * Offsets. Example:
+         * {
+         *   0: [0, 6],
+         *   1: [0, -10],
+         *   2: [0, 10]
+         * }
          */
         offsets: {
             type: Object,
