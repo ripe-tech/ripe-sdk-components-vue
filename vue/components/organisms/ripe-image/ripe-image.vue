@@ -528,12 +528,16 @@ export const RipeImage = {
         },
         frame: {
             handler: function(value) {
+                if (!this.image) return;
+
                 this.loading = true;
                 this.image.setFrame(value);
             }
         },
         size: {
             handler: async function(value) {
+                if (!this.image) return;
+
                 this.loading = true;
                 this.image.resize(value);
             }
@@ -547,17 +551,17 @@ export const RipeImage = {
         },
         showInitials: {
             handler: function(value) {
-                this.image.setShowInitials(value);
+                this.image?.setShowInitials(value);
             }
         },
         initialsBuilder: {
             handler: function(value) {
-                this.image.setInitialsBuilder(value);
+                this.image?.setInitialsBuilder(value);
             }
         },
         state: {
             handler: async function(value) {
-                await this.image.update(this.state);
+                await this.image?.update(this.state);
             }
         },
         configProps: {
