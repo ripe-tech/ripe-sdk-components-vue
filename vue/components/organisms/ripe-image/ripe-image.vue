@@ -171,35 +171,35 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's position on the x axis.
+         * Overrides the profiles's position on the x axis.
          */
         initialsX: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initialsProfile's position on the y axis.
+         * Overrides the profiles's position on the y axis.
          */
         initialsY: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initialsProfile's width.
+         * Overrides the profiles's width.
          */
         initialsWidth: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initialsProfile's height.
+         * Overrides the profiles's height.
          */
         initialsHeight: {
             type: Number,
             default: null
         },
         /**
-         * Overrides the initialsProfile's viewport. Viewport is a window (specified by [x, y, width, height])
+         * Overrides the profiles's viewport. Viewport is a window (specified by [x, y, width, height])
          * that defines a region to be shown with a zoom. It is used to showcase the initials.
          */
         initialsViewport: {
@@ -207,14 +207,14 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's color to be applied to the initials.
+         * Overrides the profiles's color to be applied to the initials.
          */
         initialsColor: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initialsProfile's opacity to be applied to the initials. This value ranges from
+         * Overrides the profiles's opacity to be applied to the initials. This value ranges from
          * 0 to 1.
          */
         initialsOpacity: {
@@ -222,7 +222,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's orientation of the initials to be applied. This field can be
+         * Overrides the profiles's orientation of the initials to be applied. This field can be
          * left, right or center.
          */
         initialsAlign: {
@@ -230,7 +230,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's vertical alignment on the initials. This field can be top,
+         * Overrides the profiles's vertical alignment on the initials. This field can be top,
          * bottom or middle.
          */
         initialsVertical: {
@@ -238,7 +238,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's embossing type of the initials. The available options
+         * Overrides the profiles's embossing type of the initials. The available options
          * vary with each model.
          */
         initialsEmbossing: {
@@ -246,7 +246,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's rotation angle, in degrees, to be applied to the initials.
+         * Overrides the profiles's rotation angle, in degrees, to be applied to the initials.
          */
         initialsRotation: {
             type: Number,
@@ -303,7 +303,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initials_profile's rotation angle, in degrees, to be applied to image.
+         * Overrides the profile's rotation angle, in degrees, to be applied to image.
          */
         initialsImageRotation: {
             type: Number,
@@ -331,28 +331,28 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's font to be applied on the initials.
+         * Overrides the profiles's font to be applied on the initials.
          */
         fontFamily: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initialsProfile's font weight to be applied on the initials.
+         * Overrides the profiles's font weight to be applied on the initials.
          */
         fontWeight: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initialsProfile's font size to be applied on the initials.
+         * Overrides the profiles's font size to be applied on the initials.
          */
         fontSize: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initialsProfile's spacing between each letter.
+         * Overrides the profiles's spacing between each letter.
          */
         fontSpacing: {
             type: Number,
@@ -399,21 +399,21 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the initialsProfile's shadow, which defines if the initials have a shadow.
+         * Overrides the profiles's shadow, which defines if the initials have a shadow.
          */
         shadow: {
             type: Boolean,
             default: null
         },
         /**
-         * Overrides the initialsProfile's color of the shadow to be used.
+         * Overrides the profiles's color of the shadow to be used.
          */
         shadowColor: {
             type: String,
             default: null
         },
         /**
-         * Overrides the initialsProfile's offset to be applied on the shadow.
+         * Overrides the profiles's offset to be applied on the shadow.
          */
         shadowOffset: {
             type: String,
