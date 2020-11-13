@@ -341,14 +341,14 @@ export const RipeImage = {
          * Overrides the profiles's font weight to be applied on the initials.
          */
         fontWeight: {
-            type: String,
+            type: Number,
             default: null
         },
         /**
          * Overrides the profiles's font size to be applied on the initials.
          */
         fontSize: {
-            type: String,
+            type: Number,
             default: null
         },
         /**
