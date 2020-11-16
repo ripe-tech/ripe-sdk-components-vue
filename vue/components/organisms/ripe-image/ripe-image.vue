@@ -171,6 +171,13 @@ export const RipeImage = {
             default: null
         },
         /**
+         * Model's initials. TODO more components.
+         */
+        initials: {
+            type: String,
+            default: null
+        },
+        /**
          * Overrides the profiles's position on the x axis.
          */
         initialsX: {
@@ -534,6 +541,12 @@ export const RipeImage = {
                 this.image?.setInitialsBuilder(value);
             }
         },
+        initials: {
+            handler: function(value) {
+                const initials = !value ? "$empty" : this.initials;
+                this.ripeData.setInitials(initials);
+            }
+        },
         state: {
             handler: async function(value) {
                 await this.image?.update(this.state);
@@ -623,6 +636,8 @@ export const RipeImage = {
             this.partsData = parts;
         });
 
+        const initials = !this.initials ? "$empty" : this.initials;
+        this.ripeData.setInitials(initials);
         this.image = this.ripeData.bindImage(this.$refs.image, {
             frame: this.frame,
             size: this.size || undefined,
