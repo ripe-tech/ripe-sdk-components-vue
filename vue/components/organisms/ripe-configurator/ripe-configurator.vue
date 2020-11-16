@@ -77,21 +77,29 @@ export const RipeConfigurator = {
          */
         brand: {
             type: String,
-            required: true
+            required: null
         },
         /**
          * The name of the model.
          */
         model: {
             type: String,
-            required: true
+            required: null
         },
         /**
          * The version of the build.
          */
         version: {
             type: Number,
-            required: true
+            required: null
+        },
+        /**
+         * Indicates that the component should apply the config internally
+         * on component initialization.
+         */
+        config: {
+            type: Boolean,
+            default: true
         },
         /**
          * The parts of the customized build as a dictionary mapping the
@@ -313,7 +321,7 @@ export const RipeConfigurator = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         options: {

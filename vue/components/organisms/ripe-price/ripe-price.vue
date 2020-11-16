@@ -41,6 +41,13 @@ export const RipePrice = {
             default: null
         },
         /**
+         * Indicates that the component should apply the config internally.
+         */
+        config: {
+            type: Boolean,
+            default: true
+        },
+        /**
          * The parts of the customized build as a dictionary mapping the
          * name of the part to an object of material and color.
          */
@@ -108,7 +115,7 @@ export const RipePrice = {
         },
         currency: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         price: {
@@ -125,7 +132,7 @@ export const RipePrice = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         }
     },

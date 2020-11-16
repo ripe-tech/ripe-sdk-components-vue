@@ -37,6 +37,14 @@ export const RipeImage = {
             default: null
         },
         /**
+         * Indicates that the component should apply the config internally
+         * on component initialization.
+         */
+        config: {
+            type: Boolean,
+            default: true
+        },
+        /**
          * The version of the build.
          */
         version: {
@@ -203,7 +211,7 @@ export const RipeImage = {
         },
         configProps: {
             handler: async function(value) {
-                await this.configRipe();
+                if (this.config) await this.configRipe();
             }
         },
         imageProps: {
