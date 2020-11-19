@@ -299,7 +299,7 @@ export const RipeImage = {
          * Parts to exclude when applying the initials.
          */
         initialsExclusion: {
-            type: String,
+            type: Array,
             default: null
         },
         /**
