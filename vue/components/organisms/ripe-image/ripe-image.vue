@@ -306,7 +306,7 @@ export const RipeImage = {
          * Parts to include when applying the initials.
          */
         initialsInclusion: {
-            type: String,
+            type: Array,
             default: null
         },
         /**
