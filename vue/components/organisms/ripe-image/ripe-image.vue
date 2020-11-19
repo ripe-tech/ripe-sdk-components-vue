@@ -348,7 +348,7 @@ export const RipeImage = {
          * Overrides the profiles's font weight to be applied on the initials.
          */
         fontWeight: {
-            type: Number,
+            type: String | Number,
             default: null
         },
         /**
@@ -369,7 +369,7 @@ export const RipeImage = {
          * Font Trim.
          */
         fontTrim: {
-            type: Number,
+            type: Boolean,
             default: null
         },
         /**
