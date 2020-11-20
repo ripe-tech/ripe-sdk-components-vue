@@ -171,7 +171,17 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Model's initials. TODO more components.
+         * A list with the names of the profiles to be used. A profile what what defines a premade
+         * configuration in a specific product. The configuration can set the values such as the
+         * font type, color and size, the initials position and rotation. This supports the use of
+         * namespacing.
+         */
+        profiles: {
+            type: Array,
+            default: null
+        },
+        /**
+         * The initials value used to personalize the model.
          */
         initials: {
             type: String,
@@ -544,7 +554,7 @@ export const RipeImage = {
         initials: {
             handler: function(value) {
                 const initials = !value ? "$empty" : this.initials;
-                this.ripeData.setInitials(initials);
+                this.ripeData.setInitials(initials, this.profiles);
             }
         },
         state: {
@@ -637,7 +647,7 @@ export const RipeImage = {
         });
 
         const initials = !this.initials ? "$empty" : this.initials;
-        this.ripeData.setInitials(initials);
+        this.ripeData.setInitials(initials, this.profiles);
         this.image = this.ripeData.bindImage(this.$refs.image, {
             frame: this.frame,
             size: this.size || undefined,
