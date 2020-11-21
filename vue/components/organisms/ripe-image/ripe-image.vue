@@ -551,10 +551,14 @@ export const RipeImage = {
                 this.image?.setInitialsBuilder(value);
             }
         },
+        profiles: {
+            handler: function(value) {
+                this.setInitials(this.initials, value);
+            }
+        },
         initials: {
             handler: function(value) {
-                const initials = !value ? "$empty" : this.initials;
-                this.ripeData.setInitials(initials, this.profiles);
+                this.setInitials(value, this.profiles);
             }
         },
         state: {
@@ -703,6 +707,11 @@ export const RipeImage = {
         this.image.update(this.state);
     },
     methods: {
+        setInitials(initials, profiles) {
+            const _initials = initials || "$empty";
+            const _profiles = profiles || null;
+            this.ripeData.setInitials(_initials, _profiles);
+        },
         onLoaded() {
             this.loading = false;
         }
