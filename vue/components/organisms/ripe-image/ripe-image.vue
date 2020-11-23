@@ -4,8 +4,7 @@
 
 <style scoped>
 .image {
-    cursor: pointer;
-    display: block;
+    display: inline-block;
 }
 </style>
 
