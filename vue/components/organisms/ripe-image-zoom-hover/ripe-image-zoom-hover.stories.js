@@ -65,6 +65,10 @@ storiesOf("Organisms", module)
                 type: Number,
                 default: number("Max Zoom", 500)
             },
+            minZoom: {
+                type: Number,
+                default: number("Min Zoom", 10)
+            },
             scrollZoom: {
                 type: Boolean,
                 default: boolean("Enable Scroll Zoom", true)
@@ -72,6 +76,10 @@ storiesOf("Organisms", module)
             scrollSensitivity: {
                 type: Number,
                 default: number("Scroll Zoom Sensitivity", 1)
+            },
+            zoomOut: {
+                type: Boolean,
+                default: boolean("Enable Zoom Out", false)
             },
             state: {
                 type: Object,
@@ -100,8 +108,10 @@ storiesOf("Organisms", module)
                 v-bind:state="state"
                 v-bind:zoom="zoom"
                 v-bind:max-zoom="maxZoom"
+                v-bind:min-zoom="minZoom"
                 v-bind:scroll-zoom="scrollZoom"
                 v-bind:scroll-sensitivity="scrollSensitivity"
+                v-bind:zoom-out="zoomOut"
             />
         `
     }));
