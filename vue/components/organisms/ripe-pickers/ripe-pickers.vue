@@ -1,7 +1,7 @@
 <template>
     <div class="ripe-pickers">
         <select
-            class="select"
+            class="select select-parts"
             v-bind:value="selectedPart"
             v-if="partsOptions.length > 0"
             v-on:change="event => onSelectPartChange(event.target.value)"
@@ -18,7 +18,7 @@
             </option>
         </select>
         <select
-            class="select"
+            class="select select-materials"
             v-bind:value="selectedMaterial"
             v-bind:disabled="!Boolean(selectedPart)"
             v-on:change="event => onSelectMaterialChange(event.target.value)"
@@ -35,7 +35,7 @@
             </option>
         </select>
         <select
-            class="select"
+            class="select select-colors"
             v-bind:value="selectedColor"
             v-bind:disabled="!Boolean(selectedMaterial)"
             v-on:change="event => onSelectColorChange(event.target.value)"
