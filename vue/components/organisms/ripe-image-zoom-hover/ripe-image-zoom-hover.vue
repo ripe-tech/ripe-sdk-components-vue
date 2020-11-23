@@ -3,7 +3,7 @@
         class="ripe-image-zoom-hover"
         v-on:mouseenter="onMouseEnter"
         v-on:mousemove="onMouseMove"
-        v-on:mouseleave="onEndHover"
+        v-on:mouseleave="onMouseLeave"
         v-on:wheel.prevent="onMouseWheel"
     >
         <ripe-image-zoom v-bind="$attrs" v-bind:zoom="zoomApplied" v-bind:pivot="pivot" />
@@ -12,6 +12,7 @@
 
 <style scoped>
 .ripe-image-zoom-hover {
+    cursor: zoom-in;
     display: inline-block;
 }
 </style>
@@ -119,11 +120,11 @@ export const RipeImageZoomHover = {
         onMouseMove(event) {
             this.moveHover(event, event.target);
         },
+        onMouseLeave() {
+            this.endHover();
+        },
         onMouseWheel(event) {
             this.zoomScroll(event);
-        },
-        onEndHover() {
-            this.endHover();
         },
         _getPivotCoordinates(event, target) {
             const x = event.pageX - target.offsetLeft;
