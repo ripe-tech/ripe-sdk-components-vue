@@ -73,43 +73,6 @@ export const RipeConfigurator = {
     mixins: [logicMixin],
     props: {
         /**
-         * The brand of the model.
-         */
-        brand: {
-            type: String,
-            required: null
-        },
-        /**
-         * The name of the model.
-         */
-        model: {
-            type: String,
-            required: null
-        },
-        /**
-         * The version of the build.
-         */
-        version: {
-            type: Number,
-            required: null
-        },
-        /**
-         * Indicates that the component should apply the config internally
-         * on component initialization.
-         */
-        config: {
-            type: Boolean,
-            default: null
-        },
-        /**
-         * The parts of the customized build as a dictionary mapping the
-         * name of the part to an object of material and color.
-         */
-        parts: {
-            type: Object,
-            default: null
-        },
-        /**
          * The name of the frame to be shown in the configurator using
          * the normalized frame format (eg: side-1).
          */
@@ -185,14 +148,6 @@ export const RipeConfigurator = {
         format: {
             type: String,
             default: null
-        },
-        /**
-         * An initialized RIPE instance form the RIPE SDK, if not defined,
-         * a new SDK instance will be initialized.
-         */
-        ripe: {
-            type: Object,
-            default: null
         }
     },
     data: function() {
@@ -203,53 +158,41 @@ export const RipeConfigurator = {
              */
             frameData: this.frame,
             /**
-             * Flag that controls if the initial loading process for
-             * the configurator is still running.
-             */
-            loading: true,
-            /**
              * Part of the model that is currently selected.
              */
             selectedPartData: this.selectedPart,
             /**
              * Part of the model that is currently highlighted.
              */
-            highlightedPartData: this.highlightedPart,
-            /**
-             * Parts of the model to be used for the internal sync
-             * operation.
-             */
-            partsData: this.parts,
-            /**
-             * RIPE instance, which can be later initialized
-             * if the given prop is not defined.
-             */
-            ripeData: this.ripe
+            highlightedPartData: this.highlightedPart
         };
     },
+    computed: {
+        elementDisplayed() {
+            if (!this.configurator) {
+                return false;
+            }
+            return getComputedStyle(this.configurator.element).display !== "none";
+        },
+        loaderStyle() {
+            return {
+                top: this.size ? `${this.size / 2}px` : "calc(50%)"
+            };
+        },
+        options() {
+            return {
+                duration: this.duration,
+                animation: this.animation,
+                useMasks: this.useMasks,
+                sensitivity: this.sensitivity
+            };
+        }
+    },
     watch: {
-        parts: {
-            handler: async function(value, previous) {
-                if (this.equalParts(value, previous)) return;
-
-                this.partsData = value;
-                await this.setPartsRipe(value);
-            }
-        },
-        partsData: {
-            handler: function(value) {
-                this.$emit("update:parts", value);
-            }
-        },
         frame: {
             handler: function(value) {
                 if (this.frameData === value) return;
                 this.frameData = value;
-            }
-        },
-        size: {
-            handler: function(value) {
-                this.resize(value);
             }
         },
         frameData: {
@@ -279,12 +222,10 @@ export const RipeConfigurator = {
                 }
             }
         },
-        loading: {
+        size: {
             handler: function(value) {
-                if (value) this.$emit("loading");
-                else this.$emit("loaded");
-            },
-            immediate: true
+                this.resize(value);
+            }
         },
         selectedPart: {
             handler: function(value) {
@@ -319,52 +260,14 @@ export const RipeConfigurator = {
                 else this.configurator.disableMasks();
             }
         },
-        configProps: {
-            handler: async function(value) {
-                if (this.config) await this.configRipe();
-            }
-        },
         options: {
             handler: async function(value) {
                 await this.configurator.updateOptions(value);
             }
         }
     },
-    computed: {
-        elementDisplayed() {
-            if (!this.configurator) {
-                return false;
-            }
-            return getComputedStyle(this.configurator.element).display !== "none";
-        },
-        loaderStyle() {
-            return {
-                top: this.size ? `${this.size / 2}px` : "calc(50%)"
-            };
-        },
-        options() {
-            return {
-                duration: this.duration,
-                animation: this.animation,
-                useMasks: this.useMasks,
-                sensitivity: this.sensitivity
-            };
-        },
-        configProps() {
-            return {
-                brand: this.brand,
-                model: this.model,
-                version: this.version
-            };
-        }
-    },
     mounted: async function() {
         await this.setupRipe();
-
-        // saves the model parts after the RIPE configuration so that
-        // possible changes due to restrictions can be communicated
-        // to the parent component
-        this.partsData = Object.assign({}, this.ripeData.parts);
 
         this.configurator = this.ripeData.bindConfigurator(this.$refs.configurator, {
             view: this.frameData ? this.frameData.split("-")[0] : null,
@@ -375,11 +278,6 @@ export const RipeConfigurator = {
         this.ripeData.bind("selected_part", part => {
             if (this.selectedPartData === part) return;
             this.selectedPartData = part;
-        });
-
-        this.ripeData.bind("parts", parts => {
-            if (this.equalParts(parts, this.partsData)) return;
-            this.partsData = parts;
         });
 
         this.configurator.bind("changed_frame", frame => {

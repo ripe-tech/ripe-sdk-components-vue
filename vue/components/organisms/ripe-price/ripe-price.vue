@@ -16,61 +16,6 @@ import { logicMixin, moneyMixin } from "../../../mixins";
 export const RipePrice = {
     name: "ripe-price",
     mixins: [logicMixin, moneyMixin],
-    props: {
-        /**
-         * The brand of the model for which the price
-         * will be returned.
-         */
-        brand: {
-            type: String,
-            default: null
-        },
-        /**
-         * The name of the model for which the price
-         * will be returned.
-         */
-        model: {
-            type: String,
-            default: null
-        },
-        /**
-         * The version of the build.
-         */
-        version: {
-            type: Number,
-            default: null
-        },
-        /**
-         * Indicates that the component should apply the config internally.
-         */
-        config: {
-            type: Boolean,
-            default: null
-        },
-        /**
-         * The parts of the customized build as a dictionary mapping the
-         * name of the part to an object of material and color.
-         */
-        parts: {
-            type: Object,
-            default: null
-        },
-        /**
-         * The currency being used for the price of the model.
-         */
-        currency: {
-            type: String,
-            required: true
-        },
-        /**
-         * An initialized RIPE instance form the RIPE SDK, if not defined,
-         * a new SDK instance will be initialized.
-         */
-        ripe: {
-            type: Object,
-            default: null
-        }
-    },
     data: function() {
         return {
             /**
@@ -79,98 +24,42 @@ export const RipePrice = {
              */
             price: null,
             /**
-             * Binding to the RIPE price changing event.
+             * The error raised when fetching the price.
              */
-            priceBind: null,
-            /**
-             * Flag that controls if the initial loading process for
-             * the price is still running.
-             */
-            loading: true,
-            /**
-             * Parts of the model to be used for the internal sync
-             * operation.
-             */
-            partsData: this.parts,
-            /**
-             * Ripe SDK instance, which can be later initialized
-             * if the given prop is not defined.
-             */
-            ripeData: this.ripe
+            error: null
         };
     },
     watch: {
-        parts: {
-            handler: async function(value, previous) {
-                if (this.equalParts(value, previous)) return;
-
-                this.partsData = value;
-                await this.setPartsRipe(value);
-            }
+        async currency(value) {
+            if (this.configData) await this.configRipe();
         },
-        partsData: {
-            handler: function(value) {
-                this.$emit("update:parts", value);
-            }
-        },
-        currency: {
-            handler: async function(value) {
-                if (this.config) await this.configRipe();
-            }
-        },
-        price: {
-            handler: function(value) {
-                this.$emit("update:price", this.priceText);
-            }
-        },
-        loading: {
-            handler: function(value) {
-                if (value) this.$emit("loading");
-                else this.$emit("loaded");
-            },
-            immediate: true
-        },
-        configProps: {
-            handler: async function(value) {
-                if (this.config) await this.configRipe();
-            }
+        error(value) {
+            this.$emit("error", value);
         }
     },
     computed: {
         priceText() {
-            return this.formatMoney(this.price, this.currency);
-        },
-        configProps() {
-            return {
-                brand: this.brand,
-                model: this.model,
-                version: this.version
-            };
+            return this.error
+                ? "Error"
+                : this.formatMoney(this.price?.total.price_final, this.currency);
         }
     },
     created: async function() {
         await this.setupRipe();
 
-        // saves the model parts after the RIPE configuration so that
-        // possible changes due to restrictions can be communicated
-        // to the parent component
-        this.partsData = Object.assign({}, this.ripeData.parts);
-
-        this.ripeData.bind("parts", parts => {
-            if (this.equalParts(parts, this.partsData)) return;
-            this.partsData = parts;
+        this.onPrice = this.ripeData.bind("price", price => {
+            this.error = null;
+            this.price = price;
         });
-
-        this.priceBind = this.ripeData.bind("price", this.onPriceChange);
-    },
-    methods: {
-        onPriceChange(value) {
-            this.price = value.total.price_final;
-        }
+        this.onPriceError = this.ripeData.bind("price_error", error => {
+            this.error = error;
+            this.price = null;
+        });
+        // TODO get current price (needs SDK support)
     },
     destroyed: async function() {
-        if (this.priceBind) this.ripeData.unbind("price", this.priceBind);
-        this.priceBind = null;
+        if (this.onPriceError) this.ripeData.unbind("price_error", this.onPriceError);
+        if (this.onPrice) this.ripeData.unbind("price", this.onPrice);
     }
 };
 

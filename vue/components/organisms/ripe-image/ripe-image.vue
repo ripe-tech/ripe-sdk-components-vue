@@ -3,7 +3,7 @@
 </template>
 
 <style scoped>
-.image {
+.ripe-image {
     display: inline-block;
 }
 </style>
@@ -19,59 +19,6 @@ export const RipeImage = {
     name: "ripe-image",
     mixins: [logicMixin],
     props: {
-        /**
-         * The brand of the model to be rendered into
-         * the target image.
-         */
-        brand: {
-            type: String,
-            default: null
-        },
-        /**
-         * The name of the model to be rendered into
-         * the target image.
-         */
-        model: {
-            type: String,
-            default: null
-        },
-        /**
-         * The version of the build.
-         */
-        version: {
-            type: Number,
-            default: null
-        },
-        /**
-         * Indicates that the component should apply the config internally
-         * on component initialization.
-         */
-        config: {
-            type: Boolean,
-            default: null
-        },
-        /**
-         * The parts of the customized build as a dictionary mapping the
-         * name of the part to an object of material and color.
-         */
-        parts: {
-            type: Object,
-            default: null
-        },
-        /**
-         * The initials value to be used in the Ripe instance.
-         */
-        initials: {
-            type: String,
-            default: null
-        },
-        /**
-         * The engraving value to be used in the Ripe instance.
-         */
-        engraving: {
-            type: String,
-            default: null
-        },
         /**
          * The name of the frame to be shown in the configurator using
          * the normalized frame format (eg: side-1).
@@ -472,14 +419,6 @@ export const RipeImage = {
             default: () => ({})
         },
         /**
-         * An initialized RIPE instance form the RIPE SDK, if not defined,
-         * a new SDK instance will be initialized.
-         */
-        ripe: {
-            type: Object,
-            default: null
-        },
-        /**
          * Name of the image.
          */
         name: {
@@ -492,104 +431,10 @@ export const RipeImage = {
             /**
              * The image created by the Ripe instance, currently being shown.
              */
-            image: null,
-            /**
-             * Flag that controls if the initial loading process for
-             * the image is still running.
-             */
-            loading: true,
-            /**
-             * Parts of the model to be used for the internal sync
-             * operation.
-             */
-            partsData: this.parts,
-            /**
-             * RIPE instance, which can be later initialized
-             * if the given prop is not defined.
-             */
-            ripeData: this.ripe
+            image: null
         };
     },
-    watch: {
-        parts: {
-            handler: async function(value, previous) {
-                if (this.equalParts(value, previous)) return;
-
-                this.partsData = value;
-                await this.setPartsRipe(value);
-            }
-        },
-        partsData: {
-            handler: function(value) {
-                this.$emit("update:parts", value);
-            }
-        },
-        frame: {
-            handler: function(value) {
-                if (!this.image) return;
-                this.loading = true;
-                this.image.setFrame(value);
-            }
-        },
-        size: {
-            handler: async function(value) {
-                if (!this.image) return;
-                this.loading = true;
-                this.image.resize(value);
-            }
-        },
-        loading: {
-            handler: function(value) {
-                if (value) this.$emit("loading");
-                else this.$emit("loaded");
-            },
-            immediate: true
-        },
-        showInitials: {
-            handler: function(value) {
-                this.image?.setShowInitials(value);
-            }
-        },
-        initialsBuilder: {
-            handler: function(value) {
-                this.image?.setInitialsBuilder(value);
-            }
-        },
-        profiles: {
-            handler: function(value) {
-                this.setInitials(this.initials, value);
-            }
-        },
-        initials: {
-            handler: function(value) {
-                this.setInitials(value, this.profiles);
-            }
-        },
-        state: {
-            handler: async function(value) {
-                await this.image?.update(this.state);
-            }
-        },
-        configProps: {
-            handler: async function(value) {
-                if (this.config) await this.configRipe();
-            }
-        },
-        imageProps: {
-            handler: async function(value) {
-                await this.image?.updateOptions(value);
-            }
-        }
-    },
     computed: {
-        configProps() {
-            return {
-                brand: this.brand,
-                model: this.model,
-                version: this.version,
-                parts: this.parts
-            };
-        },
         imageProps() {
             return {
                 format: this.format,
@@ -641,18 +486,35 @@ export const RipeImage = {
             };
         }
     },
+    watch: {
+        frame(value) {
+            if (!this.image) return;
+            this.loading = true;
+            this.image.setFrame(value);
+        },
+        async size(value) {
+            if (!this.image) return;
+            this.loading = true;
+            this.image.resize(value);
+        },
+        showInitials(value) {
+            this.image?.setShowInitials(value);
+        },
+        initialsBuilder(value) {
+            this.image?.setInitialsBuilder(value);
+        },
+        initials(value) {
+            this.ripeData.setInitials(value);
+        },
+        async state(value) {
+            await this.image?.update(this.state);
+        },
+        async imageProps(value) {
+            await this.image?.updateOptions(value);
+        }
+    },
     mounted: async function() {
         await this.setupRipe();
-
-        // saves the model parts after the RIPE configuration so that
-        // possible changes due to restrictions can be communicated
-        // to the parent component
-        this.partsData = Object.assign({}, this.ripeData.parts);
-
-        this.ripeData.bind("parts", parts => {
-            if (this.equalParts(parts, this.partsData)) return;
-            this.partsData = parts;
-        });
 
         this.image = this.ripeData.bindImage(this.$refs.image, {
             frame: this.frame,

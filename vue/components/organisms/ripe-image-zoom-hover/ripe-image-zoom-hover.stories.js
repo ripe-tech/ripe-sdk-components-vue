@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, number, boolean } from "@storybook/addon-knobs";
+import { Ripe } from "ripe-sdk";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
@@ -91,6 +92,9 @@ storiesOf("Organisms", module)
                         }
                     }
                 })
+            },
+            ripe: {
+                default: () => new Ripe()
             }
         },
         template: `
@@ -112,6 +116,8 @@ storiesOf("Organisms", module)
                 v-bind:scroll-zoom="scrollZoom"
                 v-bind:scroll-sensitivity="scrollSensitivity"
                 v-bind:zoom-out="zoomOut"
+                v-bind:ripe="ripe"
+                v-bind:config="true"
             />
         `
     }));
