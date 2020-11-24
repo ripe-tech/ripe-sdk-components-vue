@@ -45,7 +45,7 @@ export const RipePrice = {
          */
         config: {
             type: Boolean,
-            default: true
+            default: null
         },
         /**
          * The parts of the customized build as a dictionary mapping the
