@@ -4,27 +4,6 @@
 
 The configurator component provides an interactive configuration experience inside a DOM. The user can interact with a model by rotating, highlighting and selecting it.
 
-The configurator can receive the following parameters:
-
-| Prop            | Type      | Required | Description                                                                                                                                    |
-| --------------- | --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
-| brand           | `String`  | `false`  | The brand of the model.                                                                                                                        |
-| model           | `String`  | `false`  | The name of the model.                                                                                                                         |
-| version         | `Number`  | `false`  | The version of the build.                                                                                                                      |
-| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
-| parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
-| frame           | `String`  | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
-| size            | `Number`  | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                            |
-| loader          | `Boolean` | `false`  | Flag for showing a loader when the configurator is loading.                                                                                    |
-| selectedPart    | `String`  | `false`  | Part of the model that is currently selected (eg: side).                                                                                       |
-| highlightedPart | `String`  | `false`  | Part of the model that is currently highlighted (eg:side). Only possible if the usage of masks is enabled.                                     |
-| sensitivity     | `Number`  | `false`  | Configurator rotation sensitivity to the user mouse drag action. The bigger the number, more sensible it is.                                   |
-| useMasks        | `Boolean` | `false`  | Usage of masks in the current model, necessary for the part highlighting action.                                                               |
-| duration        | `Number`  | `false`  | The duration in milliseconds that the configurator frame transition should take.                                                               |
-| animation       | `String`  | `false`  | The configurator animation style: 'simple' (fade in), 'cross' (crossfade) or 'null'.                                                           |
-| format          | `String`  | `false`  | The format of the configurator image, (eg: png, jpg, svg, etc.).                                                                               |
-| ripe            | `Object`  | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated.                                                              |
-
 An example of an instantiation and the correspondent view:
 
 ```html
@@ -141,26 +120,6 @@ await this.ripe.config("dummy", "cube", {
 ## Image
 
 The image component `<ripe-image>` allows for the visualization of a given model.
-
-The image can receive the following parameters:
-
-| Prop            | Type       | Required | Description                                                                                                                                                                                                |
-| --------------- | ---------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| brand           | `String`   | `false`  | The brand of the model.                                                                                                                                                                                    |
-| model           | `String`   | `false`  | The name of the model.                                                                                                                                                                                     |
-| version         | `Number`   | `false`  | The version of the build.                                                                                                                                                                                  |
-| config          | `Boolean`  | `false`  | Indicates that the component should apply the config internally on component initialization.                                                                                                               |
-| parts           | `Object`   | `false`  | The model's customization.                                                                                                                                                                                 |
-| frame           | `String`   | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.                                                                    |
-| size            | `Number`   | `false`  | The size (in pixels) of the image. If not defined, the image will use all the screen space available.                                                                                                      |
-| format          | `String`   | `false`  | The format of the image, (eg: png, jpg, svg, etc.). Defaults to 'png'.                                                                                                                                     |
-| crop            | `Boolean`  | `false`  | Indicates that the image composition is to be cropped. Crops the current image according to the minimal possible bounding box in both x and y axis.                                                        |
-| showInitials    | `Boolean`  | `false`  | Indicates if the personalization should be shown. Defaults to `false`.                                                                                                                                     |
-| initialsGroup   | `String`   | `false`  | The group in which the image initials belongs to.                                                                                                                                                          |
-| initialsBuilder | `Function` | `false`  | A function that receives the initials and engraving as strings and the img element that will be used and returns a map with the initials and a profile list.                                               |
-| state           | `Object`   | `false`  | An object containing the state of the personalization. For each group of the model it can contain the initials and the corresponding engraving (eg. { main: { initials: "AB", engraving: "style:grey" }}). |
-| ripe            | `Number`   | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated.                                                                                                                          |
-| name            | `String`   | `false`  | Name of the image.                                                                                                                                                                                         |
 
 An example of an instantiation and the correspondent view:
 
@@ -369,18 +328,6 @@ It is also possible to enable the scroll wheel to increase and decrease the zoom
 
 The price component `<ripe-price>` allows for the visualization of the price of a model, according to the currency provided.
 
-The component can receive the following parameters:
-
-| Prop     | Type      | Required | Description                                                                                  |
-| -------- | --------- | -------- | -------------------------------------------------------------------------------------------- |
-| brand    | `String`  | `false`  | The brand of the model.                                                                      |
-| model    | `String`  | `false`  | The name of the model.                                                                       |
-| version  | `Number`  | `false`  | The version of the build.                                                                    |
-| config   | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization. |
-| parts    | `Object`  | `false`  | The model's customization.                                                                   |
-| currency | `String`  | `true`   | The `ISO 4217` currency code in which the price will be displayed.                           |
-| ripe     | `Object`  | `false`  | Instance of Ripe SDK initialized, if not defined, a new one will be instantiated.            |
-
 An example of an instantiation and the correspondent view:
 
 ```html
@@ -454,12 +401,6 @@ Different customizations can result in different prices. Below is an example of 
 ## Pickers
 
 The pickers component `<ripe-pickers>` allows for the customization of a model, by choosing materials and colors for its parts.
-
-The pickers can receive the following parameters:
-
-| Prop | Type     | Required | Description                       |
-| ---- | -------- | -------- | --------------------------------- |
-| ripe | `Object` | `true`   | Instance of Ripe SDK initialized. |
 
 The pickers component will wait for the RIPE configuration to be completed in order to have access to its parts and materials.
 

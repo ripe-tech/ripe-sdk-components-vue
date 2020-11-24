@@ -9,21 +9,26 @@ export const logicMixin = {
          * be used without further configuration.
          */
         async setupRipe() {
+            // in case the config is not explicitly defined "computes" the
+            // best possible decision on if the instance should be configured
+            const isNewInstance = Boolean(!this.ripeData && !global.ripe);
+            const config = this.config === null ? isNewInstance : this.config;
+
             // in case there's no internal RIPE instance already
             // available then created a new one with default config
             if (!this.ripeData) {
-                this.ripeData = new Ripe();
+                this.ripeData = global.ripe || new Ripe();
             }
-
-            // runs the initial configuration of the RIPE
-            // instance properly setting its default
-            if (this.config) await this.configRipe();
 
             // in case the global RIPE instance is not set then
             // updates it with the current one
             if (!global.ripe) {
                 global.ripe = this.ripeData;
             }
+
+            // runs the initial configuration of the RIPE
+            // instance properly setting its default
+            if (config) await this.configRipe();
         },
         /**
          * Configures the RIPE instance with the current brand,
@@ -38,9 +43,11 @@ export const logicMixin = {
                     parts: this.partsData,
                     currency: this.currency ? this.currency.toUpperCase() : null
                 });
-            } catch (error) {
+                if (this.initials) {
+                    await this.ripeData.setInitials(this.initials, this.engraving || null);
+                }
+            } finally {
                 this.loading = false;
-                throw error;
             }
         },
         /**
