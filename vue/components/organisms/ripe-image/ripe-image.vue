@@ -37,19 +37,19 @@ export const RipeImage = {
             default: null
         },
         /**
+         * The version of the build.
+         */
+        version: {
+            type: Number,
+            default: null
+        },
+        /**
          * Indicates that the component should apply the config internally
          * on component initialization.
          */
         config: {
             type: Boolean,
             default: true
-        },
-        /**
-         * The version of the build.
-         */
-        version: {
-            type: Number,
-            default: null
         },
         /**
          * The parts of the customized build as a dictionary mapping the
@@ -376,7 +376,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Font Trim.
+         * Overrides the profiles's font trim, which defines if the initials are trimmed.
          */
         fontTrim: {
             type: Boolean,
@@ -402,7 +402,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Line Height.
+         * Overrides the profiles's line height, which defines the initials line height.
          */
         lineHeight: {
             type: Number,
@@ -437,7 +437,7 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Offsets. Example:
+         * Overrides the profiles's offset to be applied on the initials. Example:
          * {
          *   0: [0, 6],
          *   1: [0, -10],
