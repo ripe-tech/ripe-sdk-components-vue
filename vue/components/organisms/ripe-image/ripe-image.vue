@@ -650,8 +650,7 @@ export const RipeImage = {
             this.partsData = parts;
         });
 
-        const initials = !this.initials ? "$empty" : this.initials;
-        this.ripeData.setInitials(initials, this.profiles);
+        this.setInitials(this.initials, this.profiles);
         this.image = this.ripeData.bindImage(this.$refs.image, {
             frame: this.frame,
             size: this.size || undefined,
