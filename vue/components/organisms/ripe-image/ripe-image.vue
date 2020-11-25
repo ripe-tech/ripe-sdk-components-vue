@@ -555,14 +555,19 @@ export const RipeImage = {
                 this.image?.setInitialsBuilder(value);
             }
         },
-        profiles: {
-            handler: function(value) {
-                this.setInitials(this.initials, value);
-            }
-        },
         initials: {
             handler: function(value) {
-                this.setInitials(value, this.profiles);
+                this.ripeData.setInitials(value, this.profiles || this.engraving);
+            }
+        },
+        engraving: {
+            handler: function(value) {
+                this.ripeData.setInitials(this.initials, value);
+            }
+        },
+        profiles: {
+            handler: function(value) {
+                this.ripeData.setInitials(this.initials, value);
             }
         },
         state: {
