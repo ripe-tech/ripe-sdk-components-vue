@@ -131,16 +131,6 @@ export const RipeImage = {
             default: null
         },
         /**
-         * A list with the names of the profiles to be used. A profile what what defines a pre-made
-         * configuration in a specific product. The configuration can set the values such as the
-         * font type, color and size, the initials position and rotation. This supports the use of
-         * namespacing.
-         */
-        profiles: {
-            type: Array,
-            default: null
-        },
-        /**
          * Overrides the profiles position on the x axis.
          */
         initialsX: {

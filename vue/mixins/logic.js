@@ -75,6 +75,14 @@ export const logicMixin = {
         initialsExtra: {
             type: String,
             default: null
+        },
+        /**
+         * The normalized structure that uniquely represents
+         * the configuration "situation".
+         */
+        structure: {
+            type: Object,
+            default: null
         }
     },
     data: function() {
@@ -119,9 +127,13 @@ export const logicMixin = {
              */
             engravingData: this.engraving,
             /**
-             * Engraving to be used for the internal sync operation.
+             * Initials extra to be used for the internal sync operation.
              */
             initialsExtraData: this.initialsExtra,
+            /**
+             * Structure to be used for the internal sync operation.
+             */
+            structureData: this.structure,
             /**
              * Flag that controls if the initial loading process for
              * the price is still running.
@@ -131,27 +143,47 @@ export const logicMixin = {
     },
     watch: {
         brand: {
-            handler: async function(value) {
+            handler: async function() {
                 if (!this.ripeData || !this.configData) return;
                 await this.configRipe();
+            }
+        },
+        brandData: {
+            handler: function(value) {
+                this.$emit("update:brand", value);
             }
         },
         model: {
-            handler: async function(value) {
+            handler: async function() {
                 if (!this.ripeData || !this.configData) return;
                 await this.configRipe();
+            }
+        },
+        modelData: {
+            handler: function(value) {
+                this.$emit("update:model", value);
             }
         },
         version: {
-            handler: async function(value) {
+            handler: async function() {
                 if (!this.ripeData || !this.configData) return;
                 await this.configRipe();
             }
         },
+        versionData: {
+            handler: function(value) {
+                this.$emit("update:version", value);
+            }
+        },
         currency: {
-            handler: async function(value) {
+            handler: async function() {
                 if (!this.ripeData || !this.configData) return;
                 await this.configRipe();
+            }
+        },
+        currencyData: {
+            handler: function(value) {
+                this.$emit("update:currency", value);
             }
         },
         parts: {
@@ -202,6 +234,26 @@ export const logicMixin = {
                 this.$emit("update:initials-extra", value);
             }
         },
+        structure: {
+            handler: async function(value, previous) {
+                if (!this.ripeData || !this.configData) return;
+                const equal =
+                    value.brand === previous.brand &&
+                    value.model === previous.model &&
+                    value.version === previous.version &&
+                    this.equalParts(value.parts, previous.parts) &&
+                    value.initials !== previous.initials &&
+                    value.engraving !== previous.engraving &&
+                    this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra);
+                if (equal) return;
+                await this.configRipe();
+            }
+        },
+        structureData: {
+            handler: function(value) {
+                this.$emit("update:structure", value);
+            }
+        },
         loading: {
             handler: function(value) {
                 if (value) this.$emit("loading");
@@ -212,6 +264,8 @@ export const logicMixin = {
     },
     destroyed: function() {
         if (this.onPreConfig && this.ripeData) this.ripeData.unbind("pre_config", this.onPreConfig);
+        if (this.onPostConfig && this.ripeData)
+            { this.ripeData.unbind("post_config", this.onPostConfig); }
         if (this.onInitialsExtra && this.ripeData) {
             this.ripeData.unbind("initials_extra", this.onInitialsExtra);
         }
@@ -238,26 +292,30 @@ export const logicMixin = {
             }
 
             this.onPreConfig = this.ripeData.bind("pre_config", (brand, model, options) => {
-                this.brandData = brand;
-                this.modelData = model;
-                this.versionData = options.version;
-                this.currencyData = options.currency;
+                this._copyRipeData();
+            });
+
+            this.onPostConfig = this.ripeData.bind("post_config", (loadedConfig, options) => {
+                this._copyRipeData();
             });
 
             this.onParts = this.ripeData.bind("parts", parts => {
                 if (this.equalParts(parts, this.partsData)) return;
                 this.partsData = parts;
+                this.structureData = this.ripeData.getStructure();
             });
 
             this.onInitials = this.ripeData.bind("initials", (initials, engraving) => {
                 if (initials === this.initialsData && engraving === this.engravingData) return;
                 this.initialsData = initials;
                 this.engravingData = engraving;
+                this.structureData = this.ripeData.getStructure();
             });
 
             this.onInitialsExtra = this.ripeData.bind("initials_extra", initialsExtra => {
                 if (this.equalInitialsExtra(initialsExtra, this.initialsExtraData)) return;
                 this.initialsExtraData = initialsExtra;
+                this.structureData = this.ripeData.getStructure();
             });
 
             // in case the global RIPE instance is not set then
@@ -272,16 +330,8 @@ export const logicMixin = {
                 await this.configRipe();
             } else {
                 await this.ripeData.isReady();
+                this._copyRipeData();
             }
-
-            this.brandData = this.ripeData.brand;
-            this.modelData = this.ripeData.model;
-            this.versionData = this.ripeData.version;
-            this.currencyData = this.ripeData.currency;
-            this.partsData = Object.assign({}, this.ripeData.parts); // TODO deep clone?
-            this.initialsData = this.ripeData.initials;
-            this.engravingData = this.ripeData.engraving;
-            this.initialsExtraData = Object.assign({}, this.ripeData.initialsExtra); // TODO deep clone?
         },
         /**
          * Configures the RIPE instance with the current brand,
@@ -291,13 +341,23 @@ export const logicMixin = {
             this.loading = true;
 
             try {
-                await this.ripeData.config(this.brand, this.model, {
-                    version: this.version,
-                    parts: this.partsData,
-                    currency: this.currency ? this.currency.toUpperCase() : null
-                });
-                if (this.initials) {
-                    await this.ripeData.setInitials(this.initials, this.engraving || null);
+                if (this.structureData) {
+                    await this.ripeData.setStructure(this.structureData);
+                } else {
+                    await this.ripeData.config(this.brandData, this.modelData, {
+                        version: this.versionData,
+                        parts: this.partsData,
+                        currency: this.currencyData?.toUpperCase()
+                    });
+                    if (this.initialsData) {
+                        await this.ripeData.setInitials(
+                            this.initialsData,
+                            this.engravingData || null
+                        );
+                    }
+                    if (this.initialsExtraData) {
+                        await this.ripeData.setInitialsExtra(this.initialsExtraData);
+                    }
                 }
             } finally {
                 this.loading = false;
@@ -389,6 +449,17 @@ export const logicMixin = {
             }
 
             return true;
+        },
+        _copyRipeData() {
+            this.brandData = this.ripeData.brand;
+            this.modelData = this.ripeData.model;
+            this.versionData = this.ripeData.version;
+            this.currencyData = this.ripeData.currency;
+            this.partsData = JSON.parse(JSON.stringify(this.ripeData.parts));
+            this.initialsData = this.ripeData.initials;
+            this.engravingData = this.ripeData.engraving;
+            this.initialsExtraData = JSON.parse(JSON.stringify(this.ripeData.initialsExtra));
+            this.structureData = this.ripeData.getStructure();
         }
     }
 };
