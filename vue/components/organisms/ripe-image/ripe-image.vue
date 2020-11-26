@@ -400,15 +400,6 @@ export const RipeImage = {
             default: null
         },
         /**
-         * An object containing the state of the personalization. For each
-         * group of the model it can contain the initials and the corresponding
-         * engraving (eg. { main: { initials: "AB", engraving: "style:grey" }}).
-         */
-        state: {
-            type: Object,
-            default: () => ({})
-        },
-        /**
          * Name of the image.
          */
         name: {
@@ -425,6 +416,13 @@ export const RipeImage = {
         };
     },
     computed: {
+        state() {
+            return {
+                initialsExtra: this.initialsExtra || {},
+                initials: this.initials,
+                engraving: this.engraving
+            }
+        },
         imageProps() {
             return {
                 format: this.format,
@@ -493,9 +491,6 @@ export const RipeImage = {
         initialsBuilder(value) {
             this.image?.setInitialsBuilder(value);
         },
-        initials(value) {
-            this.ripeData.setInitials(value);
-        },
         async state(value) {
             await this.image?.update(this.state);
         },
@@ -558,7 +553,7 @@ export const RipeImage = {
             offsets: this.offsets,
             curve: this.curve
         });
-        this.image.update(this.state);
+        await this.image.update(this.state);
     },
     methods: {
         onLoaded() {
