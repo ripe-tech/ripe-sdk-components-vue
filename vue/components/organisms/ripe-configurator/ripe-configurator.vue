@@ -1,6 +1,6 @@
 <template>
     <div class="ripe-configurator">
-        <div class="loader-container" v-bind:style="loaderStyle" v-if="loader && loading">
+        <div class="loader-container" v-bind:style="loaderStyle" v-if="loader && (loading || configuring)">
             <slot name="loader" v-if="loading">
                 <loader class="loader" v-bind:loader="'ball-scale-multiple'" />
             </slot>
@@ -275,6 +275,10 @@ export const RipeConfigurator = {
             ...this.options
         });
 
+        this.onPreConfigEvent = this.ripeData.bind("pre_config", () => {
+            this.loading = true;
+        });
+
         this.ripeData.bind("selected_part", part => {
             if (this.selectedPartData === part) return;
             this.selectedPartData = part;
@@ -309,6 +313,7 @@ export const RipeConfigurator = {
     },
     destroyed: async function() {
         if (this.configurator) await this.ripeData.unbindConfigurator(this.configurator);
+        if (this.onPreConfigEvent && this.ripeData) this.ripeData.unbind("pre_config", this.onPreConfigEvent);
         this.configurator = null;
     }
 };

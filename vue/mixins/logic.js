@@ -366,7 +366,6 @@ export const logicMixin = {
             initialsExtra = null,
             structure = null
         } = {}) {
-            this.loading = true;
             this.configuring = true;
 
             try {
@@ -386,7 +385,6 @@ export const logicMixin = {
                     }
                 }
             } finally {
-                this.loading = false;
                 this.configuring = false;
             }
         },
