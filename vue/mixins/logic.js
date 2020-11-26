@@ -238,6 +238,7 @@ export const logicMixin = {
                     value.model === previous.model &&
                     value.version === previous.version &&
                     this.equalParts(value.parts, previous.parts) &&
+                    value.currency !== previous.currency &&
                     value.initials !== previous.initials &&
                     value.engraving !== previous.engraving &&
                     this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra);

@@ -30,18 +30,16 @@ export const RipePrice = {
         };
     },
     watch: {
-        async currency(value) {
-            if (this.configData) await this.configRipe();
-        },
         error(value) {
             this.$emit("error", value);
         }
     },
     computed: {
         priceText() {
+            const currency = this.currency || this.structure.currency;
             return this.error
                 ? "Error"
-                : this.formatMoney(this.price?.total.price_final, this.currency);
+                : this.formatMoney(this.price?.total.price_final, currency);
         }
     },
     created: async function() {
