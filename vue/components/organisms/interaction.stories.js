@@ -23,13 +23,13 @@ storiesOf("Organisms", module)
             engraving: {
                 default: text("Engraving", "")
             },
-            currency : {
+            currency: {
                 default: text("Currency", "EUR")
             },
             frame: {
                 type: String,
                 default: text("Frame", "side-0")
-            },
+            }
         },
         computed: {
             structure() {
@@ -42,7 +42,7 @@ storiesOf("Organisms", module)
                     initials: this.initials,
                     engraving: this.engraving,
                     initials_extra: {}
-                }
+                };
             }
         },
         template: `

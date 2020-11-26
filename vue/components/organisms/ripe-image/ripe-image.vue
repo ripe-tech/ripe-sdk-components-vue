@@ -421,7 +421,7 @@ export const RipeImage = {
                 initialsExtra: this.initialsExtra || {},
                 initials: this.initials,
                 engraving: this.engraving
-            }
+            };
         },
         imageProps() {
             return {
