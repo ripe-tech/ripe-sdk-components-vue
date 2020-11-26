@@ -73,7 +73,7 @@ export const logicMixin = {
          * to be used in the Ripe instance.
          */
         initialsExtra: {
-            type: String,
+            type: Object,
             default: null
         },
         /**
@@ -344,7 +344,8 @@ export const logicMixin = {
                     parts: this.parts,
                     initials: this.initials,
                     engraving: this.engraving,
-                    initialsExtra: this.initialsExtra
+                    initialsExtra: this.initialsExtra,
+                    structure: this.structure
                 });
             } else {
                 await this.ripeData.isReady();
