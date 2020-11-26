@@ -372,7 +372,7 @@ export const logicMixin = {
 
             try {
                 if (structure) {
-                    await this.ripeData.setStructure(structure);
+                    await this.ripeData.setStructure(structure, { currency: currency });
                 } else {
                     await this.ripeData.config(brand, model, {
                         version: version,
