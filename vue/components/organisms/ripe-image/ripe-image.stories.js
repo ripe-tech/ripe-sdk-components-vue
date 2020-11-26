@@ -38,6 +38,12 @@ storiesOf("Organisms", module)
                     }
                 })
             },
+            initials: {
+                default: text("Initials", "")
+            },
+            engraving: {
+                default: text("Engraving", "style:black")
+            },
             frame: {
                 type: String,
                 default: text("Frame", "side-0")
@@ -58,17 +64,6 @@ storiesOf("Organisms", module)
                 type: Boolean,
                 default: boolean("Show Initials", true)
             },
-            state: {
-                type: Object,
-                default: () => ({
-                    initialsExtra: {
-                        main: {
-                            initials: "A",
-                            engraving: "style:white"
-                        }
-                    }
-                })
-            },
             ripe: {
                 default: () => new Ripe()
             }
@@ -79,13 +74,14 @@ storiesOf("Organisms", module)
                 v-bind:model="model"
                 v-bind:version="version"
                 v-bind:parts="parts"
+                v-bind:initials="initials"
+                v-bind:engraving="engraving"
                 v-bind:frame="frame"
                 v-bind:size="size"
                 v-bind:format="format"
                 v-bind:crop="crop"
                 v-bind:show-initials="showInitials"
                 v-bind:initials-group="'main'"
-                v-bind:state="state"
                 v-bind:ripe="ripe"
                 v-bind:config="true"
             />
