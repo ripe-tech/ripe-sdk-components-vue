@@ -389,6 +389,8 @@ export const logicMixin = {
             }
         },
         equalParts(first, second) {
+            if (!first && !second) return true;
+
             if (Boolean(first) !== Boolean(second)) {
                 return false;
             }

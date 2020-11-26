@@ -94,7 +94,7 @@ export const RipePickers = {
     computed: {
         filteredOptions() {
             const choices = {};
-            for (const [part, partValue] of Object.entries(this.choices)) {
+            for (const [part, partValue] of Object.entries(this.choices || {})) {
                 if (!partValue.available) continue;
 
                 const materials = {};
