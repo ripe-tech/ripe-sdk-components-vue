@@ -298,6 +298,10 @@ export const RipeConfigurator = {
             this.loading = false;
         });
 
+        this.configurator.bind("not_loaded", () => {
+            this.loading = false;
+        });
+
         this.configurator.bind("highlighted_part", part => {
             if (this.highlightedPartData === part) return;
             this.highlightedPartData = part;

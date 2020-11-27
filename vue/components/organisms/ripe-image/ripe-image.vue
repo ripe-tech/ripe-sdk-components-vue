@@ -418,9 +418,9 @@ export const RipeImage = {
     computed: {
         state() {
             return {
-                initialsExtra: this.initialsExtra || {},
-                initials: this.initials,
-                engraving: this.engraving
+                initialsExtra: this.initialsExtraData || {},
+                initials: this.initialsData,
+                engraving: this.engravingData
             };
         },
         imageProps() {
