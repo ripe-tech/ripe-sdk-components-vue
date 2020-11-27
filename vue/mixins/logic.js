@@ -144,23 +144,98 @@ export const logicMixin = {
     },
     computed: {
         configOptions() {
-            return `${this.brand},${this.model},${this.version},${this.currency}`;
+            return {
+                brand: this.brand,
+                model: this.model,
+                version: this.version,
+                currency: this.currency
+            };
+        },
+        configOptionsStructure() {
+            return {
+                structure: this.structure,
+                currency: this.currency
+            };
         }
     },
     watch: {
         configOptions: {
-            handler: async function() {
+            handler: async function(value, previous) {
+                if (!this.ripeData || !this.configData) return;
+
+                // resets the parts and personalization options if
+                // the model was changed but they stayed the same,
+                // which makes them invalid
+                if (this.shouldReset(value, previous)) {
+                    value.parts = null;
+                    value.initials = "";
+                    value.engraving = null;
+                    value.initialsExtra = {};
+                }
+
+                // makes the configuration call with only the changed
+                // values, defaulting to the 'data' values in the unchanged
+                // ones, safeguarding against outdated props
                 await this.configRipe({
-                    brand: this.brand,
-                    model: this.model,
-                    version: this.version,
-                    currency: this.currency,
-                    parts: this.parts,
-                    initials: this.initials,
-                    engraving: this.engraving,
-                    initialsExtra: this.initialsExtra
+                    brand: value.brand !== previous.brand ? value.brand : undefined,
+                    model: value.model !== previous.model ? value.model : undefined,
+                    version: value.version !== previous.version ? value.version : undefined,
+                    currency: value.currency !== previous.currency ? value.currency : undefined,
+                    parts: value.parts,
+                    initials: value.initials !== previous.initials ? value.initials : undefined,
+                    engraving: value.engraving !== previous.engraving ? value.engraving : undefined,
+                    initialsExtra: !this.equalInitialsExtra(
+                        value.initialsExtra,
+                        previous.initialsExtra
+                    )
+                        ? value.initialsExtra
+                        : undefined
                 });
-            }
+            },
+            deep: true
+        },
+        configOptionsStructure: {
+            handler: async function(value, previous) {
+                if (!this.ripeData || !this.configData) return;
+
+                // verifies if there were no changes in the structure
+                // and/or currency, making the configuration call with only
+                // the changed values and defaulting to the 'data' values
+                // for the others, which are updated
+                const structure = value.structure;
+                const previousStructure = previous.structure;
+                const equalStructure =
+                    structure.brand === previousStructure.brand &&
+                    structure.model === previousStructure.model &&
+                    structure.version === previousStructure.version &&
+                    this.equalParts(structure.parts, previousStructure.parts) &&
+                    structure.initials === previousStructure.initials &&
+                    structure.engraving === previousStructure.engraving &&
+                    this.equalInitialsExtra(
+                        structure.initials_extra,
+                        previousStructure.initials_extra
+                    );
+                const equalCurrency = value.currency === previous.currency;
+                if (equalStructure && equalCurrency) return;
+
+                // resets the parts and personalization options if
+                // the model was changed but they stayed the same,
+                // which makes them invalid
+                if (this.shouldReset(value.structure, previous.structure)) {
+                    structure.parts = null;
+                    structure.initials = "";
+                    structure.engraving = null;
+                    structure.initials_extra = {};
+                }
+
+                // configures the SDK with the currency, since it is not
+                // present in the structure
+                await this.configRipe({
+                    structure: !equalStructure ? structure : undefined,
+                    currency: !equalCurrency ? value.currency : undefined
+                });
+            },
+            deep: true
         },
         brandData: {
             handler: function(value) {
@@ -230,23 +305,6 @@ export const logicMixin = {
                 this.$emit("update:initials-extra", value);
             }
         },
-        structure: {
-            handler: async function(value, previous) {
-                if (!this.ripeData || !this.configData) return;
-                const equal =
-                    value.brand === previous.brand &&
-                    value.model === previous.model &&
-                    value.version === previous.version &&
-                    this.equalParts(value.parts, previous.parts) &&
-                    value.currency !== previous.currency &&
-                    value.initials !== previous.initials &&
-                    value.engraving !== previous.engraving &&
-                    this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra);
-                if (equal) return;
-                await this.configRipe({ structure: value });
-            },
-            deep: true
-        },
         structureData: {
             handler: function(value) {
                 this.$emit("update:structure", value);
@@ -290,37 +348,37 @@ export const logicMixin = {
                 this.ripeData = global.ripe || new Ripe();
             }
 
-            this.onPreConfig = this.ripeData.bind("pre_config", (brand, model, options) => {
-                this._copyRipeData();
+            this.onPreConfig = this.ripeData.bind("pre_config", async (brand, model, options) => {
+                await this._copyRipeData();
             });
 
-            this.onPostConfig = this.ripeData.bind("post_config", (loadedConfig, options) => {
-                this._copyRipeData();
+            this.onPostConfig = this.ripeData.bind("post_config", async (loadedConfig, options) => {
+                await this._copyRipeData();
             });
 
-            this.onParts = this.ripeData.bind("parts", parts => {
+            this.onParts = this.ripeData.bind("parts", async parts => {
                 if (this.equalParts(parts, this.partsData)) return;
                 if (this.structureData) {
-                    this.structureData = this.ripeData.getStructure();
+                    this.structureData = await this.ripeData.getStructure();
                 } else {
                     this.partsData = JSON.parse(JSON.stringify(this.ripeData.parts));
                 }
             });
 
-            this.onInitials = this.ripeData.bind("initials", (initials, engraving) => {
+            this.onInitials = this.ripeData.bind("initials", async (initials, engraving) => {
                 if (initials === this.initialsData && engraving === this.engravingData) return;
                 if (this.structureData) {
-                    this.structureData = this.ripeData.getStructure();
+                    this.structureData = await this.ripeData.getStructure();
                 } else {
                     this.initialsData = this.ripeData.initials;
                     this.engravingData = this.ripeData.engraving;
                 }
             });
 
-            this.onInitialsExtra = this.ripeData.bind("initials_extra", initialsExtra => {
+            this.onInitialsExtra = this.ripeData.bind("initials_extra", async initialsExtra => {
                 if (this.equalInitialsExtra(initialsExtra, this.initialsExtraData)) return;
                 if (this.structureData) {
-                    this.structureData = this.ripeData.getStructure();
+                    this.structureData = await this.ripeData.getStructure();
                 } else {
                     this.initialsExtraData = JSON.parse(
                         JSON.stringify(this.ripeData.initialsExtra)
@@ -350,7 +408,7 @@ export const logicMixin = {
                 });
             } else {
                 await this.ripeData.isReady();
-                this._copyRipeData();
+                await this._copyRipeData();
             }
         },
         /**
@@ -358,21 +416,40 @@ export const logicMixin = {
          * model, version and parts defined in instance.
          */
         async configRipe({
-            brand = null,
-            model = null,
-            version = null,
-            parts = null,
-            currency = null,
-            initials = null,
-            engraving = null,
-            initialsExtra = null,
-            structure = null
+            brand = undefined,
+            model = undefined,
+            version = undefined,
+            parts = undefined,
+            currency = undefined,
+            initials = undefined,
+            engraving = undefined,
+            initialsExtra = undefined,
+            structure = undefined
         } = {}) {
             this.configuring = true;
 
+            // verifies if the parameters are 'undefined', since it is a valid
+            // option for some parameters to be 'null', making a fallback to the
+            // values saved in 'data'
+            brand = brand === undefined ? this.brandData : brand;
+            model = model === undefined ? this.modelData : model;
+            version = version === undefined ? this.versionData : version;
+            parts = parts === undefined ? this.partsData : parts;
+            currency = currency === undefined ? this.currencyData : currency;
+            initials = initials === undefined ? this.initialsData : initials;
+            engraving = engraving === undefined ? this.engravingData : engraving;
+            initialsExtra = initialsExtra === undefined ? this.initialsExtraData : initialsExtra;
+            structure = structure === undefined ? this.structureData : structure;
+
             try {
                 if (structure) {
-                    await this.ripeData.setStructure(structure, { currency: currency });
+                    // configures the SDK with the structure and currency values
+                    // to allow only one call to make the whole setup, with currency
+                    // included
+                    await this.ripeData.config(structure.brand, structure.model, {
+                        ...structure,
+                        currency: currency?.toUpperCase()
+                    });
                 } else {
                     await this.ripeData.config(brand, model, {
                         version: version,
@@ -389,6 +466,22 @@ export const logicMixin = {
             } finally {
                 this.configuring = false;
             }
+        },
+        shouldReset(value, previous) {
+            // checks to see if the model, brand or version
+            // changed but if the parts and personalization
+            // options (initials, engraving, initialsExtra)
+            // stayed the same
+            return (
+                (value.brand !== previous.brand ||
+                    value.model !== previous.model ||
+                    value.version !== previous.version) &&
+                (this.equalParts(value.parts, previous.parts) ||
+                    value.initials !== previous.initials ||
+                    value.engraving !== previous.engraving ||
+                    this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra) ||
+                    this.equalInitialsExtra(value.initials_extra, previous.initials_extra))
+            );
         },
         equalParts(first, second) {
             if (!first && !second) return true;
@@ -417,6 +510,8 @@ export const logicMixin = {
          * @return {Boolean} Returns the result of the deep comparison.
          */
         equalInitialsExtra(first, second) {
+            if (!first && !second) return true;
+
             if (Boolean(first) !== Boolean(second)) {
                 return false;
             }
@@ -479,19 +574,19 @@ export const logicMixin = {
 
             return true;
         },
-        _copyRipeData() {
+        async _copyRipeData() {
             if (this.structureData) {
-                this.structureData = this.ripeData.getStructure();
+                this.structureData = await this.ripeData.getStructure();
             } else {
                 this.brandData = this.ripeData.brand;
                 this.modelData = this.ripeData.model;
                 this.versionData = this.ripeData.version;
-                this.currencyData = this.ripeData.currency;
                 this.partsData = JSON.parse(JSON.stringify(this.ripeData.parts));
                 this.initialsData = this.ripeData.initials;
                 this.engravingData = this.ripeData.engraving;
                 this.initialsExtraData = JSON.parse(JSON.stringify(this.ripeData.initialsExtra));
             }
+            this.currencyData = this.ripeData.currency;
         }
     }
 };
