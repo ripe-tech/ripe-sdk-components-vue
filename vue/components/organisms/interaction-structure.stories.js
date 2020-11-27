@@ -3,7 +3,7 @@ import { withKnobs, text, select } from "@storybook/addon-knobs";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
-    .add("Interaction", () => ({
+    .add("Interaction Structure", () => ({
         props: {
             brand: {
                 default: select(
@@ -40,30 +40,68 @@ storiesOf("Organisms", module)
                 default: text("Frame", "side-0")
             }
         },
+        data: function() {
+            return {
+                structureData: {
+                    brand: this.brand.brand,
+                    model: this.brand.model,
+                    version: this.brand.version,
+                    parts: null,
+                    initials: this.initials,
+                    engraving: this.engraving
+                }
+            };
+        },
+        watch: {
+            brand(value) {
+                this.structureData = {
+                    ...this.structureData,
+                    brand: value.brand,
+                    model: value.model,
+                    version: value.version
+                };
+            },
+            parts(value) {
+                this.structureData = {
+                    ...this.structureData,
+                    parts: value
+                };
+            },
+            initials(value) {
+                this.structureData = {
+                    ...this.structureData,
+                    initials: value
+                };
+            },
+            engraving(value) {
+                this.structureData = {
+                    ...this.structureData,
+                    engraving: value
+                };
+            }
+        },
         template: `
             <div>
                 <ripe-configurator
-                    v-bind:brand="brand.brand"
-                    v-bind:model="brand.model"
-                    v-bind:version="brand.version"
-                    v-bind:initials="initials"
-                    v-bind:engraving="engraving"
+                    v-bind:structure.sync="structureData"
                     v-bind:currency="currency"
-                    v-bind:config="true"
                     v-bind:size="400"
                     style="display: inline-block"
                 />
                 <ripe-image
-                    v-bind:config="false"
+                    v-bind:structure.sync="structureData"
+                    v-bind:currency="currency"
                     v-bind:frame="frame"
                     v-bind:show-initials="true"
                     v-bind:size="400"
                 />
                 <ripe-price
-                    v-bind:config="false"
+                    v-bind:structure.sync="structureData"
+                    v-bind:currency="currency"
                 />
                 <ripe-pickers
-                    v-bind:config="false"
+                    v-bind:structure.sync="structureData"
+                    v-bind:currency="currency"
                 />
             </div>
         `
