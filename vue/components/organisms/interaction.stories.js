@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, select } from "@storybook/addon-knobs";
+import { Ripe } from "ripe-sdk";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
@@ -38,6 +39,9 @@ storiesOf("Organisms", module)
             frame: {
                 type: String,
                 default: text("Frame", "side-0")
+            },
+            ripe: {
+                default: () => new Ripe()
             }
         },
         template: `
@@ -50,6 +54,7 @@ storiesOf("Organisms", module)
                     v-bind:engraving="engraving"
                     v-bind:currency="currency"
                     v-bind:config="true"
+                    v-bind:ripe="ripe"
                     v-bind:size="400"
                     style="display: inline-block"
                 />
@@ -57,13 +62,16 @@ storiesOf("Organisms", module)
                     v-bind:config="false"
                     v-bind:frame="frame"
                     v-bind:show-initials="true"
+                    v-bind:ripe="ripe"
                     v-bind:size="400"
                 />
                 <ripe-price
                     v-bind:config="false"
+                    v-bind:ripe="ripe"
                 />
                 <ripe-pickers
                     v-bind:config="false"
+                    v-bind:ripe="ripe"
                 />
             </div>
         `
