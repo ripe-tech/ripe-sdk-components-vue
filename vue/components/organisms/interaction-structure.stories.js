@@ -99,20 +99,17 @@ storiesOf("Organisms", module)
                     v-bind:currency="currency"
                     v-bind:frame="frame"
                     v-bind:show-initials="true"
-                    v-bind:config="false"
                     v-bind:ripe="ripe"
                     v-bind:size="400"
                 />
                 <ripe-price
                     v-bind:structure.sync="structureData"
                     v-bind:currency="currency"
-                    v-bind:config="false"
                     v-bind:ripe="ripe"
                 />
                 <ripe-pickers
                     v-bind:structure.sync="structureData"
                     v-bind:currency="currency"
-                    v-bind:config="false"
                     v-bind:ripe="ripe"
                 />
             </div>

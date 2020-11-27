@@ -59,20 +59,13 @@ storiesOf("Organisms", module)
                     style="display: inline-block"
                 />
                 <ripe-image
-                    v-bind:config="false"
                     v-bind:frame="frame"
                     v-bind:show-initials="true"
                     v-bind:ripe="ripe"
                     v-bind:size="400"
                 />
-                <ripe-price
-                    v-bind:config="false"
-                    v-bind:ripe="ripe"
-                />
-                <ripe-pickers
-                    v-bind:config="false"
-                    v-bind:ripe="ripe"
-                />
+                <ripe-price v-bind:ripe="ripe" />
+                <ripe-pickers v-bind:ripe="ripe" />
             </div>
         `
     }));
