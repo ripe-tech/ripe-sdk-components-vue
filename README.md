@@ -12,7 +12,7 @@ For extended documentation check [Documentation - Overview](doc/overview.md).
 * [Styleguide](https://ripe-sdk-components-vue.platforme.com/styleguide)
 
 ## License
- 
+
 Vue.js components for RIPE SDK is currently licensed under the [Apache License, Version 2.0](http://www.apache.org/licenses/).
 
 ## Build Automation
