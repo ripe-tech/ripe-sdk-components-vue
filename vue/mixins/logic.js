@@ -199,25 +199,40 @@ export const logicMixin = {
                 if (!this.ripeData || !this.configData) return;
 
                 // verifies if there were no changes in the structure
-                // and/or currency, making the configuration call with only
-                // the changed values and defaulting to the 'data' values
-                // for the others, which are updated
+                // and/or currency comparing to the previous structure
+                // prop and the structureData, making the configuration
+                // call with only the changed values and defaulting to
+                // the 'data' values for the others, which are updated
                 const structure = value.structure;
+                const previousStructure = previous.structure;
                 const unchangedStructure =
                     this.equalStructure(structure, this.structureData) ||
-                    this.equalStructure(structure, previous.structure);
+                    this.equalStructure(structure, previousStructure);
                 const equalCurrency = value.currency === previous.currency;
                 if (equalCurrency && unchangedStructure) return;
 
                 // resets the parts and personalization options if
                 // the model was changed but they stayed the same,
                 // which makes them invalid
-                if (this.shouldReset(value.structure, previous.structure)) {
+                if (this.shouldReset(structure, previousStructure)) {
                     structure.parts = null;
                     structure.initials = "";
                     structure.engraving = null;
                     structure.initials_extra = {};
                 }
+
+                // resets the initials extra object if the initials and/or
+                // engraving were modified but the initials extra stayed the
+                // same, allowing an update that won't be overriden by the
+                // outdated initials extra
+                const equalInitialsEngraving =
+                    structure.initials === previousStructure.initials &&
+                    structure.engraving === previousStructure.engraving;
+                const equalInitialsExtra = this.equalInitialsExtra(
+                    structure.initials_extra,
+                    previousStructure.initials_extra
+                );
+                if (equalInitialsExtra && !equalInitialsEngraving) structure.initials_extra = null;
 
                 // configures the SDK with the currency, since it is not
                 // present in the structure
@@ -441,19 +456,25 @@ export const logicMixin = {
                         ...structure,
                         currency: currency?.toUpperCase()
                     });
+
+                    // sets the initials variables so that the personalization
+                    // choices might be applied after the initials configuration
+                    initials = structure.initials;
+                    engraving = structure.engraving;
+                    initialsExtra = structure.initials_extra;
                 } else {
                     await this.ripeData.config(brand, model, {
                         version: version,
                         parts: parts,
                         currency: currency?.toUpperCase()
                     });
+                }
                     if (initials) {
                         await this.ripeData.setInitials(initials, engraving);
                     }
                     if (initialsExtra) {
                         await this.ripeData.setInitialsExtra(initialsExtra);
                     }
-                }
             } finally {
                 this.configuring = false;
             }
