@@ -205,9 +205,11 @@ export const logicMixin = {
                 // for the others, which are updated
                 const structure = value.structure;
                 const previousStructure = previous.structure;
-                const equalStructure = this.equalStructure(structure, previousStructure);
+                const equalStructure =
+                    this.equalStructure(structure, this.structureData) ||
+                    this.equalStructure(structure, previousStructure);
                 const equalCurrency = value.currency === previous.currency;
-                if (equalCurrency && !equalStructure) return;
+                if (equalCurrency && equalStructure) return;
 
                 // resets the parts and personalization options if
                 // the model was changed but they stayed the same,
@@ -468,6 +470,11 @@ export const logicMixin = {
                         currency: currency?.toUpperCase()
                     });
                 }
+
+                // the initials must be set after the SDK configuration in
+                // order to update all the children that show them, since
+                // the configuration before does not calls the update with
+                // the personalization
                 if (initials) {
                     await this.ripeData.setInitials(initials, engraving);
                 }
