@@ -235,7 +235,7 @@ export const logicMixin = {
                 // configures the SDK with the currency, since it is not
                 // present in the structure
                 await this.configRipe({
-                    structure: !unchangedStructure ? structure : undefined,
+                    structure: !equalStructure ? structure : undefined,
                     currency: !equalCurrency ? value.currency : undefined
                 });
             },
