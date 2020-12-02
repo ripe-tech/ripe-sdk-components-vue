@@ -200,16 +200,14 @@ export const logicMixin = {
 
                 // verifies if there were no changes in the structure
                 // and/or currency comparing to the previous structure
-                // prop and the structureData, making the configuration
-                // call with only the changed values and defaulting to
-                // the 'data' values for the others, which are updated
+                // prop, making the configuration call with only the
+                // changed values and defaulting to the 'data' values
+                // for the others, which are updated
                 const structure = value.structure;
                 const previousStructure = previous.structure;
-                const unchangedStructure =
-                    this.equalStructure(structure, this.structureData) ||
-                    this.equalStructure(structure, previousStructure);
+                const equalStructure = this.equalStructure(structure, previousStructure);
                 const equalCurrency = value.currency === previous.currency;
-                if (equalCurrency && unchangedStructure) return;
+                if (equalCurrency && !equalStructure) return;
 
                 // resets the parts and personalization options if
                 // the model was changed but they stayed the same,
@@ -312,7 +310,8 @@ export const logicMixin = {
             }
         },
         structureData: {
-            handler: function(value) {
+            handler: function(value, previous) {
+                if (this.equalStructure(value, previous)) return;
                 this.$emit("update:structure", value);
             }
         },
