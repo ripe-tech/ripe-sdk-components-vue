@@ -203,20 +203,11 @@ export const logicMixin = {
                 // the changed values and defaulting to the 'data' values
                 // for the others, which are updated
                 const structure = value.structure;
-                const previousStructure = previous.structure;
-                const equalStructure =
-                    structure.brand === previousStructure.brand &&
-                    structure.model === previousStructure.model &&
-                    structure.version === previousStructure.version &&
-                    this.equalParts(structure.parts, previousStructure.parts) &&
-                    structure.initials === previousStructure.initials &&
-                    structure.engraving === previousStructure.engraving &&
-                    this.equalInitialsExtra(
-                        structure.initials_extra,
-                        previousStructure.initials_extra
-                    );
+                const unchangedStructure =
+                    this.equalStructure(structure, this.structureData) ||
+                    this.equalStructure(structure, previous.structure);
                 const equalCurrency = value.currency === previous.currency;
-                if (equalStructure && equalCurrency) return;
+                if (equalCurrency && unchangedStructure) return;
 
                 // resets the parts and personalization options if
                 // the model was changed but they stayed the same,
@@ -231,7 +222,7 @@ export const logicMixin = {
                 // configures the SDK with the currency, since it is not
                 // present in the structure
                 await this.configRipe({
-                    structure: !equalStructure ? structure : undefined,
+                    structure: !unchangedStructure ? structure : undefined,
                     currency: !equalCurrency ? value.currency : undefined
                 });
             },
@@ -525,6 +516,17 @@ export const logicMixin = {
             }
 
             return true;
+        },
+        equalStructure(first, second) {
+            return (
+                first.brand === second.brand &&
+                first.model === second.model &&
+                first.version === second.version &&
+                this.equalParts(first.parts, second.parts) &&
+                first.initials === second.initials &&
+                first.engraving === second.engraving &&
+                this.equalInitialsExtra(first.initials_extra, second.initials_extra)
+            );
         },
         _subsetCompareParts(base, reference) {
             for (const name of Object.keys(base)) {
