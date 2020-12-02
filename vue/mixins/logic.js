@@ -364,7 +364,7 @@ export const logicMixin = {
 
             this.onParts = this.ripeData.bind("parts", async parts => {
                 if (this.equalParts(parts, this.partsData)) return;
-                if (this.structureData) {
+                if (this.structure) {
                     this.structureData = await this.ripeData.getStructure();
                 } else {
                     this.partsData = JSON.parse(JSON.stringify(this.ripeData.parts));
@@ -373,7 +373,7 @@ export const logicMixin = {
 
             this.onInitials = this.ripeData.bind("initials", async (initials, engraving) => {
                 if (initials === this.initialsData && engraving === this.engravingData) return;
-                if (this.structureData) {
+                if (this.structure) {
                     this.structureData = await this.ripeData.getStructure();
                 } else {
                     this.initialsData = this.ripeData.initials;
@@ -383,7 +383,7 @@ export const logicMixin = {
 
             this.onInitialsExtra = this.ripeData.bind("initials_extra", async initialsExtra => {
                 if (this.equalInitialsExtra(initialsExtra, this.initialsExtraData)) return;
-                if (this.structureData) {
+                if (this.structure) {
                     this.structureData = await this.ripeData.getStructure();
                 } else {
                     this.initialsExtraData = JSON.parse(
@@ -469,12 +469,12 @@ export const logicMixin = {
                         currency: currency?.toUpperCase()
                     });
                 }
-                    if (initials) {
-                        await this.ripeData.setInitials(initials, engraving);
-                    }
-                    if (initialsExtra) {
-                        await this.ripeData.setInitialsExtra(initialsExtra);
-                    }
+                if (initials) {
+                    await this.ripeData.setInitials(initials, engraving);
+                }
+                if (initialsExtra) {
+                    await this.ripeData.setInitialsExtra(initialsExtra);
+                }
             } finally {
                 this.configuring = false;
             }
@@ -598,7 +598,7 @@ export const logicMixin = {
             return true;
         },
         async _copyRipeData() {
-            if (this.structureData) {
+            if (this.structure) {
                 this.structureData = await this.ripeData.getStructure();
             } else {
                 this.brandData = this.ripeData.brand;
