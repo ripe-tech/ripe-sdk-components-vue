@@ -486,16 +486,16 @@ export const RipeImage = {
             this.image.resize(value);
         },
         showInitials(value) {
-            this.image?.setShowInitials(value);
+            this.image && this.image.setShowInitials(value);
         },
         initialsBuilder(value) {
-            this.image?.setInitialsBuilder(value);
+            this.image && this.image.setInitialsBuilder(value);
         },
         async state(value) {
-            await this.image?.update(this.state);
+            this.image && (await this.image.update(this.state));
         },
         async imageProps(value) {
-            await this.image?.updateOptions(value);
+            this.image && (await this.image.updateOptions(value));
         }
     },
     mounted: async function() {

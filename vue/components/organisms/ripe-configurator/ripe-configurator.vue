@@ -5,7 +5,7 @@
             v-bind:style="loaderStyle"
             v-if="loader && (loading || configuring)"
         >
-            <slot name="loader" v-if="loading">
+            <slot name="loader" v-if="loading || configuring">
                 <loader class="loader" v-bind:loader="'ball-scale-multiple'" />
             </slot>
         </div>

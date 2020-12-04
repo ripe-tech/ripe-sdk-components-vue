@@ -135,10 +135,14 @@ export const logicMixin = {
              */
             structureData: this.structure,
             /**
-             * Flag that controls if the initial loading process for
-             * the price is still running.
+             * Flag that controls if the initial loading process is
+             * still running.
              */
-            loading: false,
+            loading: true,
+            /**
+             * Flag that controls if the configuring process is
+             * still running.
+             */
             configuring: false
         };
     },
@@ -196,7 +200,7 @@ export const logicMixin = {
         },
         configOptionsStructure: {
             handler: async function(value, previous) {
-                if (!this.ripeData || !this.configData) return;
+                if (!this.ripeData || !this.configData || !this.structure) return;
 
                 // verifies if there were no changes in the structure
                 // and/or currency comparing to the previous structure
@@ -455,7 +459,7 @@ export const logicMixin = {
                     // included
                     await this.ripeData.config(structure.brand, structure.model, {
                         ...structure,
-                        currency: currency?.toUpperCase()
+                        currency: currency ? currency.toUpperCase() : null
                     });
 
                     // sets the initials variables so that the personalization
@@ -467,7 +471,7 @@ export const logicMixin = {
                     await this.ripeData.config(brand, model, {
                         version: version,
                         parts: parts,
-                        currency: currency?.toUpperCase()
+                        currency: currency ? currency.toUpperCase() : null
                     });
                 }
 

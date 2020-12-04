@@ -38,7 +38,10 @@ export const RipePrice = {
         priceText() {
             return this.error
                 ? "Error"
-                : this.formatMoney(this.price?.total.price_final, this.currencyData);
+                : this.formatMoney(
+                      this.price ? this.price.total.price_final : null,
+                      this.currencyData
+                  );
         }
     },
     created: async function() {
