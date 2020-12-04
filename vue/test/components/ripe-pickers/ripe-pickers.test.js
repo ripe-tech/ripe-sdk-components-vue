@@ -1,104 +1,101 @@
 const assert = require("assert");
+const Ripe = require("ripe-sdk").Ripe;
 
 const base = require("../../base");
-const mocks = require("../../mocks");
 
-class RipeSdk extends mocks.MockRipeSdk {
-    constructor() {
-        super();
-
-        this.choices = {
-            side: {
-                available: true,
-                materials: {
-                    crocodile_cbe: {
-                        available: true,
-                        colors: { black: { available: true }, chestnut: { available: true } }
-                    },
-                    leather_cbe: {
-                        available: true,
-                        colors: {
-                            black: { available: true },
-                            blue: { available: true },
-                            brown: { available: true },
-                            red: { available: true }
-                        }
-                    },
-                    suede_cbe: {
-                        available: true,
-                        colors: {
-                            blue: { available: true },
-                            fuchsia: { available: true },
-                            red: { available: true }
-                        }
-                    }
-                }
-            },
-            top0_bottom: {
-                available: true,
-                materials: {
-                    crocodile_cbe: {
-                        available: true,
-                        colors: { black: { available: true }, chestnut: { available: true } }
-                    },
-                    leather_cbe: {
-                        available: true,
-                        colors: {
-                            black: { available: true },
-                            blue: { available: true },
-                            brown: { available: true },
-                            red: { available: true }
-                        }
-                    },
-                    suede_cbe: {
-                        available: true,
-                        colors: {
-                            blue: { available: true },
-                            fuchsia: { available: true },
-                            red: { available: true }
-                        }
-                    }
-                }
-            },
-            patch: {
-                available: true,
-                materials: {
-                    patch_cbe: {
-                        available: true,
-                        colors: { smiley: { available: true }, egg: { available: true } }
-                    }
-                }
-            }
-        };
-        this.options = {
-            parts: {
-                side: {
-                    color: "black",
-                    material: "crocodile_cbe",
-                    face: "side"
-                },
-                shadow: {
-                    color: "default",
-                    hidden: true,
-                    material: "default"
-                },
-                top0_bottom: {
-                    color: "fuchsia",
-                    face: "side",
-                    material: "suede_cbe"
-                }
-            }
-        };
+const _parts = {
+    side: {
+        color: "black",
+        material: "crocodile_cbe",
+        face: "side"
+    },
+    shadow: {
+        color: "default",
+        hidden: true,
+        material: "default"
+    },
+    top0_bottom: {
+        color: "fuchsia",
+        face: "side",
+        material: "suede_cbe"
     }
-}
+};
+const _choices = {
+    side: {
+        available: true,
+        materials: {
+            crocodile_cbe: {
+                available: true,
+                colors: { black: { available: true }, chestnut: { available: true } }
+            },
+            leather_cbe: {
+                available: true,
+                colors: {
+                    black: { available: true },
+                    blue: { available: true },
+                    brown: { available: true },
+                    red: { available: true }
+                }
+            },
+            suede_cbe: {
+                available: true,
+                colors: {
+                    blue: { available: true },
+                    fuchsia: { available: true },
+                    red: { available: true }
+                }
+            }
+        }
+    },
+    top0_bottom: {
+        available: true,
+        materials: {
+            crocodile_cbe: {
+                available: true,
+                colors: { black: { available: true }, chestnut: { available: true } }
+            },
+            leather_cbe: {
+                available: true,
+                colors: {
+                    black: { available: true },
+                    blue: { available: true },
+                    brown: { available: true },
+                    red: { available: true }
+                }
+            },
+            suede_cbe: {
+                available: true,
+                colors: {
+                    blue: { available: true },
+                    fuchsia: { available: true },
+                    red: { available: true }
+                }
+            }
+        }
+    },
+    patch: {
+        available: true,
+        materials: {
+            patch_cbe: {
+                available: true,
+                colors: { smiley: { available: true }, egg: { available: true } }
+            }
+        }
+    }
+};
 
 describe("RipePickers", () => {
     it("should instantiate the component", async () => {
-        const ripeInstance = new RipeSdk();
+        const ripeInstance = new Ripe("dummy", "cube", {
+            version: 52,
+            parts: _parts
+        });
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         assert.strictEqual(component.emitted("loading").length, 1);
 
+        await ripeInstance.isReady();
+        await ripeInstance.trigger("choices", _choices);
         await component.vm.$forceUpdate();
         assert.strictEqual(component.find(".select-parts").exists(), true);
         assert.strictEqual(component.find(".select-materials").exists(), true);
@@ -109,9 +106,14 @@ describe("RipePickers", () => {
     });
 
     it("should sync selects options", async () => {
-        const ripeInstance = new RipeSdk();
+        const ripeInstance = new Ripe("dummy", "cube", {
+            version: 52,
+            parts: _parts
+        });
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
+        await ripeInstance.isReady();
+        await ripeInstance.trigger("choices", _choices);
         await component.vm.$forceUpdate();
         await component.vm.onSelectPartChange("side");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
