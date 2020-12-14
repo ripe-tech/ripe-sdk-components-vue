@@ -553,7 +553,9 @@ export const RipeImage = {
             offsets: this.offsets,
             curve: this.curve
         });
-        await this.image.update(this.state);
+
+        // only updates if the SDK configuration is not empty
+        if (this.ripeData.brand) await this.image.update(this.state);
     },
     methods: {
         onLoaded() {
