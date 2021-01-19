@@ -1,5 +1,6 @@
 import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, number } from "@storybook/addon-knobs";
+import { Ripe } from "ripe-sdk";
 
 storiesOf("Organisms", module)
     .addDecorator(withKnobs)
@@ -40,6 +41,9 @@ storiesOf("Organisms", module)
             currency: {
                 type: String,
                 default: text("Currency", "USD")
+            },
+            ripe: {
+                default: () => new Ripe()
             }
         },
         template: `
@@ -49,6 +53,8 @@ storiesOf("Organisms", module)
                 v-bind:version="version"
                 v-bind:parts="parts"
                 v-bind:currency="currency"
+                v-bind:ripe="ripe"
+                v-bind:config="true"
             />
         `
     }));

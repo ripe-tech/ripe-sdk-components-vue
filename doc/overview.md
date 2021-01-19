@@ -86,7 +86,7 @@ It is also possible to define the highlighted part of the configurator, which wi
 
 ![Configurator with Increased Sensitivity](/res/images/configurator-sensitivity.gif)
 
-There can be more than one configurator using the same instance of Ripe SDK:
+There can be more than one configurator using the same instance of RIPE SDK:
 
 ```html
 <ripe-configurator
@@ -106,7 +106,7 @@ There can be more than one configurator using the same instance of Ripe SDK:
 />
 ```
 
-Which uses a Ripe SDK instance that can be initialized like this:
+Which uses a RIPE SDK instance that can be initialized like this:
 
 ```javascript
 this.ripe = new Ripe();
@@ -209,7 +209,7 @@ const state = {
 
 It is also possible to provide a `initialsBuilder` function, that allows for a more custom logic in the translation from initials and engraving into initials and profiles.
 
-There can be more than one image using the same instance of Ripe SDK:
+There can be more than one image using the same instance of RIPE SDK:
 
 ```html
 <ripe-image
@@ -253,7 +253,7 @@ In cases where it is necessary to see details in the image, it is possible to us
 | zoom            | `Number`   | `false`  | Zoom percentage that controls the level of zoom over the original image, defaults to `100`.                                                                                                                |
 | pivot           | `Object`   | `false`  | The x and y coordinates of the pivot point where the zoom will be applied to, e.g. `{ x: 100, y: 100 }`.                                                                                                   |
 | state           | `Object`   | `false`  | An object containing the state of the personalization. For each group of the model it can contain the initials and the corresponding engraving (eg. { main: { initials: "AB", engraving: "style:grey" }}). |
-| ripe            | `Number`   | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                                                                                               |
+| ripe            | `Number`   | `false`  | Instance of RIPE SDK initialized, if not defined, the global RIPE SDK instance will be used.                                                                                                               |
 
 The zoom value is in percentage, and will not go under the `10%` value, which is the minimum to get a visible image. Below is a comparison between the normal image component and one with zoom.
 
@@ -304,7 +304,7 @@ It is also possible to enable the scroll wheel to increase and decrease the zoom
 | scrollSensitivity | `Number`   | `false`  | Scroll sensitivity when controlling the zoom value with the mouse wheel scroll. Defaults to `1`.                                                                                                           |
 | zoomOut           | `Boolean`  | `false`  | Enables zooming out of the image with the mouse scroll. Defaults to `false`.                                                                                                                               |
 | state             | `Object`   | `false`  | An object containing the state of the personalization. For each group of the model it can contain the initials and the corresponding engraving (eg. { main: { initials: "AB", engraving: "style:grey" }}). |
-| ripe              | `Number`   | `false`  | Instance of Ripe SDK initialized, if not defined, the global Ripe SDK instance will be used.                                                                                                               |
+| ripe              | `Number`   | `false`  | Instance of RIPE SDK initialized, if not defined, the global RIPE SDK instance will be used.                                                                                                               |
 
 ```html
 <ripe-image-zoom-hover

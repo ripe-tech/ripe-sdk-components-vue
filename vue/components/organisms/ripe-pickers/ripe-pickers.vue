@@ -64,24 +64,24 @@
 </style>
 
 <script>
+import { logicMixin } from "../../../mixins";
+
 /**
  * The component that contains the RIPE's pickers,
  * for the static render of compositions.
  */
 export const RipePickers = {
     name: "ripe-pickers",
-    props: {
-        /**
-         * An initialized RIPE instance form the RIPE SDK, if not defined,
-         * a new SDK instance will be initialized.
-         */
-        ripe: {
-            type: Object,
-            required: true
-        }
-    },
+    mixins: [logicMixin],
     data: function() {
         return {
+            /**
+             * The object containing the complete set of part names
+             * associated with their current availability and available
+             * materials (which in turn should have the equivalent relation
+             * with the colors).
+             */
+            choices: {},
             /**
              * Part of the model currently selected in the dropdown and
              * highlighted in a possible existing configurator.
@@ -92,67 +92,15 @@ export const RipePickers = {
              */
             selectedMaterial: null,
             /**
-             * Color selected for the currently selected part and  of the model.
+             * Color selected for the currently selected part of the model.
              */
-            selectedColor: null,
-            /**
-             * Flag that controls if the initial loading process for
-             * the price is still running.
-             */
-            loading: true,
-            /**
-             * Ripe SDK instance, which can be later initialized
-             * if the given prop is not defined.
-             */
-            ripeData: this.ripe
+            selectedColor: null
         };
     },
-    watch: {
-        loading: {
-            handler: function(value) {
-                if (value) this.$emit("loading");
-                else this.$emit("loaded");
-            },
-            immediate: true
-        },
-        selectedPart: {
-            handler: function(value) {
-                if (!value) return;
-
-                this.selectedMaterial = null;
-                this.selectedColor = null;
-
-                if (this.materialOptions.length === 1) {
-                    this.selectedMaterial = this.materialOptions[0].value;
-                }
-
-                this.$emit("update:highlighted-part", value);
-            }
-        },
-        selectedMaterial: {
-            handler: function(value) {
-                if (!value) return;
-
-                if (this.colorOptions.length === 1) {
-                    this.selectedColor = this.colorOptions[0].value;
-                }
-            }
-        }
-    },
     computed: {
-        choices() {
-            if (this.loading) return {};
-            return this.ripeData.choices;
-        },
-        parts() {
-            if (this.loading) return {};
-            return this.ripeData.options.parts;
-        },
         filteredOptions() {
-            if (this.loading) return {};
-
             const choices = {};
-            for (const [part, partValue] of Object.entries(this.choices)) {
+            for (const [part, partValue] of Object.entries(this.choices || {})) {
                 if (!partValue.available) continue;
 
                 const materials = {};
@@ -174,7 +122,7 @@ export const RipePickers = {
         },
         partsOptions() {
             return Object.keys(this.filteredOptions).map(part => ({
-                label: this.normalize(part),
+                label: this._normalize(part),
                 value: part
             }));
         },
@@ -182,7 +130,7 @@ export const RipePickers = {
             if (!this.selectedPart) return [];
 
             return Object.keys(this.filteredOptions[this.selectedPart]).map(material => ({
-                label: this.normalize(material),
+                label: this._normalize(material),
                 value: material
             }));
         },
@@ -190,7 +138,7 @@ export const RipePickers = {
             if (!this.selectedMaterial) return [];
 
             return this.filteredOptions[this.selectedPart][this.selectedMaterial].map(color => ({
-                label: this.normalize(color),
+                label: this._normalize(color),
                 value: color
             }));
         },
@@ -198,37 +146,50 @@ export const RipePickers = {
             return !this.selectedPart || !this.selectedMaterial || !this.selectedColor;
         }
     },
+    watch: {
+        selectedPart(value) {
+            if (!value) return;
+
+            this.selectedMaterial = null;
+            this.selectedColor = null;
+
+            if (this.materialOptions.length === 1) {
+                this.selectedMaterial = this.materialOptions[0].value;
+            }
+
+            this.$emit("update:highlighted-part", value);
+        },
+        selectedMaterial(value) {
+            if (!value) return;
+
+            if (this.colorOptions.length === 1) {
+                this.selectedColor = this.colorOptions[0].value;
+            }
+        }
+    },
     created: async function() {
         await this.setupRipe();
 
-        this.ripeData.bind("pre_config", () => {
-            this.loading = true;
+        this.onChoices = this.ripeData.bind("choices", choices => {
+            this.choices = choices;
+        });
+
+        this.onPreConfig = this.ripeData.bind("pre_config", () => {
+            // reset the current selection state
+            // every time the config changes
             this.selectedPart = null;
             this.selectedMaterial = null;
             this.selectedColor = null;
-            this.$forceUpdate();
         });
 
-        this.ripeData.bind("post_config", () => {
-            this.loading = false;
-        });
+        this.choices = this.ripeData.choices;
+    },
+    destroyed: function() {
+        if (this.onPreConfig) this.ripeData.unbind("pre_config", this.onPreConfig);
+        if (this.onChoices) this.ripeData.unbind("choices", this.onChoices);
     },
     methods: {
-        /**
-         * Initializes RIPE instance if one was not provided,
-         * sets the global instance to it and awaits for it
-         * to be ready (configured).
-         */
-        async setupRipe() {
-            if (!global.ripe) {
-                global.ripe = this.ripeData;
-            }
-
-            this.loading = true;
-            await this.ripeData.isReady();
-            this.loading = false;
-        },
-        normalize(value) {
+        _normalize(value) {
             return value
                 .split("_")
                 .map(v => v[0].toUpperCase() + v.slice(1))
@@ -253,8 +214,6 @@ export const RipePickers = {
                 this.selectedMaterial,
                 this.selectedColor
             );
-
-            this.$emit("update:parts", this.ripeData.options.parts);
 
             this.selectedPart = null;
             this.selectedMaterial = null;
