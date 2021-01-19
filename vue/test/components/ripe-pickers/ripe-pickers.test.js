@@ -2,6 +2,7 @@ const assert = require("assert");
 const Ripe = require("ripe-sdk").Ripe;
 
 const base = require("../../base");
+const config = require("../../config");
 
 const _parts = {
     side: {
@@ -85,6 +86,8 @@ const _choices = {
 };
 
 describe("RipePickers", () => {
+    this.timeout(config.TEST_TIMEOUT);
+
     it("should instantiate the component", async () => {
         const ripeInstance = new Ripe("dummy", "cube", {
             version: 52,
