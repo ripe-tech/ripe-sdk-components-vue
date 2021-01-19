@@ -55,7 +55,6 @@ export const RipePrice = {
             this.error = error;
             this.price = null;
         });
-        // TODO get current price (needs SDK support)
     },
     destroyed: async function() {
         if (this.onPriceError) this.ripeData.unbind("price_error", this.onPriceError);
