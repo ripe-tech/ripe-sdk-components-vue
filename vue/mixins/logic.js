@@ -499,10 +499,14 @@ export const logicMixin = {
                     value.model !== previous.model ||
                     value.version !== previous.version) &&
                 (this.equalParts(value.parts, previous.parts) ||
-                    value.initials !== previous.initials ||
-                    value.engraving !== previous.engraving ||
-                    this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra) ||
-                    this.equalInitialsExtra(value.initials_extra, previous.initials_extra))
+                    value.initials === previous.initials ||
+                    value.engraving === previous.engraving ||
+                    (value.initialsExtra &&
+                        previous.initialsExtra &&
+                        this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra)) ||
+                    (value.initials_extra &&
+                        previous.initials_extra &&
+                        this.equalInitialsExtra(value.initials_extra, previous.initials_extra)))
             );
         },
         equalParts(first, second) {
