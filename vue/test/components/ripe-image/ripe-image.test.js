@@ -2,7 +2,7 @@ const assert = require("assert");
 const base = require("../../base");
 const config = require("../../config");
 
-describe("RipeImage", () => {
+describe("RipeImage", function() {
     this.timeout(config.TEST_TIMEOUT);
 
     it("should instantiate the component", () => {

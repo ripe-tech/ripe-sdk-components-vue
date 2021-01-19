@@ -85,7 +85,7 @@ const _choices = {
     }
 };
 
-describe("RipePickers", () => {
+describe("RipePickers", function() {
     this.timeout(config.TEST_TIMEOUT);
 
     it("should instantiate the component", async () => {
