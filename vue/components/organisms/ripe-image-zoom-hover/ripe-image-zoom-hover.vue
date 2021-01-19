@@ -101,6 +101,8 @@ export const RipeImageZoomHover = {
             // hovering the image
             if (!this.hover || !this.scrollZoom) return;
 
+            // computes the new zoom value using the delta in Y of the mouse
+            // and the currently defined scroll sensitivity
             const zoomValue = this.zoomData + -1 * this.scrollSensitivity * event.deltaY;
 
             // checks if the zooming out feature is disabled, if so only
