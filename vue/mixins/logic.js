@@ -55,14 +55,14 @@ export const logicMixin = {
             default: null
         },
         /**
-         * The initials value to be used in the Ripe instance.
+         * The initials value to be used in the RIPE instance.
          */
         initials: {
             type: String,
             default: null
         },
         /**
-         * The engraving value to be used in the Ripe instance.
+         * The engraving value to be used in the RIPE instance.
          */
         engraving: {
             type: String,
@@ -70,7 +70,7 @@ export const logicMixin = {
         },
         /**
          * The set of (initials, engraving) per initials group
-         * to be used in the Ripe instance.
+         * to be used in the RIPE instance.
          */
         initialsExtra: {
             type: Object,

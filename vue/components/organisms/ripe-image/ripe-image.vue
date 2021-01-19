@@ -410,7 +410,7 @@ export const RipeImage = {
     data: function() {
         return {
             /**
-             * The image created by the Ripe instance, currently being shown.
+             * The image created by the RIPE instance, currently being shown.
              */
             image: null
         };
