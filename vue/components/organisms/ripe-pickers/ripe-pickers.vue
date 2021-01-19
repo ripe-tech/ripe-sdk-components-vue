@@ -75,6 +75,12 @@ export const RipePickers = {
     mixins: [logicMixin],
     data: function() {
         return {
+            /**
+             * The object containing the complete set of part names
+             * associated with their current availability and available
+             * materials (which in turn should have the equivalent relation
+             * with the colors).
+             */
             choices: {},
             /**
              * Part of the model currently selected in the dropdown and
@@ -86,7 +92,7 @@ export const RipePickers = {
              */
             selectedMaterial: null,
             /**
-             * Color selected for the currently selected part and  of the model.
+             * Color selected for the currently selected part of the model.
              */
             selectedColor: null
         };
