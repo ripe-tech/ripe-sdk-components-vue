@@ -30,11 +30,11 @@ export const RipePrice = {
         };
     },
     watch: {
-        error(value) {
-            this.$emit("error", value);
-        },
         price(value) {
             this.$emit("update:price", value);
+        },
+        error(value) {
+            this.$emit("error", value);
         }
     },
     computed: {
