@@ -31,7 +31,7 @@ export const RipePrice = {
     },
     watch: {
         price(value) {
-            this.$emit("update:price", value);
+            this.$emit("price", value);
         },
         error(value) {
             this.$emit("error", value);

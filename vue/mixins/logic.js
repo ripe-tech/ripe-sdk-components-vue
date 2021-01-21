@@ -330,7 +330,7 @@ export const logicMixin = {
         },
         configuring: {
             handler: function(value) {
-                this.$emit("update:configuring", value);
+                this.$emit("configuring", value);
             }
         }
     },
