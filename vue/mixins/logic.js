@@ -327,6 +327,11 @@ export const logicMixin = {
                 else this.$emit("loaded");
             },
             immediate: true
+        },
+        configuring: {
+            handler: function(value) {
+                this.$emit("configuring", value);
+            }
         }
     },
     destroyed: function() {
