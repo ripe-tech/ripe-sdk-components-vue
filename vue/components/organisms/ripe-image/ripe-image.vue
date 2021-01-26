@@ -491,9 +491,6 @@ export const RipeImage = {
         initialsBuilder(value) {
             this.image && this.image.setInitialsBuilder(value);
         },
-        async state(value) {
-            this.image && (await this.image.update(this.state));
-        },
         async imageProps(value) {
             this.image && (await this.image.updateOptions(value));
         }
