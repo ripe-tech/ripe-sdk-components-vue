@@ -2,9 +2,9 @@ import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, number, boolean } from "@storybook/addon-knobs";
 import { Ripe } from "ripe-sdk";
 
-storiesOf("Components/Organisms/RipeImageZoomHover", module)
+storiesOf("Components/Organisms/Ripe Image Zoom Hover", module)
     .addDecorator(withKnobs)
-    .add("RipeImageZoomHover", () => ({
+    .add("Ripe Image Zoom Hover", () => ({
         props: {
             brand: {
                 type: String,

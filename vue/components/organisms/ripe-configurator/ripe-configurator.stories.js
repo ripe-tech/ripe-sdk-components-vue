@@ -2,9 +2,9 @@ import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, number, boolean } from "@storybook/addon-knobs";
 import { Ripe } from "ripe-sdk";
 
-storiesOf("Components/Organisms/RipeConfigurator", module)
+storiesOf("Components/Organisms/Ripe Configurator", module)
     .addDecorator(withKnobs)
-    .add("RipeConfigurator", () => ({
+    .add("Ripe Configurator", () => ({
         props: {
             brand: {
                 type: String,
