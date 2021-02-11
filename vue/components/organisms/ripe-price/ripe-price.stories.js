@@ -2,7 +2,7 @@ import { storiesOf } from "@storybook/vue";
 import { withKnobs, text, number } from "@storybook/addon-knobs";
 import { Ripe } from "ripe-sdk";
 
-storiesOf("Organisms", module)
+storiesOf("Components/Organisms/RipePrice", module)
     .addDecorator(withKnobs)
     .add("RipePrice", () => ({
         props: {
