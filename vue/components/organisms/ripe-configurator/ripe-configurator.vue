@@ -283,26 +283,26 @@ export const RipeConfigurator = {
             this.loading = true;
         });
 
-        this.ripeData.bind("selected_part", part => {
+        this.onSelectedPartEvent = this.ripeData.bind("selected_part", part => {
             if (this.selectedPartData === part) return;
             this.selectedPartData = part;
         });
 
-        this.configurator.bind("changed_frame", frame => {
+        this.onChangedFrame = this.configurator.bind("changed_frame", frame => {
             this.frameData = frame;
         });
 
-        this.configurator.bind("loaded", () => {
+        this.onConfiguratorLoaded = this.configurator.bind("loaded", () => {
             const frame = `${this.configurator.view}-${this.configurator.position}`;
             this.frameData = frame;
             this.loading = false;
         });
 
-        this.configurator.bind("not_loaded", () => {
+        this.onConfiguratorNotLoaded = this.configurator.bind("not_loaded", () => {
             this.loading = false;
         });
 
-        this.configurator.bind("highlighted_part", part => {
+        this.onHighlightedPart = this.configurator.bind("highlighted_part", part => {
             if (this.highlightedPartData === part) return;
             this.highlightedPartData = part;
         });
@@ -320,7 +320,22 @@ export const RipeConfigurator = {
         }
     },
     destroyed: async function() {
+        if (this.configurator && this.onHighlightedPart) {
+            this.configurator.unbind("highlighted_part", this.onHighlightedPart);
+        }
+        if (this.configurator && this.onConfiguratorNotLoaded) {
+            this.configurator.unbind("not_loaded", this.onConfiguratorNotLoaded);
+        }
+        if (this.configurator && this.onConfiguratorLoaded) {
+            this.configurator.unbind("loaded", this.onConfiguratorLoaded);
+        }
+        if (this.configurator && this.onChangedFrame) {
+            this.configurator.unbind("changed_frame", this.onChangedFrame);
+        }
         if (this.configurator) await this.ripeData.unbindConfigurator(this.configurator);
+        if (this.onSelectedPartEvent && this.ripeData) {
+            this.ripeData.unbind("selected_part", this.onSelectedPartEvent);
+        }
         if (this.onPreConfigEvent && this.ripeData) {
             this.ripeData.unbind("pre_config", this.onPreConfigEvent);
         }
