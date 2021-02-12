@@ -551,7 +551,7 @@ export const RipeImage = {
             curve: this.curve
         });
 
-        this.image.bind("error", () => this.$emit("error"));
+        this.onImageError = this.image.bind("error", () => this.onError());
 
         // only updates if the SDK configuration is not empty
         if (this.ripeData.brand) await this.image.update(this.state);
@@ -560,9 +560,13 @@ export const RipeImage = {
         onLoaded() {
             this.loading = false;
             this.$emit("loaded");
+        },
+        onError() {
+            this.$emit("error");
         }
     },
     destroyed: async function() {
+        if (this.image && this.onImageError) this.image.unbind("error", this.onImageError);
         if (this.image) await this.ripeData.unbindImage(this.image);
         this.image = null;
     }
