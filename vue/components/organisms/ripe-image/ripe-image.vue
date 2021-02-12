@@ -355,7 +355,7 @@ export const RipeImage = {
          * Line break, is optional and can have one of (normal and word_break).
          */
         lineBreaking: {
-            type: Boolean,
+            type: String,
             default: null
         },
         /**
@@ -551,12 +551,15 @@ export const RipeImage = {
             curve: this.curve
         });
 
+        this.image.bind("error", () => this.$emit("error"));
+
         // only updates if the SDK configuration is not empty
         if (this.ripeData.brand) await this.image.update(this.state);
     },
     methods: {
         onLoaded() {
             this.loading = false;
+            this.$emit("loaded");
         }
     },
     destroyed: async function() {
