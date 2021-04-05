@@ -167,16 +167,6 @@ export const logicMixin = {
             handler: async function(value, previous) {
                 if (!this.ripeData || !this.configData) return;
 
-                // resets the parts and personalization options if
-                // the model was changed but they stayed the same,
-                // which makes them invalid
-                if (this.shouldReset(value, previous)) {
-                    value.parts = null;
-                    value.initials = "";
-                    value.engraving = null;
-                    value.initialsExtra = {};
-                }
-
                 // makes the configuration call with only the changed
                 // values, defaulting to the 'data' values in the unchanged
                 // ones, safeguarding against outdated props
@@ -185,15 +175,10 @@ export const logicMixin = {
                     model: value.model !== previous.model ? value.model : undefined,
                     version: value.version !== previous.version ? value.version : undefined,
                     currency: value.currency !== previous.currency ? value.currency : undefined,
-                    parts: value.parts,
-                    initials: value.initials !== previous.initials ? value.initials : undefined,
-                    engraving: value.engraving !== previous.engraving ? value.engraving : undefined,
-                    initialsExtra: !this.equalInitialsExtra(
-                        value.initialsExtra,
-                        previous.initialsExtra
-                    )
-                        ? value.initialsExtra
-                        : undefined
+                    parts: this.parts,
+                    initials: this.initials,
+                    engraving: this.engraving,
+                    initialsExtra: this.initialsExtra
                 });
             },
             deep: true
@@ -214,16 +199,6 @@ export const logicMixin = {
                     this.equalStructure(structure, previousStructure);
                 const equalCurrency = value.currency === previous.currency;
                 if (equalCurrency && equalStructure) return;
-
-                // resets the parts and personalization options if
-                // the model was changed but they stayed the same,
-                // which makes them invalid
-                if (this.shouldReset(structure, previousStructure)) {
-                    structure.parts = null;
-                    structure.initials = "";
-                    structure.engraving = null;
-                    structure.initials_extra = {};
-                }
 
                 // resets the initials extra object if the initials and/or
                 // engraving were modified but the initials extra stayed the
@@ -493,26 +468,6 @@ export const logicMixin = {
             } finally {
                 this.configuring = false;
             }
-        },
-        shouldReset(value, previous) {
-            // checks to see if the model, brand or version
-            // changed but if the parts and personalization
-            // options (initials, engraving, initialsExtra)
-            // stayed the same
-            return (
-                (value.brand !== previous.brand ||
-                    value.model !== previous.model ||
-                    value.version !== previous.version) &&
-                (this.equalParts(value.parts, previous.parts) ||
-                    value.initials === previous.initials ||
-                    value.engraving === previous.engraving ||
-                    (value.initialsExtra &&
-                        previous.initialsExtra &&
-                        this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra)) ||
-                    (value.initials_extra &&
-                        previous.initials_extra &&
-                        this.equalInitialsExtra(value.initials_extra, previous.initials_extra)))
-            );
         },
         equalParts(first, second) {
             if (!first && !second) return true;
