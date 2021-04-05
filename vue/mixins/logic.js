@@ -536,16 +536,16 @@ export const logicMixin = {
                         this.equalInitialsExtra(value.initials_extra, previous.initials_extra)))
             );
         },
-        shouldConfigRipe(first, second) {
+        shouldConfigRipe(value, previous) {
             // checks to see if the model, brand,
             // version and currency changed
-            if (!first && !second) return false;
+            if (!value && !previous) return false;
 
             return (
-                first.brand !== second.brand ||
-                first.model !== second.model ||
-                first.version !== second.version ||
-                first.currency !== second.currency
+                value.brand !== previous.brand ||
+                value.model !== previous.model ||
+                value.version !== previous.version ||
+                value.currency !== previous.currency
             );
         },
         equalParts(first, second) {
