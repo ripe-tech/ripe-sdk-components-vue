@@ -151,11 +151,7 @@ export const logicMixin = {
             return {
                 brand: this.brand,
                 model: this.model,
-                parts: this.parts,
                 version: this.version,
-                initials: this.initials,
-                engraving: this.engraving,
-                initialsExtra: this.initialsExtra,
                 currency: this.currency
             };
         },
@@ -169,23 +165,7 @@ export const logicMixin = {
     watch: {
         configOptions: {
             handler: async function(value, previous) {
-                if (!this.ripeData || !this.configData || !this.shouldConfigRipe(value, previous)) {
-                    return;
-                }
-
-                // resets the parts options if the model was changed
-                // but they stayed the same, which makes them invalid
-                if (this.shouldResetParts(value, previous)) {
-                    value.parts = null;
-                }
-
-                // resets the personalization options if the model was changed
-                // but they stayed the same, which makes them invalid
-                if (this.shouldResetPersonalization(value, previous)) {
-                    value.initials = "";
-                    value.engraving = null;
-                    value.initials_extra = {};
-                }
+                if (!this.ripeData || !this.configData) return;
 
                 // makes the configuration call with only the changed
                 // values, defaulting to the 'data' values in the unchanged
@@ -224,20 +204,6 @@ export const logicMixin = {
                     this.equalStructure(structure, previousStructure);
                 const equalCurrency = value.currency === previous.currency;
                 if (equalCurrency && equalStructure) return;
-
-                // resets the parts options if the model was changed
-                // but they stayed the same, which makes them invalid
-                if (this.shouldResetParts(structure, previousStructure)) {
-                    structure.parts = null;
-                }
-
-                // resets the personalization options if the model was changed
-                // but they stayed the same, which makes them invalid
-                if (this.shouldResetPersonalization(structure, previousStructure)) {
-                    structure.initials = "";
-                    structure.engraving = null;
-                    structure.initials_extra = {};
-                }
 
                 // resets the initials extra object if the initials and/or
                 // engraving were modified but the initials extra stayed the
@@ -464,7 +430,7 @@ export const logicMixin = {
             brand = brand === undefined ? this.brandData : brand;
             model = model === undefined ? this.modelData : model;
             version = version === undefined ? this.versionData : version;
-            parts = parts === undefined ? this.partsData : parts;
+            parts = parts === undefined ? this.parts || this.partsData : parts;
             currency = currency === undefined ? this.currencyData : currency;
             initials = initials === undefined ? this.initialsData : initials;
             engraving = engraving === undefined ? this.engravingData : engraving;
@@ -490,7 +456,7 @@ export const logicMixin = {
                     await this.ripeData.config(brand, model, {
                         version: version,
                         parts: parts,
-                        currency: currency ? currency.toUpperCase() : undefined
+                        currency: currency ? currency.toUpperCase() : null
                     });
                 }
 
@@ -507,46 +473,6 @@ export const logicMixin = {
             } finally {
                 this.configuring = false;
             }
-        },
-        shouldResetParts(value, previous) {
-            // checks to see if the model, brand or version
-            // changed but if the parts stayed the same
-            return (
-                (value.brand !== previous.brand ||
-                    value.model !== previous.model ||
-                    value.version !== previous.version) &&
-                this.equalParts(value.parts, previous.parts)
-            );
-        },
-        shouldResetPersonalization(value, previous) {
-            // checks to see if the model, brand or version
-            // changed but personalization options (initials,
-            // engraving, initialsExtra) stayed the same
-            return (
-                (value.brand !== previous.brand ||
-                    value.model !== previous.model ||
-                    value.version !== previous.version) &&
-                (value.initials === previous.initials ||
-                    value.engraving === previous.engraving ||
-                    (value.initialsExtra &&
-                        previous.initialsExtra &&
-                        this.equalInitialsExtra(value.initialsExtra, previous.initialsExtra)) ||
-                    (value.initials_extra &&
-                        previous.initials_extra &&
-                        this.equalInitialsExtra(value.initials_extra, previous.initials_extra)))
-            );
-        },
-        shouldConfigRipe(value, previous) {
-            // checks to see if the model, brand,
-            // version and currency changed
-            if (!value && !previous) return false;
-
-            return (
-                value.brand !== previous.brand ||
-                value.model !== previous.model ||
-                value.version !== previous.version ||
-                value.currency !== previous.currency
-            );
         },
         equalParts(first, second) {
             if (!first && !second) return true;
