@@ -169,8 +169,9 @@ export const logicMixin = {
     watch: {
         configOptions: {
             handler: async function(value, previous) {
-                if (!this.ripeData || !this.configData || !this.shouldConfigRipe(value, previous))
-                    { return; }
+                if (!this.ripeData || !this.configData || !this.shouldConfigRipe(value, previous)) {
+                    return;
+                }
 
                 // resets the personalization options if the model was changed
                 // but they stayed the same, which makes them invalid
