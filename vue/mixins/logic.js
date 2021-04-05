@@ -173,13 +173,13 @@ export const logicMixin = {
                     return;
                 }
 
-                // resets the personalization options if the model was changed
+                // resets the parts options if the model was changed
                 // but they stayed the same, which makes them invalid
                 if (this.shouldResetParts(value, previous)) {
                     value.parts = null;
                 }
 
-                // resets the parts options if the model was changed
+                // resets the personalization options if the model was changed
                 // but they stayed the same, which makes them invalid
                 if (this.shouldResetPersonalization(value, previous)) {
                     value.initials = "";
@@ -225,13 +225,13 @@ export const logicMixin = {
                 const equalCurrency = value.currency === previous.currency;
                 if (equalCurrency && equalStructure) return;
 
-                // resets the personalization options if the model was changed
+                // resets the parts options if the model was changed
                 // but they stayed the same, which makes them invalid
                 if (this.shouldResetParts(structure, previousStructure)) {
                     structure.parts = null;
                 }
 
-                // resets the parts options if the model was changed
+                // resets the personalization options if the model was changed
                 // but they stayed the same, which makes them invalid
                 if (this.shouldResetPersonalization(structure, previousStructure)) {
                     structure.initials = "";
