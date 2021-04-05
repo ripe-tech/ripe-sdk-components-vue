@@ -175,15 +175,10 @@ export const logicMixin = {
                     model: value.model !== previous.model ? value.model : undefined,
                     version: value.version !== previous.version ? value.version : undefined,
                     currency: value.currency !== previous.currency ? value.currency : undefined,
-                    parts: value.parts,
-                    initials: value.initials !== previous.initials ? value.initials : undefined,
-                    engraving: value.engraving !== previous.engraving ? value.engraving : undefined,
-                    initialsExtra: !this.equalInitialsExtra(
-                        value.initialsExtra,
-                        previous.initialsExtra
-                    )
-                        ? value.initialsExtra
-                        : undefined
+                    parts: this.parts,
+                    initials: this.initials,
+                    engraving: this.engraving,
+                    initialsExtra: this.initialsExtra
                 });
             },
             deep: true
@@ -430,7 +425,7 @@ export const logicMixin = {
             brand = brand === undefined ? this.brandData : brand;
             model = model === undefined ? this.modelData : model;
             version = version === undefined ? this.versionData : version;
-            parts = parts === undefined ? this.parts || this.partsData : parts;
+            parts = parts === undefined ? this.partsData : parts;
             currency = currency === undefined ? this.currencyData : currency;
             initials = initials === undefined ? this.initialsData : initials;
             engraving = engraving === undefined ? this.engravingData : engraving;
