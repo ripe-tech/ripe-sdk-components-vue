@@ -120,7 +120,7 @@ describe("RipePickers", function() {
         await component.vm.$forceUpdate();
         await component.vm.onSelectPartChange("side");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-materials").findAll("option").length, 4);
+        assert.strictEqual(component.find(".select-materials").findAll("option").length, 3);
         assert.strictEqual(component.find(".select-colors").findAll("option").length, 1);
 
         await component.vm.onSelectPartChange("patch");
@@ -130,31 +130,31 @@ describe("RipePickers", function() {
 
         await component.vm.onSelectPartChange("top0_bottom");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-materials").findAll("option").length, 4);
+        assert.strictEqual(component.find(".select-materials").findAll("option").length, 3);
         assert.strictEqual(component.find(".select-colors").findAll("option").length, 1);
 
         await component.vm.onSelectPartChange("side");
         await component.vm.onSelectMaterialChange("crocodile_cbe");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-materials").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-colors").findAll("option").length, 3);
+        assert.strictEqual(component.find(".select-materials").findAll("option").length, 3);
+        assert.strictEqual(component.find(".select-colors").findAll("option").length, 1);
 
         await component.vm.onSelectPartChange("side");
         await component.vm.onSelectMaterialChange("leather_cbe");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-materials").findAll("option").length, 4);
+        assert.strictEqual(component.find(".select-materials").findAll("option").length, 3);
         assert.strictEqual(component.find(".select-colors").findAll("option").length, 5);
 
         await component.vm.onSelectPartChange("top0_bottom");
         await component.vm.onSelectMaterialChange("leather_cbe");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-materials").findAll("option").length, 4);
+        assert.strictEqual(component.find(".select-materials").findAll("option").length, 3);
         assert.strictEqual(component.find(".select-colors").findAll("option").length, 5);
 
         await component.vm.onSelectPartChange("top0_bottom");
         await component.vm.onSelectMaterialChange("suede_cbe");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
-        assert.strictEqual(component.find(".select-materials").findAll("option").length, 4);
+        assert.strictEqual(component.find(".select-materials").findAll("option").length, 3);
         assert.strictEqual(component.find(".select-colors").findAll("option").length, 4);
     });
 });
