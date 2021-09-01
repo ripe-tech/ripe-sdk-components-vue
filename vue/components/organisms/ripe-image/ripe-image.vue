@@ -496,67 +496,73 @@ export const RipeImage = {
         }
     },
     mounted: async function() {
+        // if the SDK is defined but not yet ready
+        // it sets up the image only after the model
+        // config is loaded
+        if (this.ripeData) this.ripeData.bind("ready", this.setupImage);
         await this.setupRipe();
 
-        this.image = this.ripeData.bindImage(this.$refs.image, {
-            frame: this.frame,
-            size: this.size || undefined,
-            format: this.format,
-            crop: this.crop,
-            showInitials: this.showInitials,
-            initialsGroup: this.initialsGroup,
-            initialsBuilder: this.initialsBuilder,
-            rotation: this.rotation,
-            flip: this.flip,
-            mirror: this.mirror,
-            boundingBox: this.boundingBox,
-            algorithm: this.algorithm,
-            background: this.background,
-            engine: this.engine,
-            initialsX: this.initialsX,
-            initialsY: this.initialsY,
-            initialsWidth: this.initialsWidth,
-            initialsHeight: this.initialsHeight,
-            initialsViewport: this.initialsViewport,
-            initialsColor: this.initialsColor,
-            initialsOpacity: this.initialsOpacity,
-            initialsAlign: this.initialsAlign,
-            initialsVertical: this.initialsVertical,
-            initialsEmbossing: this.initialsEmbossing,
-            initialsRotation: this.initialsRotation,
-            initialsZindex: this.initialsZindex,
-            initialsAlgorithm: this.initialsAlgorithm,
-            initialsBlendColor: this.initialsBlendColor,
-            initialsPattern: this.initialsPattern,
-            initialsTexture: this.initialsTexture,
-            initialsExclusion: this.initialsExclusion,
-            initialsInclusion: this.initialsInclusion,
-            initialsImageRotation: this.initialsImageRotation,
-            initialsImageFlip: this.initialsImageFlip,
-            initialsImageMirror: this.initialsImageMirror,
-            debug: this.debug,
-            fontFamily: this.fontFamily,
-            fontWeight: this.fontWeight,
-            fontSize: this.fontSize,
-            fontSpacing: this.fontSpacing,
-            fontTrim: this.fontTrim,
-            fontMask: this.fontMask,
-            fontMode: this.fontMode,
-            lineHeight: this.lineHeight,
-            lineBreaking: this.lineBreaking,
-            shadow: this.shadow,
-            shadowColor: this.shadowColor,
-            shadowOffset: this.shadowOffset,
-            offsets: this.offsets,
-            curve: this.curve
-        });
-
-        this.onImageError = this.image.bind("error", () => this.onError());
-
-        // only updates if the SDK configuration is not empty
-        if (this.ripeData.brand) await this.image.update(this.state);
+        // sets up the image if the SDK instance is ready
+        if (this.ripeData.loadedConfig) await this.setupImage();
     },
     methods: {
+        async setupImage() {
+            this.image = this.ripeData.bindImage(this.$refs.image, {
+                frame: this.frame,
+                size: this.size || undefined,
+                format: this.format,
+                crop: this.crop,
+                showInitials: this.showInitials,
+                initialsGroup: this.initialsGroup,
+                initialsBuilder: this.initialsBuilder,
+                rotation: this.rotation,
+                flip: this.flip,
+                mirror: this.mirror,
+                boundingBox: this.boundingBox,
+                algorithm: this.algorithm,
+                background: this.background,
+                engine: this.engine,
+                initialsX: this.initialsX,
+                initialsY: this.initialsY,
+                initialsWidth: this.initialsWidth,
+                initialsHeight: this.initialsHeight,
+                initialsViewport: this.initialsViewport,
+                initialsColor: this.initialsColor,
+                initialsOpacity: this.initialsOpacity,
+                initialsAlign: this.initialsAlign,
+                initialsVertical: this.initialsVertical,
+                initialsEmbossing: this.initialsEmbossing,
+                initialsRotation: this.initialsRotation,
+                initialsZindex: this.initialsZindex,
+                initialsAlgorithm: this.initialsAlgorithm,
+                initialsBlendColor: this.initialsBlendColor,
+                initialsPattern: this.initialsPattern,
+                initialsTexture: this.initialsTexture,
+                initialsExclusion: this.initialsExclusion,
+                initialsInclusion: this.initialsInclusion,
+                initialsImageRotation: this.initialsImageRotation,
+                initialsImageFlip: this.initialsImageFlip,
+                initialsImageMirror: this.initialsImageMirror,
+                debug: this.debug,
+                fontFamily: this.fontFamily,
+                fontWeight: this.fontWeight,
+                fontSize: this.fontSize,
+                fontSpacing: this.fontSpacing,
+                fontTrim: this.fontTrim,
+                fontMask: this.fontMask,
+                fontMode: this.fontMode,
+                lineHeight: this.lineHeight,
+                lineBreaking: this.lineBreaking,
+                shadow: this.shadow,
+                shadowColor: this.shadowColor,
+                shadowOffset: this.shadowOffset,
+                offsets: this.offsets,
+                curve: this.curve
+            });
+
+            this.onImageError = this.image.bind("error", () => this.onError());
+            await this.image.update(this.state);
+        },
         onLoaded() {
             this.loading = false;
             this.$emit("loaded");
