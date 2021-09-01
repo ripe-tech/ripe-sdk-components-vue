@@ -496,8 +496,14 @@ export const RipeImage = {
         }
     },
     mounted: async function() {
-        this.ripeData.bind("ready", this.setupImage);
+        // if the SDK is defined but not yet ready
+        // it sets up the image only after the model
+        // config is loaded
+        if (this.ripeData) this.ripeData.bind("ready", this.setupImage);
         await this.setupRipe();
+
+        // sets up the image if the SDK instance is ready
+        if (this.ripeData.loadedConfig) await this.setupImage();
     },
     methods: {
         async setupImage() {
@@ -555,9 +561,7 @@ export const RipeImage = {
             });
 
             this.onImageError = this.image.bind("error", () => this.onError());
-
-            // only updates if the SDK configuration is not empty
-            if (this.ripeData.brand) await this.image.update(this.state);
+            await this.image.update(this.state);
         },
         onLoaded() {
             this.loading = false;
