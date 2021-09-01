@@ -58,7 +58,7 @@
     },
     "dependencies": {
         "loaders.css": "^0.1.2",
-        "ripe-sdk": "^1.23.0",
+        "ripe-sdk": "^2.6.0",
         "vue": "^2.6.12",
         "vue-global-events": "^1.2.1",
         "yonius": "^0.6.4"
