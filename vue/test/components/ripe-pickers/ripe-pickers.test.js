@@ -98,7 +98,7 @@ describe("RipePickers", function() {
         assert.strictEqual(component.emitted("loading").length, 1);
 
         await ripeInstance.isReady();
-        await ripeInstance.trigger("choices", _choices);
+        ripeInstance.setChoices(_choices);
         await component.vm.$forceUpdate();
         assert.strictEqual(component.find(".select-parts").exists(), true);
         assert.strictEqual(component.find(".select-materials").exists(), true);
@@ -116,7 +116,7 @@ describe("RipePickers", function() {
         const component = await base.getComponent("RipePickers", { props: { ripe: ripeInstance } });
 
         await ripeInstance.isReady();
-        await ripeInstance.trigger("choices", _choices);
+        ripeInstance.setChoices(_choices);
         await component.vm.$forceUpdate();
         await component.vm.onSelectPartChange("side");
         assert.strictEqual(component.find(".select-parts").findAll("option").length, 4);
