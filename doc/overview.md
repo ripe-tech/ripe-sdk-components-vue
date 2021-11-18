@@ -117,6 +117,30 @@ await this.ripe.config("dummy", "cube", {
 
 ![Multiple Configurators](/res/images/configurator-multiple.gif)
 
+| Prop            | Type      | Required | Description                                                                                                                                    |
+| --------------- | --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| brand           | `String`  | `false`  | The brand of the model.                                                                                                                        |
+| model           | `String`  | `false`  | The name of the model.                                                                                                                         |
+| version         | `Number`  | `false`  | The version of the build.                                                                                                                      |
+| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
+| currency        | `String`  | `false`  | The `ISO 4217` currency code being used for the price of the model.                                                                            |
+| parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
+| initials        | `String`  | `false`  | The initials value to be used in the RIPE instance.                                                                                            |
+| engraving       | `String`  | `false`  | The engraving value to be used in the RIPE instance.                                                                                           |
+| initialsExtra   | `Object`  | `false`  | The set of (initials, engraving) per initials group to be used in the RIPE instance.                                                           |
+| structure       | `Object`  | `false`  | The normalized structure that uniquely represents the configuration "situation".                                                               |
+| frame           | `String`  | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`. |
+| size            | `Number`  | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                            |
+| loader          | `Boolean` | `false`  | If the loader indicator should be shown whenever a configurator related loading operation is being performed. Defaults to `true`.              |
+| selectedPart    | `String`  | `false`  | Part of the model that is currently selected (eg: side).                                                                                       |
+| highlightedPart | `String`  | `false`  | Part of the model that is currently highlighted (eg: side). Only possible if the usage of masks is enabled.                                    |
+| sensitivity     | `Number`  | `false`  | Configurator rotation sensitivity to the user mouse drag action. The sensitivity increases with the number value. Defaults to `40`.            |
+| useMasks        | `Boolean` | `false`  | Usage of masks in the current model, necessary for the part highlighting action. Defaults to `true`.                                           |
+| duration        | `Number`  | `false`  | The duration in milliseconds that the configurator frame transition should take. Defaults to `500`.                                            |
+| animation       | `String`  | `false`  | The configurator animation style: `simple` (fade in), `cross` (crossfade) or `null`. Defaults to `null`.                                       |
+| format          | `String`  | `false`  | The format of the configurator image (eg: png, jpg, svg, etc.). Defaults to 'png'.                                                             |
+| ripe            | `Number`  | `false`  | Instance of RIPE SDK initialized, if not defined, the global RIPE SDK instance will be used.                                                   |
+
 ## Image
 
 The image component `<ripe-image>` allows for the visualization of a given model.
@@ -241,11 +265,15 @@ In cases where it is necessary to see details in the image, it is possible to us
 | brand           | `String`   | `false`  | The brand of the model.                                                                                                                                                                                    |
 | model           | `String`   | `false`  | The name of the model.                                                                                                                                                                                     |
 | version         | `Number`   | `false`  | The version of the build.                                                                                                                                                                                  |
-| config          | `Boolean`  | `false`  | Indicates that the component should apply the config internally on component initialization.                                                                                                               |
-| parts           | `Object`   | `false`  | The model's customization.                                                                                                                                                                                 |
-| frame           | `String`   | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.                                                             |
-| size            | `Number`   | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                                                                                        |
-| format          | `String`   | `false`  | The format of the image, (eg: png, jpg, svg, etc.). Defaults to 'png'.                                                                                                                                     |
+| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
+| currency        | `String`  | `false`  | The `ISO 4217` currency code being used for the price of the model.                                                                            |
+| parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
+| initials        | `String`  | `false`  | The initials value to be used in the RIPE instance.                                                                                            |
+| engraving       | `String`  | `false`  | The engraving value to be used in the RIPE instance.                                                                                           |
+| initialsExtra   | `Object`  | `false`  | The set of (initials, engraving) per initials group to be used in the RIPE instance.                                                           |
+| frame           | `String`   | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.                                                                    |
+| size            | `Number`   | `false`  | The size (in pixels) of the image. If not defined, the image will use all the model's build default size.                                                                                                  |
+| format          | `String`   | `false`  | The format of the image (eg: png, jpg, svg, etc.). Defaults to 'png'.                                                                                                                                      |
 | crop            | `Boolean`  | `false`  | Indicates that the image composition is to be cropped. Crops the current image according to the minimal possible bounding box in both x and y axis.                                                        |
 | showInitials    | `Boolean`  | `false`  | Indicates if the personalization should be shown. Defaults to `false`.                                                                                                                                     |
 | initialsGroup   | `String`   | `false`  | The group in which the image initials belongs to.                                                                                                                                                          |
@@ -288,11 +316,15 @@ It is also possible to enable the scroll wheel to increase and decrease the zoom
 | brand             | `String`   | `false`  | The brand of the model.                                                                                                                                                                                    |
 | model             | `String`   | `false`  | The name of the model.                                                                                                                                                                                     |
 | version           | `Number`   | `false`  | The version of the build.                                                                                                                                                                                  |
-| config            | `Boolean`  | `false`  | Indicates that the component should apply the config internally on component initialization.                                                                                                               |
-| parts             | `Object`   | `false`  | The model's customization.                                                                                                                                                                                 |
-| frame             | `String`   | `false`  | The name of the frame to be shown in the configurator. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.                                                             |
-| size              | `Number`   | `false`  | The size (in pixels) of the configurator. If not defined, the configurator will use all the screen space available.                                                                                        |
-| format            | `String`   | `false`  | The format of the image, (eg: png, jpg, svg, etc.). Defaults to 'png'.                                                                                                                                     |
+| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
+| currency        | `String`  | `false`  | The `ISO 4217` currency code being used for the price of the model.                                                                            |
+| parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
+| initials        | `String`  | `false`  | The initials value to be used in the RIPE instance.                                                                                            |
+| engraving       | `String`  | `false`  | The engraving value to be used in the RIPE instance.                                                                                           |
+| initialsExtra   | `Object`  | `false`  | The set of (initials, engraving) per initials group to be used in the RIPE instance.                                                           |
+| frame             | `String`   | `false`  | The name of the frame to be shown in the image. For example, frame `1` on `side` would be `side-1`, and a `top` frame would be `top-1`.                                                                    |
+| size              | `Number`   | `false`  | The size (in pixels) of the image. If not defined, the image will use all the model's build default size.                                                                                                  |
+| format            | `String`   | `false`  | The format of the image (eg: png, jpg, svg, etc.). Defaults to 'png'.                                                                                                                                      |
 | crop              | `Boolean`  | `false`  | Indicates that the image composition is to be cropped. Crops the current image according to the minimal possible bounding box in both x and y axis.                                                        |
 | showInitials      | `Boolean`  | `false`  | Indicates if the personalization should be shown. Defaults to `false`.                                                                                                                                     |
 | initialsGroup     | `String`   | `false`  | The group in which the image initials belongs to.                                                                                                                                                          |
@@ -398,6 +430,20 @@ Different customizations can result in different prices. Below is an example of 
 ![Price Complex Example EUR](/res/images/price-complex-eur.png)
 ![Price Complex Example USD](/res/images/price-complex-usd.png)
 
+| Prop            | Type      | Required | Description                                                                                                                                    |
+| --------------- | --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| brand           | `String`  | `false`  | The brand of the model.                                                                                                                        |
+| model           | `String`  | `false`  | The name of the model.                                                                                                                         |
+| version         | `Number`  | `false`  | The version of the build.                                                                                                                      |
+| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
+| currency        | `String`  | `false`  | The `ISO 4217` currency code being used for the price of the model.                                                                            |
+| parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
+| initials        | `String`  | `false`  | The initials value to be used in the RIPE instance.                                                                                            |
+| engraving       | `String`  | `false`  | The engraving value to be used in the RIPE instance.                                                                                           |
+| initialsExtra   | `Object`  | `false`  | The set of (initials, engraving) per initials group to be used in the RIPE instance.                                                           |
+| structure       | `Object`  | `false`  | The normalized structure that uniquely represents the configuration "situation".                                                               |
+| ripe            | `Number`  | `false`  | Instance of RIPE SDK initialized, if not defined, the global RIPE SDK instance will be used.                                                   |
+
 ## Pickers
 
 The pickers component `<ripe-pickers>` allows for the customization of a model, by choosing materials and colors for its parts.
@@ -422,3 +468,17 @@ await this.ripe.config("dummy", "cube", {
 The pickers can interact with an existing configurator, by using the same RIPE instance:
 
 ![Pickers with Configurator Example](/res/images/pickers_configurator.gif)
+
+| Prop            | Type      | Required | Description                                                                                                                                    |
+| --------------- | --------- | -------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| brand           | `String`  | `false`  | The brand of the model.                                                                                                                        |
+| model           | `String`  | `false`  | The name of the model.                                                                                                                         |
+| version         | `Number`  | `false`  | The version of the build.                                                                                                                      |
+| config          | `Boolean` | `false`  | Indicates that the component should apply the config internally on component initialization.                                                   |
+| currency        | `String`  | `false`  | The `ISO 4217` currency code being used for the price of the model.                                                                            |
+| parts           | `Object`  | `false`  | The model's customization.                                                                                                                     |
+| initials        | `String`  | `false`  | The initials value to be used in the RIPE instance.                                                                                            |
+| engraving       | `String`  | `false`  | The engraving value to be used in the RIPE instance.                                                                                           |
+| initialsExtra   | `Object`  | `false`  | The set of (initials, engraving) per initials group to be used in the RIPE instance.                                                           |
+| structure       | `Object`  | `false`  | The normalized structure that uniquely represents the configuration "situation".                                                               |
+| ripe            | `Number`  | `false`  | Instance of RIPE SDK initialized, if not defined, the global RIPE SDK instance will be used.                                                   |
