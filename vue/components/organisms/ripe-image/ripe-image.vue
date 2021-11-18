@@ -263,28 +263,28 @@ export const RipeImage = {
             default: null
         },
         /**
-         * Overrides the profile's rotation angle, in degrees, to be applied to image.
+         * Overrides the profile's rotation angle, in degrees, to be applied to the initials image.
          */
         initialsImageRotation: {
             type: Number,
             default: null
         },
         /**
-         * Flip the image around the X axis.
+         * Flip the initials image around the X axis.
          */
         initialsImageFlip: {
             type: Boolean,
             default: null
         },
         /**
-         * Mirror the image around the Y axis.
+         * Mirror the initials image around the Y axis.
          */
         initialsImageMirror: {
             type: Boolean,
             default: null
         },
         /**
-         * Displays the Debug information box.
+         * Displays the debug information box.
          */
         debug: {
             type: Boolean,
