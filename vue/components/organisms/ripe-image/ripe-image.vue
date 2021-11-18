@@ -20,7 +20,7 @@ export const RipeImage = {
     mixins: [logicMixin],
     props: {
         /**
-         * The name of the frame to be shown in the configurator using
+         * The name of the frame to be shown in the image using
          * the normalized frame format (eg: side-1).
          */
         frame: {
@@ -28,14 +28,14 @@ export const RipeImage = {
             default: null
         },
         /**
-         * The size (in pixels) of the image shown in the configurator.
+         * The size (in pixels) of the image.
          */
         size: {
             type: Number,
             default: null
         },
         /**
-         * The format of the configurator image, (eg: png, jpg, svg, etc.).
+         * The format of the image (eg: png, jpg, svg, etc.).
          */
         format: {
             type: String,
