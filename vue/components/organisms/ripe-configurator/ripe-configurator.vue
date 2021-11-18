@@ -116,7 +116,7 @@ export const RipeConfigurator = {
         },
         /**
          * Configurator rotation sensitivity to the user mouse drag
-         * action. The bigger the number, more sensible it is.
+         * action. The sensitivity increases with the number value.
          */
         sensitivity: {
             type: Number,
@@ -147,7 +147,7 @@ export const RipeConfigurator = {
             default: null
         },
         /**
-         * The format of the configurator image, (eg: png, jpg, svg, etc.).
+         * The format of the configurator image (eg: png, jpg, svg, etc.).
          */
         format: {
             type: String,
