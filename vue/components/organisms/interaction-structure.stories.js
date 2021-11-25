@@ -62,13 +62,8 @@ storiesOf("Components/Organisms/Interaction Structure", module)
                     ...this.structureData,
                     brand: value.brand,
                     model: value.model,
-                    version: value.version
-                };
-            },
-            parts(value) {
-                this.structureData = {
-                    ...this.structureData,
-                    parts: value
+                    version: value.version,
+                    parts: null
                 };
             },
             initials(value) {

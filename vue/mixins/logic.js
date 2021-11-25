@@ -202,7 +202,7 @@ export const logicMixin = {
 
                 // resets the initials extra object if the initials and/or
                 // engraving were modified but the initials extra stayed the
-                // same, allowing an update that won't be overriden by the
+                // same, allowing an update that won't be overridden by the
                 // outdated initials extra
                 const equalInitialsEngraving =
                     structure.initials === previousStructure.initials &&
