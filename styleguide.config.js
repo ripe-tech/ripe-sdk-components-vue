@@ -33,9 +33,6 @@ config.module.rules.push({
                     ]
                 ]
             }
-        },
-        {
-            loader: "eslint-loader"
         }
     ]
 });

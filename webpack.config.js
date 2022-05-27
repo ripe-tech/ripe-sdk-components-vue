@@ -30,7 +30,7 @@ module.exports = {
                 loader: "vue-loader",
                 options: {
                     loaders: {
-                        js: "babel-loader!eslint-loader",
+                        js: "babel-loader",
                         scss: "vue-style-loader!css-loader!sass-loader",
                         sass: "vue-style-loader!css-loader!sass-loader?indentedSyntax"
                     }
@@ -74,45 +74,51 @@ module.exports = {
                                     : "@babel/preset-env"
                             ]
                         }
-                    },
-                    {
-                        loader: "eslint-loader"
                     }
                 ]
             },
             {
-                test: /\.(svga)$/,
-                loader: "file-loader",
-                options: {
-                    name: (path, query) => {
+                test: /\.(png|jpg|gif|svg|ico)$/,
+                type: "asset/resource",
+                generator: {
+                    filename: () => {
                         if (process.env.NODE_ENV === "development") {
-                            return "[path][name].svg?[fullhash]";
+                            return "[path][name][ext]?[hash]";
                         }
-                        return "[contenthash].svg";
-                    },
-                    esModule: false
+                        return "[contenthash][ext]";
+                    }
+                }
+            },
+            {
+                resourceQuery: /raw/,
+                type: "asset/source"
+            },
+            {
+                test: /\.svga$/,
+                type: "asset/inline",
+                generator: {
+                    dataUrl: {
+                        mimetype: "image/svg+xml"
+                    }
                 }
             },
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/,
-                loader: "file-loader",
-                options: {
-                    esModule: false
-                }
-            },
-            {
-                test: /\.(png|jpg|gif|svg|ico)$/,
-                loader: "url-loader",
-                options: {
-                    esModule: false
-                }
+                type: "asset/resource"
             }
         ]
     },
     resolve: {
         alias: {
             base$: "../../../js",
-            vue$: "vue/dist/vue.esm.js"
+            vue$: "vue/dist/vue.esm.js",
+            process: "process/browser"
+        },
+        fallback: {
+            fs: false,
+            http: false,
+            https: false,
+            path: false
         }
     },
     externals: {
