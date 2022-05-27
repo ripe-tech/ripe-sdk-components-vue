@@ -14,10 +14,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 * Bumped dependencies
+* Migrate to webpack 5
 
 ### Fixed
 
 * Fix storybook dependency problem after minor bump, lock versions to minor - [ripe-welcome/PR#187](https://github.com/ripe-tech/ripe-welcome/pull/187)
+* Fix eslint dependencies problems
 
 ## [0.2.3] - 2021-04-06
 
